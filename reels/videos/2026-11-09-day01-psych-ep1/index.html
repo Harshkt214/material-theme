@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* Candle Night (Raju vs Operator) — trading channel house style */
+      @font-face { font-family: "Baloo 2"; font-weight: 600; src: url("assets/fonts/baloo-2-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0e1424; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --navy: #2d3d72; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Baloo 2", sans-serif; }
+      .full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .scene { position: absolute; inset: 0; }
+      svg text { font-family: "Baloo 2", sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34.4" data-width="1080" data-height="1920">
+      <svg id="bg" class="full" viewBox="0 0 180 320"></svg>
+      <div id="stage" class="full">
+        <div id="s1" class="scene clip" data-start="0" data-duration="4.69" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s2" class="scene clip" data-start="4.69" data-duration="2.62" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s3" class="scene clip" data-start="7.31" data-duration="5.67" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s4" class="scene clip" data-start="12.98" data-duration="1.75" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s5" class="scene clip" data-start="14.73" data-duration="5.47" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s6" class="scene clip" data-start="20.2" data-duration="5.47" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s7" class="scene clip" data-start="25.67" data-duration="3.63" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+        <div id="s8" class="scene clip" data-start="29.3" data-duration="5.1" data-track-index="1" data-track-kind="graphics"><svg class="full" viewBox="0 0 180 320"></svg></div>
+      </div>
+      <svg id="hud" class="full" viewBox="0 0 180 320"></svg>
+      <div id="redflash" class="full" style="background: #ff4d5e; opacity: 0"></div>
+
+      <!-- AUDIO: voice + self-generated SFX only (no music — Candle Night / audio rules). See sfx-credits.md -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="bm1" class="clip" src="assets/sfx/impact.mp3" data-start="0" data-duration="0.9" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="bm2" class="clip" src="assets/sfx/impact.mp3" data-start="13.75" data-duration="0.9" data-track-index="11" data-volume="0.55"></audio>
+      <audio id="sl1" class="clip" src="assets/sfx/impact.mp3" data-start="6.17" data-duration="0.9" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sl2" class="clip" src="assets/sfx/impact.mp3" data-start="16.1" data-duration="0.9" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="wh1" class="clip" src="assets/sfx/whoosh.mp3" data-start="4.45" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="wh2" class="clip" src="assets/sfx/whoosh.mp3" data-start="7.07" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="wh3" class="clip" src="assets/sfx/whoosh.mp3" data-start="14.49" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="wh4" class="clip" src="assets/sfx/whoosh.mp3" data-start="19.96" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="wh5" class="clip" src="assets/sfx/whoosh.mp3" data-start="25.43" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="wh6" class="clip" src="assets/sfx/whoosh.mp3" data-start="29.06" data-duration="0.5" data-track-index="13" data-volume="0.45"></audio>
+      <audio id="po1" class="clip" src="assets/sfx/pop.mp3" data-start="5.0" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po2" class="clip" src="assets/sfx/pop.mp3" data-start="10.09" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po3" class="clip" src="assets/sfx/pop.mp3" data-start="10.81" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po4" class="clip" src="assets/sfx/pop.mp3" data-start="11.78" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po5" class="clip" src="assets/sfx/pop.mp3" data-start="17.14" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po6" class="clip" src="assets/sfx/pop.mp3" data-start="18.07" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po7" class="clip" src="assets/sfx/pop.mp3" data-start="18.94" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="po8" class="clip" src="assets/sfx/pop.mp3" data-start="28.45" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+      <audio id="tk1" class="clip" src="assets/sfx/tick.mp3" data-start="23.55" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="tk2" class="clip" src="assets/sfx/tick.mp3" data-start="23.8" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="tk3" class="clip" src="assets/sfx/tick.mp3" data-start="24.05" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="tk4" class="clip" src="assets/sfx/tick.mp3" data-start="24.3" data-duration="0.07" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="ty1" class="clip" src="assets/sfx/click.mp3" data-start="28.14" data-duration="0.13" data-track-index="16" data-volume="0.22"></audio>
+      <audio id="ty2" class="clip" src="assets/sfx/click.mp3" data-start="28.27" data-duration="0.1" data-track-index="16" data-volume="0.22"></audio>
+      <audio id="ty3" class="clip" src="assets/sfx/click.mp3" data-start="28.38" data-duration="0.13" data-track-index="16" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      // ---------- drawing helpers (180x320 units; x6 = pixels) ----------
+      const G = "#26d07c", R = "#ff4d5e", Y = "#ffc94a", W = "#eef1f8", M = "#8d97ad", O = "#ff8a3d", NV = "#2d3d72", BG = "#0e1424", SK = "#f0c39a";
+      const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      function T(x, y, s, size = 11, fill = W, anchor = "middle", weight = 800, id = "") {
+        return `<text ${id ? `id="${id}"` : ""} x="${x}" y="${y}" font-size="${size}" fill="${fill}" text-anchor="${anchor}" font-weight="${weight}">${esc(s)}</text>`;
+      }
+      function tag(x, y, s, bg = Y, fg = BG, size = 8, id = "") {
+        const w = s.length * size * 0.56 + 12, h = size + 7;
+        return `<g ${id ? `id="${id}"` : ""}><rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}" fill="${bg}"/>${T(x, y + size * 0.36, s, size, fg)}</g>`;
+      }
+      const card = (x, y, w, h, c = "#1b2440", extra = "") => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${c}" ${extra}/>`;
+      const ln = (x1, y1, x2, y2, c = W, w = 1.2, o = 1) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" opacity="${o}" stroke-linecap="round"/>`;
+      function mouth(x, y, k, m, c = "#3a2418") {
+        if (m === "happy") return `<path d="M${x - 4 * k},${y} Q${x},${y + 4.5 * k} ${x + 4 * k},${y}" stroke="${c}" stroke-width="${1.4 * k}" fill="none" stroke-linecap="round"/>`;
+        if (m === "sad") return `<path d="M${x - 4 * k},${y + 2.5 * k} Q${x},${y - 1.5 * k} ${x + 4 * k},${y + 2.5 * k}" stroke="${c}" stroke-width="${1.4 * k}" fill="none" stroke-linecap="round"/>`;
+        if (m === "shock") return `<ellipse cx="${x}" cy="${y + 1.5 * k}" rx="${2.3 * k}" ry="${3 * k}" fill="${c}"/>`;
+        if (m === "smirk") return `<path d="M${x - 3.5 * k},${y + 1 * k} Q${x + 1 * k},${y + 3 * k} ${x + 4.5 * k},${y - 1 * k}" stroke="${c}" stroke-width="${1.4 * k}" fill="none" stroke-linecap="round"/>`;
+        return ln(x - 3.5 * k, y + 1 * k, x + 3.5 * k, y + 1 * k, c, 1.4 * k);
+      }
+      function raju(x, y, k = 1, m = "neutral") {
+        let s = `<rect x="${x - 14 * k}" y="${y - 30 * k}" width="${28 * k}" height="${30 * k}" rx="${10 * k}" fill="${O}"/>` +
+          `<circle cx="${x}" cy="${y - 43 * k}" r="${12 * k}" fill="${SK}"/>` +
+          `<path d="M${x - 12.5 * k},${y - 45 * k} Q${x - 11 * k},${y - 58 * k} ${x},${y - 57 * k} Q${x + 12 * k},${y - 58 * k} ${x + 12.5 * k},${y - 45 * k} Q${x + 4 * k},${y - 51 * k} ${x - 12.5 * k},${y - 45 * k}Z" fill="#2a1a12"/>` +
+          (m === "shock" ? `<circle cx="${x - 4.2 * k}" cy="${y - 43 * k}" r="${2.2 * k}" fill="#fff"/><circle cx="${x + 4.2 * k}" cy="${y - 43 * k}" r="${2.2 * k}" fill="#fff"/>` : "") +
+          `<circle cx="${x - 4.2 * k}" cy="${y - 43 * k}" r="${1.5 * k}" fill="#2a1a12"/><circle cx="${x + 4.2 * k}" cy="${y - 43 * k}" r="${1.5 * k}" fill="#2a1a12"/>` + mouth(x, y - 37.5 * k, k, m);
+        if (m === "sad") s += `<path d="M${x + 11 * k},${y - 50 * k} q${2 * k},${4 * k} 0,${5 * k} q${-2 * k},${-1 * k} 0,${-5 * k}z" fill="#7cc4ff"/>`;
+        return s;
+      }
+      function op(x, y, k = 1, m = "smirk", shadow = false) {
+        if (shadow) return `<rect x="${x - 15 * k}" y="${y - 31 * k}" width="${30 * k}" height="${31 * k}" rx="${9 * k}" fill="#1a2238"/><circle cx="${x}" cy="${y - 44 * k}" r="${12.5 * k}" fill="#1a2238"/>` +
+          `<circle cx="${x - 4.5 * k}" cy="${y - 44 * k}" r="${1.6 * k}" fill="${R}"/><circle cx="${x + 4.5 * k}" cy="${y - 44 * k}" r="${1.6 * k}" fill="${R}"/>` +
+          `<circle cx="${x - 4.5 * k}" cy="${y - 44 * k}" r="${4 * k}" fill="${R}" opacity=".18"/><circle cx="${x + 4.5 * k}" cy="${y - 44 * k}" r="${4 * k}" fill="${R}" opacity=".18"/>`;
+        return `<rect x="${x - 15 * k}" y="${y - 31 * k}" width="${30 * k}" height="${31 * k}" rx="${9 * k}" fill="${NV}"/>` +
+          `<path d="M${x - 6 * k},${y - 31 * k} L${x + 6 * k},${y - 31 * k} L${x},${y - 17 * k}Z" fill="#fff"/>` +
+          `<path d="M${x - 1.8 * k},${y - 30 * k} L${x + 1.8 * k},${y - 30 * k} L${x + 2.6 * k},${y - 17 * k} L${x},${y - 13 * k} L${x - 2.6 * k},${y - 17 * k}Z" fill="${R}"/>` +
+          `<circle cx="${x}" cy="${y - 44 * k}" r="${12 * k}" fill="#e7b48a"/>` +
+          `<path d="M${x - 12.5 * k},${y - 46 * k} Q${x - 10 * k},${y - 59 * k} ${x + 2 * k},${y - 58 * k} Q${x + 13 * k},${y - 57 * k} ${x + 12.5 * k},${y - 46 * k} Q${x + 6 * k},${y - 53 * k} ${x - 4 * k},${y - 51 * k} Q${x - 9 * k},${y - 50 * k} ${x - 12.5 * k},${y - 46 * k}Z" fill="#1d1d26"/>` +
+          `<circle cx="${x - 4.2 * k}" cy="${y - 44 * k}" r="${1.5 * k}" fill="#1d1d26"/><circle cx="${x + 4.2 * k}" cy="${y - 44 * k}" r="${1.5 * k}" fill="#1d1d26"/>` + mouth(x, y - 38.5 * k, k, m);
+      }
+      const trader = (x, y, k, col) => `<circle cx="${x}" cy="${y}" r="${5 * k}" fill="${col}"/><rect x="${x - 6 * k}" y="${y + 6 * k}" width="${12 * k}" height="${10 * k}" rx="${4 * k}" fill="${col}"/>`;
+      function candles(x0, x1, y0, y1, v) {
+        const st = (x1 - x0) / v.length; let s = "";
+        v.forEach((c, i) => {
+          const p = i ? v[i - 1] : c + 0.03, X = x0 + st * (i + 0.5), Yf = (q) => y1 - q * (y1 - y0), col = c >= p ? G : R;
+          s += `<g class="cdl">${ln(X, Yf(Math.max(p, c) + 0.03), X, Yf(Math.min(p, c) - 0.03), col, 1)}<rect x="${X - st * 0.31}" y="${Yf(Math.max(p, c))}" width="${st * 0.62}" height="${Math.max(1.4, Math.abs(Yf(p) - Yf(c)))}" fill="${col}"/></g>`;
+        });
+        return s;
+      }
+      const PR = [0.7, 0.62, 0.66, 0.55, 0.58, 0.47, 0.5, 0.4, 0.44, 0.33];
+      const svg = (id) => document.getElementById(id).querySelector("svg");
+
+      // ---------- background + HUD (chip + progress bar, below IG top zone) ----------
+      let grid = `<rect width="180" height="320" fill="${BG}"/>`;
+      for (let y = 40; y < 320; y += 20) grid += ln(0, y, 180, y, "#ffffff", 0.2, 0.05);
+      for (let x = 20; x < 180; x += 20) grid += ln(x, 0, x, 320, "#ffffff", 0.2, 0.035);
+      document.getElementById("bg").innerHTML = grid;
+      document.getElementById("hud").innerHTML =
+        `<rect x="18" y="30" width="144" height="2" rx="1" fill="#1b2440"/><rect id="prog" x="18" y="30" width="144" height="2" rx="1" fill="${O}"/>` +
+        tag(90, 42, "TRADING PSYCHOLOGY · EP 1", "#1b2440", M, 6.5);
+
+      // ---------- scenes ----------
+      // S1 hook: full at frame 0
+      let crowd = "";
+      for (let i = 0; i < 10; i++) { const x = 30 + (i % 5) * 30, y = i < 5 ? 122 : 156; crowd += `<g class="tr" id="tr${i}">${trader(x, y, 1.2, i === 7 ? G : R)}</g>`; }
+      svg("s1").innerHTML = `<g id="s1a">${T(90, 64, "SEBI ka data:", 12, M, "middle", 600)}</g><g id="s1b">${T(90, 96, "10 mein se 9", 28, Y)}</g>` + crowd +
+        `<g id="s1c">${T(90, 198, "F&O traders LOSS mein", 14, R)}</g><g id="s1d">${T(90, 214, "SEBI, FY26: 87.7% individual F&O traders net loss", 6.2, M, "middle", 600)}</g>`;
+
+      // S2 tease
+      svg("s2").innerHTML = `<defs><filter id="bl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="blur2" stdDeviation="8"/></filter></defs>` +
+        `<g id="s2a">${T(90, 66, "Aur sabse badi wajah…", 14, W)}</g><g id="s2b">${T(90, 94, "CHART nahi hai", 20, R)}</g>` +
+        `<g filter="url(#bl)">${card(22, 110, 136, 66, "#2a1d3a")}${T(90, 137, "Asli wajah:", 11, M, "middle", 600)}${T(90, 162, "BEHAVIOUR", 20, Y)}</g>` +
+        `<g id="s2st" transform="rotate(-6 120 200)">${card(78, 186, 84, 28, Y)}${T(120, 205, "end tak dekhna", 9.5, BG)}</g>` +
+        `<g id="s2op">${op(40, 262, 1.1, "smirk", true)}</g>`;
+
+      // S3 indicators
+      svg("s3").innerHTML = `<g id="s3a">${T(90, 62, "Har loss ke baad", 13, W)}</g><g id="s3b">${T(90, 84, "NAYA indicator", 18, Y)}</g>` +
+        card(14, 96, 152, 74, "#141c33") + `<g id="s3c">${candles(20, 160, 102, 164, PR)}</g>` +
+        tag(34, 186, "RSI", W, BG, 9, "s3t1") + tag(76, 186, "MACD", W, BG, 9, "s3t2") + tag(136, 186, "Naya course", O, BG, 8, "s3t3") +
+        `<g id="s3r">${raju(90, 262, 1.05, "neutral")}</g>`;
+
+      // S4 loss
+      svg("s4").innerHTML = `<g id="s4a">${T(90, 66, "Phir bhi…", 14, W)}</g><g id="s4b">${T(90, 100, "LOSS", 32, R)}</g>` +
+        tag(34, 140, "RSI", W, BG, 9) + tag(76, 140, "MACD", W, BG, 9) + tag(136, 140, "Naya course", O, BG, 8) +
+        `<g id="s4x">${ln(26, 124, 154, 158, R, 4)}${ln(154, 124, 26, 158, R, 4)}</g>` +
+        `<g id="s4r">${raju(62, 262, 1.05, "sad")}</g><g id="s4op">${op(124, 262, 1.05, "smirk")}</g>`;
+
+      // S5 behaviour
+      svg("s5").innerHTML = `<defs><filter id="bl5" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="blur5" stdDeviation="8"/></filter></defs>` +
+        `<g id="s5a">${T(90, 66, "Asli problem", 15, W)}</g>` +
+        `<g filter="url(#bl5)">${card(22, 80, 136, 66, "#2a1d3a")}${T(90, 107, "Asli wajah:", 11, M, "middle", 600)}<g id="s5w">${T(90, 132, "BEHAVIOUR", 20, Y)}</g></g>` +
+        tag(48, 166, "SL hatana", R, "#fff", 8.5, "s5c1") + tag(128, 166, "Revenge trade", R, "#fff", 8.5, "s5c2") + tag(90, 188, "Overtrading", R, "#fff", 8.5, "s5c3") +
+        `<g id="s5r">${raju(62, 262, 1.0, "shock")}</g><g id="s5op">${op(124, 262, 1.0, "smirk")}</g>`;
+
+      // S6 today's task: journal table
+      const rows = [["1", "Breakout dekha", "SL hit"], ["2", "FOMO", "Target"], ["3", "Revenge", "SL hata diya"], ["4", "Plan wala setup", "Plan exit"]];
+      let tbl = card(14, 90, 152, 112, "#141c33") + T(24, 106, "#", 8, M, "start", 700) + `<g id="s6h1">${T(40, 106, "Entry reason", 8, M, "start", 700)}</g><g id="s6h2">${T(104, 106, "Exit reason", 8, M, "start", 700)}</g>` + ln(20, 112, 160, 112, M, 0.6);
+      rows.forEach((r, i) => { const y = 128 + i * 20; tbl += `<g id="s6r${i}">${T(24, y, r[0], 8.5, W, "start", 600)}${T(40, y, r[1], 8.5, W, "start", 600)}${T(104, y, r[2], 8.5, i === 2 ? R : W, "start", 600)}</g>`; });
+      svg("s6").innerHTML = `<g id="s6a">${T(90, 62, "Aaj ka EK kaam", 16, G)}</g><g id="s6b">${T(90, 80, "Last 20 trades likho", 12, W, "middle", 600)}</g>` + tbl +
+        `<g id="s6m">${T(90, 214, "… 20 tak", 8.5, M, "middle", 600)}</g><g id="s6r">${raju(90, 266, 0.95, "happy")}</g>`;
+
+      // S7 comment CTA
+      svg("s7").innerHTML = `<defs><clipPath id="typeclip"><rect id="typerect" x="58" y="96" width="0" height="22"/></clipPath></defs>` +
+        `<g id="s7a">${T(90, 62, "Free journal chahiye?", 15, W)}</g>` +
+        card(18, 92, 144, 32, "#1b2440") + `<g id="s7ph">${T(30, 112, "Add a comment…", 9, M, "start", 600)}</g>` +
+        `<g clip-path="url(#typeclip)">${T(60, 113, "JOURNAL", 13, Y, "start", 800)}</g>` +
+        `<g id="s7send"><path d="M146,101 l9,7 l-9,7z" fill="${O}"/></g>` +
+        `<g id="s7dm">${card(32, 140, 128, 40, "#123326")}${T(44, 156, "DM", 8, G, "start", 800)}${T(44, 171, "Free trading journal yahan hai", 8, W, "start", 600)}</g>` +
+        `<g id="s7b">${T(90, 208, "Comment karo: JOURNAL", 13, Y)}</g><g id="s7r">${raju(90, 266, 0.95, "happy")}</g>`;
+
+      // S8 follow card
+      svg("s8").innerHTML = `<rect width="180" height="320" fill="#05070d" opacity=".55"/>` +
+        `<g id="s8card">${card(22, 70, 136, 150, "#1b2440")}` +
+        `<rect x="74" y="86" width="32" height="26" rx="7" fill="none" stroke="${W}" stroke-width="2.4"/><circle cx="90" cy="99" r="7" fill="none" stroke="${W}" stroke-width="2.4"/><circle cx="100" cy="91" r="1.5" fill="${W}"/>` +
+        `<g id="s8btn">${card(48, 124, 84, 24, W)}${T(90, 141, "FOLLOW KARO", 11, BG)}</g>` +
+        `<g id="s8p">${T(90, 170, "Part 2:", 10, O, "middle", 700)}${T(90, 186, "Loss ke baad bhi log", 10, W, "middle", 600)}${T(90, 200, "trading kyun nahi chhodte?", 10, W, "middle", 600)}</g></g>` +
+        `<g id="s8f">${T(90, 236, "Educational content, not investment advice.", 6.5, M, "middle", 600)}</g>`;
+
+      // ---------- timeline ----------
+      const tl = gsap.timeline({ paused: true });
+      const F = 1 / 30, TO = { transformOrigin: "50% 50%" };
+      const pop = (s, t) => tl.fromTo(s, { scale: 0, opacity: 0, ...TO }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, t);
+      const kick = (s, t) => tl.fromTo(s, { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, ease: "power3.out" }, t);
+      function slam(s, t) {
+        tl.fromTo(s, { scale: 1.8, opacity: 0, ...TO }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+        tl.to(s, { x: 1.6, duration: F }, t + 0.3).to(s, { x: -1.4, duration: F }, t + 0.3 + F).to(s, { x: 0, duration: F }, t + 0.3 + 2 * F);
+      }
+      const push = (s, t) => tl.fromTo(s, { scale: 1.06, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, t);
+      function shake(t) { [10, -9, 7, -5, 0].forEach((x, i) => tl.to("#stage", { x, y: i % 2 ? 4 : -4, duration: F }, t + i * F)); tl.to("#stage", { y: 0, duration: F }, t + 5 * F); }
+      const redflash = (t) => tl.fromTo("#redflash", { opacity: 0 }, { opacity: 0.28, duration: 2 * F }, t).to("#redflash", { opacity: 0, duration: 0.3 }, t + 2 * F);
+
+      tl.fromTo("#prog", { attr: { width: 0 } }, { attr: { width: 144 }, duration: 34.4, ease: "none" }, 0);
+
+      // S1 — frame 0 already readable (1.06 -> 1)
+      tl.fromTo("#s1b", { scale: 1.06, ...TO }, { scale: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.fromTo("#s1 .tr", { scale: 0.85, ...TO }, { scale: 1, duration: 0.25, stagger: 0.06, ease: "back.out(2)" }, 1.3);
+      tl.fromTo("#s1c", { scale: 1 , ...TO }, { scale: 1.12, duration: 0.15, yoyo: true, repeat: 1 }, 3.0);
+
+      // S2
+      push("#s2", 4.69); pop("#s2st", 5.0); slam("#s2b", 6.17);
+      tl.fromTo("#s2op", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, 5.4);
+
+      // S3
+      push("#s3", 7.31); kick("#s3b", 7.6);
+      tl.fromTo("#s3 .cdl", { scaleY: 0, opacity: 0, transformOrigin: "50% 100%" }, { scaleY: 1, opacity: 1, duration: 0.2, stagger: 0.2, ease: "power2.out" }, 7.5);
+      tl.fromTo("#s3r", { y: 40 }, { y: 0, duration: 0.45, ease: "back.out(1.6)" }, 7.4);
+      pop("#s3t1", 10.09); pop("#s3t2", 10.81); pop("#s3t3", 11.78);
+
+      // S4 — SL-hit moment: slam + shake + red flash
+      push("#s4", 12.98); slam("#s4b", 13.75); shake(13.75); redflash(13.75);
+      tl.fromTo("#s4x", { scale: 0, ...TO }, { scale: 1, duration: 0.2, ease: "back.out(2)" }, 13.85);
+      tl.fromTo("#s4op", { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.4 }, 13.1);
+
+      // S5
+      push("#s5", 14.73);
+      tl.fromTo("#blur5", { attr: { stdDeviation: 8 } }, { attr: { stdDeviation: 0 }, duration: 0.35, ease: "power2.out" }, 15.95);
+      slam("#s5w", 16.1);
+      pop("#s5c1", 17.14); pop("#s5c2", 18.07); pop("#s5c3", 18.94);
+
+      // S6
+      push("#s6", 20.2); kick("#s6b", 21.63);
+      ["#s6r0", "#s6r1", "#s6r2", "#s6r3"].forEach((s, i) => tl.fromTo(s, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.2, ease: "power2.out" }, [23.55, 23.8, 24.05, 24.3][i]));
+      tl.fromTo("#s6h1", { fill: M }, { scale: 1.15, duration: 0.15, yoyo: true, repeat: 1, ...TO }, 23.49);
+      tl.fromTo("#s6h2", { fill: M }, { scale: 1.15, duration: 0.15, yoyo: true, repeat: 1, ...TO }, 24.43);
+      kick("#s6m", 25.0);
+
+      // S7
+      push("#s7", 25.67); kick("#s7b", 26.82);
+      tl.to("#s7ph", { opacity: 0, duration: 0.05 }, 28.12);
+      tl.fromTo("#typerect", { attr: { width: 0 } }, { attr: { width: 80 }, duration: 0.24, ease: "steps(7)" }, 28.12);
+      tl.fromTo("#s7send", { scale: 1, ...TO }, { scale: 0.7, duration: 0.08, yoyo: true, repeat: 1 }, 28.38);
+      pop("#s7dm", 28.45);
+
+      // S8
+      tl.fromTo("#s8card", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 29.3);
+      kick("#s8p", 29.87);
+      tl.fromTo("#s8btn", { scale: 1, ...TO }, { scale: 1.06, duration: 0.45, yoyo: true, repeat: 5, ease: "sine.inOut" }, 30.4);
+
+      tl.set({}, {}, 34.4);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
