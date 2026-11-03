@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* Brand tokens — identical every video (see reels/creator-profile.md) */
+      :root {
+        --bg: #06080c;
+        --panel: #10151d;
+        --line: #1e2733;
+        --ink: #f4f7fb;
+        --calm: #3dd9ff;
+        --fear: #ff2d55;
+        --greed: #ffb020;
+        --win: #19f28c;
+        --font-slam: "League Gothic", sans-serif;
+        --font-ui: "Inter", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font-ui); color: var(--ink); }
+
+      /* background: dark ground, grid, vignette */
+      #bg { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 40%, #0d1420 0%, var(--bg) 60%, #000 100%); }
+      #grid { position: absolute; inset: 0; opacity: 0.35;
+        background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 90px 90px; }
+      #tint { position: absolute; inset: 0; opacity: 0.0; background: radial-gradient(70% 50% at 50% 35%, var(--fear) 0%, transparent 70%); }
+
+      .scene { position: absolute; inset: 0; }
+      /* content column inside the IG safe band (x 70–930, y 200–1320) */
+      .kicker { position: absolute; left: 70px; width: 860px; text-align: center; font-weight: 900; font-size: 50px; letter-spacing: 0.06em; color: rgba(244,247,251,0.9); }
+      .slam { position: absolute; left: 70px; width: 860px; text-align: center; font-family: var(--font-slam); line-height: 0.9; letter-spacing: 0.01em; text-transform: uppercase; white-space: nowrap; }
+      .g-calm { color: var(--ink); text-shadow: 0 0 24px var(--calm), 0 0 70px rgba(61,217,255,0.7); }
+      .g-fear { color: var(--fear); text-shadow: 0 0 24px rgba(255,45,85,0.9), 0 0 80px rgba(255,45,85,0.7); }
+      .g-greed { color: var(--greed); text-shadow: 0 0 24px rgba(255,176,32,0.9), 0 0 80px rgba(255,176,32,0.6); }
+      .g-win { color: var(--win); text-shadow: 0 0 24px rgba(25,242,140,0.9), 0 0 80px rgba(25,242,140,0.6); }
+      .g-ink { color: var(--ink); text-shadow: 0 0 22px rgba(255,255,255,0.55), 0 0 60px rgba(255,255,255,0.25); }
+
+      .pill { position: absolute; left: 50%; padding: 14px 36px; border-radius: 999px; font-weight: 900; font-size: 46px; letter-spacing: 0.05em; white-space: nowrap; }
+      .card { position: absolute; display: flex; align-items: center; gap: 18px; padding: 22px 30px; border-radius: 28px; background: var(--panel); border: 3px solid var(--line); font-weight: 900; font-size: 44px; letter-spacing: 0.03em; white-space: nowrap; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+      .card.fear { border-color: var(--fear); box-shadow: 0 0 40px rgba(255,45,85,0.35); }
+      .card.greed { border-color: var(--greed); box-shadow: 0 0 40px rgba(255,176,32,0.35); }
+      .warn { width: 64px; height: 58px; flex: none; }
+      svg { overflow: visible; }
+
+      /* S5 bars */
+      .bar-row { position: absolute; left: 110px; width: 780px; }
+      .bar-label { font-weight: 900; font-size: 42px; letter-spacing: 0.04em; margin-bottom: 16px; display: flex; justify-content: space-between; }
+      .bar-track { height: 74px; border-radius: 20px; background: var(--panel); border: 2px solid var(--line); overflow: hidden; }
+      .bar-fill { height: 100%; width: 100%; border-radius: 18px; transform-origin: left center; }
+      .tag { position: absolute; left: 50%; font-weight: 700; font-size: 30px; letter-spacing: 0.12em; color: rgba(244,247,251,0.6); white-space: nowrap; }
+
+      /* S7 phone */
+      #phone { position: absolute; left: 260px; top: 640px; width: 480px; height: 690px; border-radius: 70px 70px 0 0; background: #0b0f16; border: 10px solid #2a3442; border-bottom: none; box-shadow: 0 0 80px rgba(25,242,140,0.18); overflow: hidden; }
+      #notch { position: absolute; left: 50%; top: 18px; width: 150px; height: 34px; margin-left: -75px; border-radius: 20px; background: #000; }
+      .ph-title { position: absolute; left: 40px; top: 84px; font-weight: 900; font-size: 34px; letter-spacing: 0.06em; color: var(--win); }
+      .row { position: absolute; left: 34px; width: 392px; height: 104px; border-radius: 22px; background: var(--panel); border: 2px solid var(--line); display: flex; align-items: center; gap: 22px; padding: 0 22px; font-weight: 700; font-size: 31px; }
+      .tickc { width: 54px; height: 54px; border-radius: 50%; border: 4px solid #3a4656; flex: none; position: relative; }
+      .tickc .fill { position: absolute; inset: -4px; border-radius: 50%; background: var(--win); }
+      .tickc svg { position: absolute; inset: 0; }
+
+      /* S8 CTA */
+      #cta { position: absolute; left: 230px; top: 960px; width: 540px; height: 140px; border-radius: 999px; background: var(--win); color: #03140b; font-weight: 900; font-size: 58px; letter-spacing: 0.06em; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(25,242,140,0.55); }
+      #ripple { position: absolute; left: 500px; top: 1030px; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 5px solid var(--win); opacity: 0; }
+      #cursor { position: absolute; left: 0; top: 0; width: 80px; height: 96px; }
+      #disclaimer { position: absolute; left: 70px; width: 860px; top: 1262px; text-align: center; font-weight: 700; font-size: 30px; letter-spacing: 0.04em; color: rgba(244,247,251,0.72); }
+
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-fdpl" id="root" data-composition-id="main" data-start="0" data-duration="23" data-width="1080" data-height="1920">
+      <div data-hf-id="hf-2xc0" id="bg"></div>
+      <div data-hf-id="hf-gs5t" id="grid"></div>
+      <div data-hf-id="hf-5tue" id="tint"></div>
+
+      <!-- S1 HOOK: Market tumhara dushman nahi hai -->
+      <div data-hf-id="hf-2k0f" id="s1" class="scene clip" data-start="0" data-duration="1.8" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-jlsg" id="s1k" class="kicker" style="top: 250px">MARKET TUMHARA</div>
+        <div data-hf-id="hf-3jun" id="s1w" class="slam g-calm" style="top: 320px; font-size: 310px">DUSHMAN</div>
+        <div data-hf-id="hf-4gqo" id="s1p" class="pill" style="top: 640px; margin-left: -170px; width: 340px; text-align: center; background: var(--calm); color: #001018">NAHI HAI</div>
+        <svg data-hf-id="hf-23lv" id="s1c" class="chart" data-kind="mixed" style="position: absolute; left: 90px; top: 820px" width="820" height="460"></svg>
+      </div>
+
+      <!-- S2: Dushman tumhari psychology hai — gauge -->
+      <div data-hf-id="hf-kkku" id="s2" class="scene clip" data-start="1.8" data-duration="2.08" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-jp0f" id="s2k" class="kicker" style="top: 250px">DUSHMAN HAI TUMHARI</div>
+        <div data-hf-id="hf-4sp1" id="s2w" class="slam g-fear" style="top: 320px; font-size: 250px">PSYCHOLOGY</div>
+        <svg data-hf-id="hf-n177" id="gauge" style="position: absolute; left: 140px; top: 690px" width="720" height="560" viewBox="0 0 720 560">
+          <defs data-hf-id="hf-mh0t">
+            <linearGradient data-hf-id="hf-ytv8" id="gg" x1="0" x2="1" y1="0" y2="0">
+              <stop data-hf-id="hf-wlxd" offset="0" stop-color="#19f28c" /><stop data-hf-id="hf-pgc9" offset="0.5" stop-color="#ffb020" /><stop data-hf-id="hf-03dn" offset="1" stop-color="#ff2d55" />
+            </linearGradient>
+          </defs>
+          <path data-hf-id="hf-3qhv" d="M 60 400 A 300 300 0 0 1 660 400" fill="none" stroke="#1e2733" stroke-width="54" stroke-linecap="round" />
+          <path data-hf-id="hf-qmzh" id="garc" d="M 60 400 A 300 300 0 0 1 660 400" fill="none" stroke="url(#gg)" stroke-width="54" stroke-linecap="round" />
+          <g data-hf-id="hf-p5we" id="needle">
+            <line data-hf-id="hf-m4xy" x1="360" y1="400" x2="360" y2="150" stroke="#f4f7fb" stroke-width="14" stroke-linecap="round" />
+          </g>
+          <circle data-hf-id="hf-j5ka" cx="360" cy="400" r="30" fill="#f4f7fb" />
+          <text data-hf-id="hf-02dv" x="60" y="490" fill="#19f28c" font-family="Inter" font-weight="900" font-size="34" text-anchor="middle">CALM</text>
+          <text data-hf-id="hf-x3ec" x="660" y="490" fill="#ff2d55" font-family="Inter" font-weight="900" font-size="34" text-anchor="middle">PANIC</text>
+          <text data-hf-id="hf-ptkq" id="glabel" x="360" y="520" fill="#f4f7fb" font-family="Inter" font-weight="900" font-size="40" text-anchor="middle" letter-spacing="4">EMOTION METER</text>
+        </svg>
+      </div>
+
+      <!-- S3: FOMO top pe kharidwata hai — rally + BUY card -->
+      <div data-hf-id="hf-8sai" id="s3" class="scene clip" data-start="3.88" data-duration="1.75" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-kgov" id="s3w" class="slam g-greed" style="top: 210px; font-size: 380px">FOMO</div>
+        <div data-hf-id="hf-mqgm" id="s3k" class="kicker" style="top: 560px">TOP PE KHARIDWATA HAI</div>
+        <svg data-hf-id="hf-z8o4" id="s3c" class="chart" data-kind="rally" style="position: absolute; left: 90px; top: 780px" width="820" height="500"></svg>
+        <div data-hf-id="hf-lmvw" id="s3card" class="card greed" style="left: 470px; top: 690px">
+          <svg data-hf-id="hf-4aq5" class="warn" viewBox="0 0 64 58"><path data-hf-id="hf-lcx2" d="M32 3 L62 55 L2 55 Z" fill="#ffb020" /><rect data-hf-id="hf-mnij" x="29" y="20" width="6" height="20" fill="#06080c" /><rect data-hf-id="hf-8vdx" x="29" y="44" width="6" height="6" fill="#06080c" /></svg>
+          <span data-hf-id="hf-dvb8">BUY @ TOP</span>
+        </div>
+      </div>
+
+      <!-- S4: Dar bottom pe bechwata hai — crash + SELL card (layout flipped) -->
+      <div data-hf-id="hf-jfo2" id="s4" class="scene clip" data-start="5.63" data-duration="1.93" data-track-index="1" data-track-kind="graphics">
+        <svg data-hf-id="hf-3zp1" id="s4c" class="chart" data-kind="crash" style="position: absolute; left: 90px; top: 230px" width="820" height="480"></svg>
+        <div data-hf-id="hf-jhbi" id="s4card" class="card fear" style="left: 330px; top: 640px">
+          <svg data-hf-id="hf-7szl" class="warn" viewBox="0 0 64 58"><path data-hf-id="hf-sxt6" d="M32 3 L62 55 L2 55 Z" fill="#ffb020" /><rect data-hf-id="hf-pgx7" x="29" y="20" width="6" height="20" fill="#06080c" /><rect data-hf-id="hf-rtx5" x="29" y="44" width="6" height="6" fill="#06080c" /></svg>
+          <span data-hf-id="hf-0ebw">SELL @ BOTTOM</span>
+        </div>
+        <div data-hf-id="hf-1mt7" id="s4w" class="slam g-fear" style="top: 820px; font-size: 400px">DAR</div>
+        <div data-hf-id="hf-tvp8" id="s4k" class="kicker" style="top: 1200px">BOTTOM PE BECHWATA HAI</div>
+      </div>
+
+      <!-- S5: Research — loss ~2x gain -->
+      <div data-hf-id="hf-jaoe" id="s5" class="scene clip" data-start="7.56" data-duration="4.4" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-xklq" id="s5k" class="pill" style="top: 240px; margin-left: -300px; width: 600px; text-align: center; background: var(--panel); border: 3px solid var(--calm); color: var(--calm)">RESEARCH KEHTI HAI</div>
+        <div data-hf-id="hf-xws7" id="s5r1" class="bar-row" style="top: 430px">
+          <div data-hf-id="hf-90o2" class="bar-label"><span data-hf-id="hf-aiq1" style="color: var(--fear)">LOSS KA DARD</span><span data-hf-id="hf-s4q8" id="s5v1" style="color: var(--fear)">~2x</span></div>
+          <div data-hf-id="hf-2kxp" class="bar-track"><div data-hf-id="hf-1xqi" id="s5b1" class="bar-fill" style="background: linear-gradient(90deg, #a3122f, var(--fear))"></div></div>
+        </div>
+        <div data-hf-id="hf-o0x5" id="s5r2" class="bar-row" style="top: 640px">
+          <div data-hf-id="hf-50g6" class="bar-label"><span data-hf-id="hf-s8zw" style="color: var(--win)">GAIN KI KHUSHI</span><span data-hf-id="hf-inbu" style="color: var(--win)">1x</span></div>
+          <div data-hf-id="hf-dok1" class="bar-track"><div data-hf-id="hf-161k" id="s5b2" class="bar-fill" style="background: linear-gradient(90deg, #0c8a52, var(--win)); width: 50%"></div></div>
+        </div>
+        <div data-hf-id="hf-y2vp" id="s5w" class="slam g-fear" style="top: 900px; font-size: 230px">LAGBHAG 2X</div>
+        <div data-hf-id="hf-hml2" id="s5t" class="tag" style="top: 345px; margin-left: -260px; width: 520px; text-align: center">LOSS AVERSION · RESEARCH</div>
+      </div>
+
+      <!-- S6: FOMO, panic, revenge — trap loop -->
+      <div data-hf-id="hf-zli5" id="s6" class="scene clip" data-start="11.96" data-duration="3.2" data-track-index="1" data-track-kind="graphics">
+        <svg data-hf-id="hf-1h4a" id="ring" style="position: absolute; left: 230px; top: 300px" width="540" height="540" viewBox="0 0 540 540">
+          <circle data-hf-id="hf-bjmb" cx="270" cy="270" r="230" fill="none" stroke="#ff2d55" stroke-opacity="0.55" stroke-width="6" stroke-dasharray="18 16" />
+          <g data-hf-id="hf-91mj" id="ringhead"><path data-hf-id="hf-ht9u" d="M 270 22 l 34 18 l -34 18 z" fill="#ff2d55" /></g>
+        </svg>
+        <div data-hf-id="hf-xpim" id="c1" class="card greed" style="left: 340px; top: 250px">
+          <svg data-hf-id="hf-8zwo" class="warn" viewBox="0 0 64 58"><path data-hf-id="hf-tc47" d="M32 3 L62 55 L2 55 Z" fill="#ffb020" /><rect data-hf-id="hf-p2m6" x="29" y="20" width="6" height="20" fill="#06080c" /><rect data-hf-id="hf-t0u8" x="29" y="44" width="6" height="6" fill="#06080c" /></svg><span data-hf-id="hf-bh02">FOMO</span>
+        </div>
+        <div data-hf-id="hf-yw9z" id="c2" class="card fear" style="left: 560px; top: 680px">
+          <svg data-hf-id="hf-8lln" class="warn" viewBox="0 0 64 58"><path data-hf-id="hf-tqf8" d="M32 3 L62 55 L2 55 Z" fill="#ffb020" /><rect data-hf-id="hf-oob5" x="29" y="20" width="6" height="20" fill="#06080c" /><rect data-hf-id="hf-smj7" x="29" y="44" width="6" height="6" fill="#06080c" /></svg><span data-hf-id="hf-ylxc">PANIC</span>
+        </div>
+        <div data-hf-id="hf-ajan" id="c3" class="card fear" style="left: 80px; top: 680px">
+          <svg data-hf-id="hf-6m2i" class="warn" viewBox="0 0 64 58"><path data-hf-id="hf-u4q9" d="M32 3 L62 55 L2 55 Z" fill="#ffb020" /><rect data-hf-id="hf-oa04" x="29" y="20" width="6" height="20" fill="#06080c" /><rect data-hf-id="hf-qn02" x="29" y="44" width="6" height="6" fill="#06080c" /></svg><span data-hf-id="hf-u049">REVENGE</span>
+        </div>
+        <div data-hf-id="hf-nrzc" id="s6k" class="kicker" style="top: 900px">YEHI HAI</div>
+        <div data-hf-id="hf-trf2" id="s6w" class="slam g-fear" style="top: 970px; font-size: 270px">TRAP LOOP</div>
+      </div>
+
+      <!-- S7: Likhe hue rules emotions ko harate hain — phone checklist -->
+      <div data-hf-id="hf-306s" id="s7" class="scene clip" data-start="15.16" data-duration="2.47" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-5y88" id="s7k" class="kicker" style="top: 220px">LIKHE HUE</div>
+        <div data-hf-id="hf-82zt" id="s7w" class="slam g-win" style="top: 280px; font-size: 300px">RULES</div>
+        <div data-hf-id="hf-g07v" id="s7e" class="kicker" style="top: 560px; font-size: 46px">
+          <span data-hf-id="hf-hg1j" style="position: relative; color: var(--fear)">EMOTIONS<span data-hf-id="hf-b55y" id="strike" style="position: absolute; left: -6px; right: -6px; top: 50%; height: 8px; margin-top: -4px; background: var(--ink); transform-origin: left center"></span></span> KO HARATE HAIN
+        </div>
+        <div data-hf-id="hf-5iuv" id="phone">
+          <div data-hf-id="hf-8x41" id="notch"></div>
+          <div data-hf-id="hf-pmj9" class="ph-title">MY TRADING RULES</div>
+          <div data-hf-id="hf-9olf" class="row" style="top: 150px"><div data-hf-id="hf-n6cu" class="tickc"><div data-hf-id="hf-05f4" id="t1" class="fill"></div><svg data-hf-id="hf-ws43" viewBox="0 0 54 54"><path data-hf-id="hf-o6lu" d="M14 28 l9 9 l17 -19" fill="none" stroke="#03140b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>Entry plan likha</div>
+          <div data-hf-id="hf-1tu0" class="row" style="top: 272px"><div data-hf-id="hf-95o2" class="tickc"><div data-hf-id="hf-8taz" id="t2" class="fill"></div><svg data-hf-id="hf-pqr7" viewBox="0 0 54 54"><path data-hf-id="hf-miwm" d="M14 28 l9 9 l17 -19" fill="none" stroke="#03140b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>Stop-loss set</div>
+          <div data-hf-id="hf-qn3w" class="row" style="top: 394px"><div data-hf-id="hf-9jz3" class="tickc"><div data-hf-id="hf-4v6y" id="t3" class="fill"></div><svg data-hf-id="hf-pcg6" viewBox="0 0 54 54"><path data-hf-id="hf-mx7n" d="M14 28 l9 9 l17 -19" fill="none" stroke="#03140b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>Position size fix</div>
+          <div data-hf-id="hf-a6tm" class="row" style="top: 516px"><div data-hf-id="hf-9ya4" class="tickc"><div data-hf-id="hf-m3h9" id="t4" class="fill"></div><svg data-hf-id="hf-oy55" viewBox="0 0 54 54"><path data-hf-id="hf-nbio" d="M14 28 l9 9 l17 -19" fill="none" stroke="#03140b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" /></svg></div>No revenge trade</div>
+        </div>
+      </div>
+
+      <!-- S8: Pehle apna mind master karo. Follow karo. — CTA -->
+      <div data-hf-id="hf-6pgd" id="s8" class="scene clip" data-start="17.63" data-duration="5.37" data-track-index="1" data-track-kind="graphics">
+        <div data-hf-id="hf-sgjt" id="s8k" class="kicker" style="top: 230px">PEHLE APNA</div>
+        <div data-hf-id="hf-y3up" id="s8w" class="slam g-ink" style="top: 290px; font-size: 330px">MIND</div>
+        <div data-hf-id="hf-d8q8" id="s8w2" class="slam g-win" style="top: 610px; font-size: 200px">MASTER KARO</div>
+        <div data-hf-id="hf-hwjr" id="cta">FOLLOW KARO</div>
+        <div data-hf-id="hf-l3gf" id="ripple"></div>
+        <div data-hf-id="hf-dxvb" id="s8chip" class="pill" style="top: 1140px; margin-left: -300px; width: 600px; text-align: center; background: var(--panel); border: 3px solid var(--win); color: var(--ink); font-size: 40px">COMMENT <span data-hf-id="hf-53mb" style="color: var(--win)">"MIND"</span></div>
+        <svg data-hf-id="hf-q548" id="cursor" viewBox="0 0 80 96"><path data-hf-id="hf-m07a" d="M6 4 L6 78 L26 60 L40 92 L54 86 L40 55 L68 55 Z" fill="#f4f7fb" stroke="#06080c" stroke-width="5" stroke-linejoin="round" /></svg>
+        <div data-hf-id="hf-6xk9" id="disclaimer">Educational only, not financial advice</div>
+      </div>
+
+      <div data-hf-id="hf-hmg5" id="flash"></div>
+
+      <!-- AUDIO: voice 100%, music bed 43%, SFX under the voice (all self-generated, see LICENSES.md) -->
+      <audio data-hf-id="hf-jmtg" id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio data-hf-id="hf-j8x8" id="music" class="clip" src="assets/music/music_bed.mp3" data-start="0" data-duration="23" data-track-index="11" data-volume="0.43" data-fade-out="1.2"></audio>
+      <!-- whoosh on every scene change (peak lands on the cut) -->
+      <audio data-hf-id="hf-3fhz" id="wh1" class="clip" src="assets/sfx/whoosh.mp3" data-start="1.56" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-3a9b" id="wh2" class="clip" src="assets/sfx/whoosh.mp3" data-start="3.64" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-62w2" id="wh3" class="clip" src="assets/sfx/whoosh.mp3" data-start="5.39" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-63ym" id="wh4" class="clip" src="assets/sfx/whoosh.mp3" data-start="7.32" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-m782" id="wh5" class="clip" src="assets/sfx/whoosh.mp3" data-start="11.72" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-sex2" id="wh6" class="clip" src="assets/sfx/whoosh.mp3" data-start="14.92" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-jrtf" id="wh7" class="clip" src="assets/sfx/whoosh.mp3" data-start="17.39" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <!-- impact on every slam word -->
+      <audio data-hf-id="hf-p47o" id="im1" class="clip" src="assets/sfx/impact.mp3" data-start="0" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-v4s2" id="im2" class="clip" src="assets/sfx/impact.mp3" data-start="2.78" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-zecd" id="im3" class="clip" src="assets/sfx/impact.mp3" data-start="3.97" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-j5k8" id="im4" class="clip" src="assets/sfx/impact.mp3" data-start="5.71" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-s0j4" id="im5" class="clip" src="assets/sfx/impact.mp3" data-start="10.69" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-kor8" id="im6" class="clip" src="assets/sfx/impact.mp3" data-start="13.92" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-b0jd" id="im7" class="clip" src="assets/sfx/impact.mp3" data-start="15.7" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-lwvd" id="im8" class="clip" src="assets/sfx/impact.mp3" data-start="18.25" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+      <audio data-hf-id="hf-gf9v" id="im9" class="clip" src="assets/sfx/impact.mp3" data-start="18.62" data-duration="0.9" data-track-index="17" data-volume="0.4"></audio>
+      <!-- pop on cards -->
+      <audio data-hf-id="hf-yoqt" id="po1" class="clip" src="assets/sfx/pop.mp3" data-start="1.17" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-3mfn" id="po2" class="clip" src="assets/sfx/pop.mp3" data-start="4.95" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-parz" id="po3" class="clip" src="assets/sfx/pop.mp3" data-start="6.85" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-y9jw" id="po4" class="clip" src="assets/sfx/pop.mp3" data-start="12.06" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-edx2" id="po5" class="clip" src="assets/sfx/pop.mp3" data-start="12.74" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-ad98" id="po6" class="clip" src="assets/sfx/pop.mp3" data-start="13.25" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <audio data-hf-id="hf-mo8q" id="po7" class="clip" src="assets/sfx/pop.mp3" data-start="20.6" data-duration="0.12" data-track-index="14" data-volume="0.45"></audio>
+      <!-- tick on checklist -->
+      <audio data-hf-id="hf-o993" id="tk1" class="clip" src="assets/sfx/tick.mp3" data-start="15.95" data-duration="0.07" data-track-index="15" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-98bb" id="tk2" class="clip" src="assets/sfx/tick.mp3" data-start="16.33" data-duration="0.07" data-track-index="15" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-3ijk" id="tk3" class="clip" src="assets/sfx/tick.mp3" data-start="16.71" data-duration="0.07" data-track-index="15" data-volume="0.5"></audio>
+      <audio data-hf-id="hf-6j3d" id="tk4" class="clip" src="assets/sfx/tick.mp3" data-start="17.09" data-duration="0.07" data-track-index="15" data-volume="0.5"></audio>
+      <!-- click on CTA -->
+      <audio data-hf-id="hf-gc57" id="ck1" class="clip" src="assets/sfx/click.mp3" data-start="20.05" data-duration="0.13" data-track-index="16" data-volume="0.6"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const F = 1 / 30;
+
+      // ---- deterministic candle charts (seeded data, no Math.random) ----
+      function seeded(seed) { let s = seed; return () => ((s = (s * 16807) % 2147483647) / 2147483647); }
+      function buildChart(svg, kind) {
+        const W = +svg.getAttribute("width"), H = +svg.getAttribute("height"), n = 18, r = seeded(kind.length * 97);
+        let p = kind === "crash" ? 0.15 : kind === "rally" ? 0.85 : 0.5; const pts = [];
+        for (let i = 0; i < n; i++) {
+          let drift = kind === "rally" ? -0.04 : kind === "crash" ? 0.045 : (i < 9 ? -0.02 : 0.03);
+          if (kind === "rally" && i > 14) drift = 0.03;
+          if (kind === "crash" && i > 15) drift = -0.01;
+          const o = p; const c = Math.min(0.95, Math.max(0.05, p + drift + (r() - 0.5) * 0.08));
+          pts.push([o, c, Math.min(o, c) - r() * 0.05, Math.max(o, c) + r() * 0.05]); p = c;
+        }
+        const cw = W / n, ns = "http://www.w3.org/2000/svg"; const groups = [];
+        pts.forEach(([o, c, hi, lo], i) => {
+          const g = document.createElementNS(ns, "g"); const up = c < o; const col = up ? "#19f28c" : "#ff2d55";
+          const x = i * cw + cw / 2;
+          const wick = document.createElementNS(ns, "line");
+          wick.setAttribute("x1", x); wick.setAttribute("x2", x); wick.setAttribute("y1", hi * H); wick.setAttribute("y2", lo * H);
+          wick.setAttribute("stroke", col); wick.setAttribute("stroke-width", 4);
+          const body = document.createElementNS(ns, "rect");
+          body.setAttribute("x", x - cw * 0.32); body.setAttribute("width", cw * 0.64);
+          body.setAttribute("y", Math.min(o, c) * H); body.setAttribute("height", Math.max(8, Math.abs(o - c) * H));
+          body.setAttribute("rx", 4); body.setAttribute("fill", col);
+          g.appendChild(wick); g.appendChild(body); g.style.transformOrigin = `${x}px ${H}px`; svg.appendChild(g); groups.push(g);
+        });
+        return groups;
+      }
+      const charts = {};
+      document.querySelectorAll(".chart").forEach((s) => (charts[s.id] = buildChart(s, s.dataset.kind)));
+
+      // ---- recipes ----
+      function slam(sel, t, from = 1.8) {
+        tl.fromTo(sel, { scale: from, opacity: from > 1.5 ? 0 : 1 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.2)" }, t);
+        tl.to(sel, { x: 10, y: -6, duration: F }, t + 0.32)
+          .to(sel, { x: -9, y: 7, duration: F }, t + 0.32 + F)
+          .to(sel, { x: 0, y: 0, duration: F }, t + 0.32 + 2 * F);
+      }
+      function kick(sel, t) { tl.fromTo(sel, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, ease: "power3.out" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { scale: 0.4, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "back.out(2.5)" }, t); }
+      function drawChart(id, t, span) { tl.fromTo(charts[id], { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.18, ease: "power2.out", stagger: span / charts[id].length }, t); }
+      function flash(t) { tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.9, duration: 2 * F, ease: "none" }, t - 2 * F).to("#flash", { opacity: 0, duration: 3 * F, ease: "power1.in" }, t); }
+      function push(scene, t) { tl.fromTo(scene, { scale: 1.08 }, { scale: 1, duration: 0.4, ease: "power3.out" }, t); }
+
+      // S1 hook — readable at frame 0
+      tl.set("#s1k", { opacity: 1 }, 0);
+      slam("#s1w", 0, 1.12);
+      pop("#s1p", 1.17);
+      drawChart("s1c", 0.05, 1.4);
+
+      // S2 gauge
+      push("#s2", 1.8); kick("#s2k", 1.82);
+      tl.fromTo("#gauge", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 1.85);
+      tl.fromTo("#needle", { rotation: -88, svgOrigin: "360 400" }, { rotation: -20, svgOrigin: "360 400", duration: 0.5, ease: "power2.inOut" }, 1.95)
+        .to("#needle", { rotation: 82, duration: 0.7, ease: "back.out(3)" }, 2.6)
+        .to("#needle", { rotation: 74, duration: 0.12, yoyo: true, repeat: 5, ease: "sine.inOut" }, 3.3);
+      tl.to("#tint", { opacity: 0.35, duration: 0.6 }, 2.7).to("#tint", { opacity: 0, duration: 0.3 }, 3.7);
+      slam("#s2w", 2.78);
+
+      // S3 FOMO rally
+      push("#s3", 3.88); slam("#s3w", 3.97); kick("#s3k", 4.2);
+      drawChart("s3c", 3.95, 0.9);
+      pop("#s3card", 4.95);
+      tl.to("#s3card .warn", { rotation: 8, duration: 0.08, yoyo: true, repeat: 5 }, 5.15);
+
+      // S4 fear crash (flipped layout)
+      push("#s4", 5.63); drawChart("s4c", 5.66, 1.0);
+      slam("#s4w", 5.71); kick("#s4k", 6.13);
+      pop("#s4card", 6.85);
+      tl.to("#tint", { opacity: 0.3, duration: 0.4 }, 5.7).to("#tint", { opacity: 0, duration: 0.3 }, 7.3);
+
+      // S5 research bars
+      push("#s5", 7.56); pop("#s5k", 7.62);
+      tl.fromTo(["#s5r1", "#s5r2"], { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12, ease: "power3.out" }, 8.6);
+      tl.fromTo("#s5b1", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.out" }, 8.82);
+      tl.fromTo("#s5b2", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 9.66);
+      slam("#s5w", 10.69); kick("#s5t", 7.8);
+
+      // S6 trap loop
+      push("#s6", 11.96);
+      tl.fromTo("#ring", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 11.98);
+      tl.fromTo("#ringhead", { rotation: 0, svgOrigin: "270 270" }, { rotation: 540, svgOrigin: "270 270", duration: 3.1, ease: "none" }, 12.0);
+      pop("#c1", 12.06); pop("#c2", 12.74); pop("#c3", 13.25);
+      kick("#s6k", 13.88); slam("#s6w", 13.92);
+
+      // S7 rules phone checklist
+      push("#s7", 15.16); kick("#s7k", 15.22);
+      tl.fromTo("#phone", { y: 700 }, { y: 0, duration: 0.45, ease: "power3.out" }, 15.2);
+      slam("#s7w", 15.7);
+      kick("#s7e", 15.9);
+      tl.fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 16.45);
+      ["#t1", "#t2", "#t3", "#t4"].forEach((s, i) => tl.fromTo(s, { scale: 0 }, { scale: 1, duration: 0.18, ease: "back.out(3)" }, 15.95 + i * 0.38));
+
+      // S8 mind + CTA click
+      push("#s8", 17.63); kick("#s8k", 17.71);
+      slam("#s8w", 18.25); slam("#s8w2", 18.62);
+      tl.fromTo("#disclaimer", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 18.0);
+      tl.fromTo("#cta", { y: 260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.8)" }, 19.42);
+      tl.fromTo("#cursor", { x: 980, y: 1500, opacity: 0 }, { x: 560, y: 1035, opacity: 1, duration: 0.55, ease: "power3.inOut" }, 19.5);
+      tl.to("#cta", { scale: 0.92, duration: 0.07, ease: "power2.in" }, 20.05).to("#cta", { scale: 1, duration: 0.25, ease: "back.out(3)" }, 20.12);
+      tl.to("#cursor", { scale: 0.88, duration: 0.07 }, 20.05).to("#cursor", { scale: 1, duration: 0.15 }, 20.12);
+      tl.fromTo("#ripple", { scale: 1, opacity: 0.9 }, { scale: 12, opacity: 0, duration: 0.6, ease: "power2.out" }, 20.05);
+      pop("#s8chip", 20.6);
+      tl.to("#cta", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 20.9);
+
+      // white flash on every scene change
+      [1.8, 3.88, 5.63, 7.56, 11.96, 15.16, 17.63].forEach(flash);
+
+      tl.set({}, {}, 23);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
