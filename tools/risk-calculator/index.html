@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risk Calculator · The Trading Wizaard</title>
+<meta name="description" content="Free risk aur position size calculator: capital, risk %, entry aur stop loss daalo, quantity aur lots apne aap. Educational only.">
+<meta property="og:title" content="Free Risk & Position Size Calculator">
+<meta property="og:description" content="Ek trade mein kitna risk? Kitni quantity? 10 second mein pata karo.">
+<meta name="theme-color" content="#0b1020">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a30; --panel2:#18223d; --line:#26324f;
+    --text:#eef2fb; --muted:#93a0bd; --green:#2fe08a; --green-d:#169a5a;
+    --red:#ff5d6c; --amber:#ffc24d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%,#1a2440 0%,var(--bg) 60%) fixed,var(--bg);
+    color:var(--text); font-family:Inter,system-ui,sans-serif; line-height:1.45;
+    padding:24px 16px 48px; min-height:100vh;
+  }
+  .wrap{max-width:560px;margin:0 auto}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  header img{width:44px;height:44px;border-radius:12px}
+  .brand{font-size:13px;color:var(--muted);letter-spacing:.04em}
+  .brand b{color:var(--text)}
+  h1{font-family:"Playfair Display",serif;font-size:30px;line-height:1.15;margin:6px 0 6px}
+  h1 span{color:var(--green)}
+  .sub{color:var(--muted);margin:0 0 20px;font-size:15px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .seg{display:flex;background:var(--panel2);border-radius:10px;padding:4px;margin-bottom:16px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--muted);font:600 14px Inter,sans-serif;padding:9px;border-radius:8px;cursor:pointer}
+  .seg button.on{background:var(--green);color:#06210f}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .full{grid-column:1/-1}
+  label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+  input,select{
+    width:100%;background:var(--bg);border:1px solid var(--line);color:var(--text);
+    font:600 16px "IBM Plex Mono",monospace;padding:11px 12px;border-radius:10px;outline:none;
+  }
+  input:focus,select:focus{border-color:var(--green)}
+  select{font-family:Inter,sans-serif;font-size:14px}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .hidden{display:none!important}
+  .results{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .stat .k{font-size:12px;color:var(--muted)}
+  .stat .v{font:600 22px "IBM Plex Mono",monospace;margin-top:2px;word-break:break-word}
+  .stat.big{grid-column:1/-1;border-color:var(--green-d);background:linear-gradient(180deg,#123224,#0f2a1e)}
+  .stat.big .v{font-size:34px;color:var(--green)}
+  .stat .s{font-size:12px;color:var(--muted);margin-top:2px}
+  .msg{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:13.5px;display:none}
+  .msg.warn{display:block;background:#2b2412;border:1px solid #5a4719;color:var(--amber)}
+  .msg.err{display:block;background:#2d1419;border:1px solid #5d2530;color:var(--red)}
+  .rule{margin-top:18px;padding:14px 16px;border-left:3px solid var(--green);background:var(--panel);border-radius:0 12px 12px 0;font-size:14px}
+  .rule b{color:var(--green)}
+  .how{margin-top:18px;font-size:13.5px;color:var(--muted)}
+  .how code{font-family:"IBM Plex Mono",monospace;color:var(--text);font-size:12.5px}
+  footer{margin-top:26px;font-size:12px;color:var(--muted);text-align:center}
+  footer a{color:var(--green);text-decoration:none}
+  @media (max-width:420px){ h1{font-size:26px} .stat.big .v{font-size:28px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="favicon.svg" alt="">
+    <div class="brand"><b>The Trading Wizaard</b><br>Pehle dimaag, phir chart</div>
+  </header>
+
+  <h1>Risk &amp; Position Size <span>Calculator</span></h1>
+  <p class="sub">Trade lene se pehle tay karo: ek trade mein kitna gawa sakte ho, aur uske hisaab se kitni quantity.</p>
+
+  <div class="card">
+    <div class="seg" role="tablist">
+      <button type="button" id="mEq" class="on">Equity / Cash</button>
+      <button type="button" id="mFo">F&amp;O (Lots)</button>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="cap">Total capital (₹)</label>
+        <input id="cap" inputmode="decimal" value="100000">
+      </div>
+      <div>
+        <label for="rp">Risk per trade (%)</label>
+        <input id="rp" inputmode="decimal" value="1">
+        <div class="hint">Zyadatar log 0.5–2% rakhte hain</div>
+      </div>
+      <div>
+        <label for="en">Entry price (₹)</label>
+        <input id="en" inputmode="decimal" value="250">
+      </div>
+      <div>
+        <label for="sl">Stop loss (₹)</label>
+        <input id="sl" inputmode="decimal" value="240">
+      </div>
+      <div class="full">
+        <label for="tg">Target (₹) · optional</label>
+        <input id="tg" inputmode="decimal" placeholder="Risk:Reward dekhne ke liye">
+      </div>
+      <div class="fo hidden">
+        <label for="inst">Instrument</label>
+        <select id="inst">
+          <option value="65">NIFTY</option>
+          <option value="30">BANKNIFTY</option>
+          <option value="60">FINNIFTY</option>
+          <option value="120">MIDCPNIFTY</option>
+          <option value="20">SENSEX</option>
+          <option value="">Custom / Stock</option>
+        </select>
+      </div>
+      <div class="fo hidden">
+        <label for="lot">Lot size</label>
+        <input id="lot" inputmode="numeric" value="65">
+        <div class="hint">Exchange lot size badalta rehta hai, broker par check karo</div>
+      </div>
+    </div>
+
+    <div class="results">
+      <div class="stat big">
+        <div class="k" id="mainK">Kitne shares lo</div>
+        <div class="v" id="mainV">–</div>
+        <div class="s" id="mainS"></div>
+      </div>
+      <div class="stat"><div class="k">Max risk (₹)</div><div class="v" id="riskAmt">–</div></div>
+      <div class="stat"><div class="k">Risk per unit (₹)</div><div class="v" id="perUnit">–</div></div>
+      <div class="stat"><div class="k">Asli risk (₹)</div><div class="v" id="actRisk">–</div><div class="s" id="actRiskS"></div></div>
+      <div class="stat"><div class="k" id="valK">Position value (₹)</div><div class="v" id="posVal">–</div><div class="s" id="posValS"></div></div>
+      <div class="stat full" id="rrBox" style="grid-column:1/-1"><div class="k">Risk : Reward</div><div class="v" id="rr">–</div><div class="s" id="rrS"></div></div>
+    </div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div class="rule"><b>Aaj ka rule:</b> pehle stop loss tay karo, phir quantity. Quantity ke hisaab se stop loss kabhi mat khiskao.</div>
+
+  <div class="how">
+    <b style="color:var(--text)">Formula</b><br>
+    <code>Max risk = Capital × Risk%</code><br>
+    <code>Quantity = Max risk ÷ |Entry − SL|</code> (neeche round)<br>
+    <code>Lots = Quantity ÷ Lot size</code> (neeche round)<br>
+    Brokerage, taxes, slippage aur gap-down is mein shamil nahi hain, isliye asli loss thoda zyada ho sakta hai.
+  </div>
+
+  <footer>
+    Educational tool only, not investment advice. Hum SEBI registered advisor nahi hain.<br>
+    Aur tools ke liye Instagram par follow karo <a href="https://instagram.com/thetradingwizaard" target="_blank" rel="noopener">@thetradingwizaard</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var mode = 'eq';
+  var inr = new Intl.NumberFormat('en-IN',{maximumFractionDigits:2});
+  var inr0 = new Intl.NumberFormat('en-IN',{maximumFractionDigits:0});
+  function num(id){ var v = parseFloat(String($(id).value).replace(/[,\s₹]/g,'')); return isFinite(v) ? v : NaN; }
+  function rs(v){ return '₹' + inr.format(v); }
+
+  function setMode(m){
+    mode = m;
+    $('mEq').classList.toggle('on', m==='eq');
+    $('mFo').classList.toggle('on', m==='fo');
+    document.querySelectorAll('.fo').forEach(function(el){ el.classList.toggle('hidden', m!=='fo'); });
+    if (m==='fo') {
+      if ($('en').value==='250' && $('sl').value==='240') { $('en').value='120'; $('sl').value='110'; $('tg').value=''; }
+    } else {
+      if ($('en').value==='120' && $('sl').value==='110') { $('en').value='250'; $('sl').value='240'; }
+    }
+    calc();
+  }
+
+  function msg(text, cls){ var m=$('msg'); m.className='msg'+(text?' '+cls:''); m.textContent=text||''; }
+  function clear(){ ['mainV','riskAmt','perUnit','actRisk','posVal','rr'].forEach(function(i){$(i).textContent='–';}); ['mainS','actRiskS','posValS','rrS'].forEach(function(i){$(i).textContent='';}); }
+
+  function calc(){
+    clear(); msg('');
+    var cap=num('cap'), rp=num('rp'), en=num('en'), sl=num('sl'), tg=num('tg');
+    $('mainK').textContent = mode==='fo' ? 'Kitne lots lo' : 'Kitne shares lo';
+    $('valK').textContent = mode==='fo' ? 'Premium lagega (₹)' : 'Position value (₹)';
+    if (!(cap>0) || !(rp>0) || !(en>0) || !(sl>0)) { msg('Capital, risk %, entry aur stop loss bharo (0 se zyada).','err'); return; }
+    if (en===sl) { msg('Entry aur stop loss same nahi ho sakte.','err'); return; }
+
+    var side = sl < en ? 'Buy (long)' : 'Sell (short)';
+    var riskAmt = cap*rp/100, perUnit = Math.abs(en-sl);
+    var qty = Math.floor(riskAmt/perUnit + 1e-9);
+    $('riskAmt').textContent = rs(riskAmt);
+    $('perUnit').textContent = rs(perUnit);
+
+    var units = qty, warn = [];
+    if (mode==='fo') {
+      var lot = Math.floor(num('lot'));
+      if (!(lot>0)) { msg('Lot size bharo.','err'); return; }
+      var lots = Math.floor(qty/lot);
+      units = lots*lot;
+      $('mainV').textContent = lots + (lots===1?' lot':' lots');
+      $('mainS').textContent = side + ' · ' + inr0.format(units) + ' qty (lot ' + lot + ')';
+      if (lots===0) {
+        var need = lot*perUnit;
+        warn.push('1 lot ka risk ' + rs(need) + ' hai, jo aapke max risk ' + rs(riskAmt) + ' se zyada hai. Ye trade skip karo, ya capital badhne tak wait karo. Sirf quantity fit karne ke liye SL paas mat khiskao.');
+      }
+    } else {
+      $('mainV').textContent = inr0.format(qty) + ' shares';
+      $('mainS').textContent = side;
+      if (qty===0) warn.push('1 share ka risk bhi aapke max risk se zyada hai. Ye trade skip karo.');
+    }
+
+    var act = units*perUnit;
+    $('actRisk').textContent = rs(act);
+    $('actRiskS').textContent = (act/cap*100).toFixed(2) + '% of capital';
+    var val = units*en;
+    $('posVal').textContent = rs(val);
+    $('posValS').textContent = mode==='fo' ? 'Option buy ke liye (premium × qty)' : (val/cap*100).toFixed(0) + '% of capital';
+    if (mode==='eq' && val>cap) warn.push('Position value capital se zyada hai. Itni quantity ke liye leverage/margin lagega, ya quantity kam karo.');
+    if (mode==='fo' && val>cap) warn.push('Premium capital se zyada hai. Itne lots afford nahi honge.');
+    if (rp>2) warn.push('Ek trade mein '+rp+'% risk zyada hai. 5 loss lagatar aaye to capital ka bada hissa jaa sakta hai.');
+
+    if (tg>0) {
+      var good = (sl<en && tg>en) || (sl>en && tg<en);
+      if (!good) { $('rr').textContent='–'; $('rrS').textContent='Target galat side par hai'; }
+      else {
+        var r = Math.abs(tg-en)/perUnit;
+        $('rr').textContent = '1 : ' + r.toFixed(2);
+        $('rrS').textContent = 'Target lagne par ~' + rs(units*Math.abs(tg-en)) + ' · break-even win rate ' + (100/(1+r)).toFixed(0) + '%';
+      }
+    } else { $('rrS').textContent='Target daalo to dikhega'; }
+
+    if (warn.length) msg(warn.join(' '), 'warn');
+  }
+
+  $('mEq').onclick=function(){setMode('eq');};
+  $('mFo').onclick=function(){setMode('fo');};
+  $('inst').onchange=function(){ if (this.value) $('lot').value=this.value; calc(); };
+  $('lot').oninput=function(){ var v=this.value, s=$('inst'), hit=false; for (var i=0;i<s.options.length;i++){ if (s.options[i].value===v){ s.selectedIndex=i; hit=true; break; } } if(!hit) s.value=''; calc(); };
+  ['cap','rp','en','sl','tg'].forEach(function(id){ $(id).addEventListener('input',calc); });
+  calc();
+})();
+</script>
+</body>
+</html>
