@@ -55,7 +55,7 @@
             <div id="aBar2" class="abs" style="left: 520px; top: 320px; width: 220px; height: 200px; border-radius: 16px; background: var(--red); transform-origin: bottom center"></div>
             <div class="abs" style="left: 520px; top: 530px; width: 220px; text-align: center; font-size: 40px; font-weight: 800; color: var(--red)">₹50,000</div>
             <div class="abs mono" style="left: 380px; top: 250px; font-size: 40px; color: var(--red)">−50%</div>
-            <div id="aClimb" class="abs" style="left: 520px; top: 120px; width: 220px; height: 200px; border: 5px dashed var(--yellow); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 76px; color: var(--yellow)">+100%?</div>
+            <div id="aClimb" class="abs" style="left: 520px; top: 120px; width: 220px; height: 200px; border: 5px dashed var(--yellow); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 60px; color: var(--yellow)">+100%?</div>
           </div>
           <div class="abs mono" style="left: 108px; top: 1210px; font-size: 28px; color: var(--muted)">example · maths: 50,000 ÷ 50,000 = 100%</div>
         </div>
@@ -88,7 +88,7 @@
             <svg class="abs" style="left: 40px; top: 70px" width="820" height="420" viewBox="0 0 820 420">
               <path id="dDown" d="M 20 40 C 120 60, 200 300, 330 360" fill="none" stroke="#ff4d5e" stroke-width="10" stroke-linecap="round" stroke-dasharray="420" stroke-dashoffset="420" />
               <polyline id="dUp" points="330,360 380,360 380,320 450,320 450,280 530,280 530,230 620,230 620,170 720,170 720,100 800,100" fill="none" stroke="#26d07c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1000" stroke-dashoffset="1000" />
-              <text x="120" y="250" font-family="IBM Plex Mono" font-weight="700" font-size="32" fill="#ff4d5e">aasaan ↓</text>
+              <text x="30" y="395" font-family="IBM Plex Mono" font-weight="700" font-size="32" fill="#ff4d5e">aasaan ↓</text>
               <text id="dHard" x="470" y="380" font-family="IBM Plex Mono" font-weight="700" font-size="32" fill="#26d07c" opacity="0">dheere ↑ mushkil</text>
             </svg>
           </div>
@@ -206,7 +206,7 @@
 
       // A — hook
       tl.fromTo("#aType", { width: 0 }, { width: 720, duration: 0.7, ease: "steps(33)" }, 0);
-      tl.fromTo("#aBar2", { scaleY: 2 }, { scaleY: 1, duration: 0.8, ease: "power3.in" }, 0.3);
+      tl.fromTo("#aBar2", { scaleY: 1 }, { scaleY: 0.9, duration: 0.15, yoyo: true, repeat: 1 }, 1.1);
       tl.fromTo("#aClimb", { opacity: 0.35, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.8)" }, 2.0);
       punch("#k100", 3.05);
       flash(1.1, 0.2);
