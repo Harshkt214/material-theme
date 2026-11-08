@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 17 evening · Wyckoff Part 5: Accumulation (concept only) */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --paper: #ece6da; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.02; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .baloo { font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 36px; font-weight: 700; }
+      .x { width: 50px; height: 50px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .ok { width: 50px; height: 50px; border-radius: 12px; background: var(--green); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .chip { position: absolute; padding: 10px 22px; border-radius: 14px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 28px; white-space: nowrap; }
+      .exl { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; font-size: 28px; color: var(--orange); }
+      .stampbox { position: absolute; border: 12px solid var(--red); border-radius: 18px; color: var(--red); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; background: rgba(11, 15, 26, 0.55); }
+      .blurred { filter: blur(14px); }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="35.1" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+
+        <!-- A: HOOK — boring range = paisa -->
+        <div id="sA" class="scene clip" data-start="0" data-duration="3.7" data-track-index="1" data-track-kind="graphics">
+          <div class="chip" style="left: 108px; top: 262px; background: rgba(255,138,61,0.16); color: var(--orange); border: 2px solid rgba(255,138,61,0.5)">WYCKOFF SERIES · 5/10</div>
+          <div class="abs center serif" style="top: 350px; font-size: 66px; white-space: nowrap">Jab market <span style="color: var(--muted)">boring</span> lagta hai,</div>
+          <div id="aT2" class="abs center serif" style="top: 440px; font-size: 66px; white-space: nowrap">tab <span style="color: var(--green)">paisa</span> banta hai.</div>
+          <div id="aPanel" class="glass" style="left: 90px; top: 580px; width: 900px; height: 520px">
+            <div class="label">DOWNTREND → RANGE</div>
+            <svg class="abs" style="left: 40px; top: 70px" width="820" height="380" viewBox="0 0 820 380">
+              <rect id="aBox" x="378.8" y="282.4" width="406.0" height="48.0" rx="10" fill="rgba(255,201,74,0.10)" stroke="#ffc94a" stroke-width="3" stroke-dasharray="10 8" />
+              <g id="a0" class="adl"><line x1="53.2" x2="53.2" y1="28.3" y2="59.8" stroke="#ff4d5e" stroke-width="3"/><rect x="45.3" y="38.5" width="15.9" height="11.1" rx="3" fill="#ff4d5e"/></g><g id="a1" class="adl"><line x1="79.6" x2="79.6" y1="39.4" y2="81.9" stroke="#ff4d5e" stroke-width="3"/><rect x="71.7" y="49.6" width="15.9" height="22.2" rx="3" fill="#ff4d5e"/></g><g id="a2" class="adl"><line x1="106.1" x2="106.1" y1="54.1" y2="81.9" stroke="#26d07c" stroke-width="3"/><rect x="98.1" y="64.3" width="15.9" height="7.4" rx="3" fill="#26d07c"/></g><g id="a3" class="adl"><line x1="132.5" x2="132.5" y1="54.1" y2="111.5" stroke="#ff4d5e" stroke-width="3"/><rect x="124.6" y="64.3" width="15.9" height="37.0" rx="3" fill="#ff4d5e"/></g><g id="a4" class="adl"><line x1="158.9" x2="158.9" y1="91.1" y2="133.7" stroke="#ff4d5e" stroke-width="3"/><rect x="151.0" y="101.3" width="15.9" height="22.2" rx="3" fill="#ff4d5e"/></g><g id="a5" class="adl"><line x1="185.4" x2="185.4" y1="105.9" y2="133.7" stroke="#26d07c" stroke-width="3"/><rect x="177.4" y="116.1" width="15.9" height="7.4" rx="3" fill="#26d07c"/></g><g id="a6" class="adl"><line x1="211.8" x2="211.8" y1="105.9" y2="163.2" stroke="#ff4d5e" stroke-width="3"/><rect x="203.9" y="116.1" width="15.9" height="37.0" rx="3" fill="#ff4d5e"/></g><g id="a7" class="adl"><line x1="238.2" x2="238.2" y1="142.8" y2="192.8" stroke="#ff4d5e" stroke-width="3"/><rect x="230.3" y="153.0" width="15.9" height="29.6" rx="3" fill="#ff4d5e"/></g><g id="a8" class="adl"><line x1="264.6" x2="264.6" y1="165.0" y2="192.8" stroke="#26d07c" stroke-width="3"/><rect x="256.7" y="175.2" width="15.9" height="7.4" rx="3" fill="#26d07c"/></g><g id="a9" class="adl"><line x1="291.1" x2="291.1" y1="165.0" y2="222.4" stroke="#ff4d5e" stroke-width="3"/><rect x="283.1" y="175.2" width="15.9" height="37.0" rx="3" fill="#ff4d5e"/></g><g id="a10" class="adl"><line x1="317.5" x2="317.5" y1="202.0" y2="251.9" stroke="#ff4d5e" stroke-width="3"/><rect x="309.6" y="212.2" width="15.9" height="29.6" rx="3" fill="#ff4d5e"/></g><g id="a11" class="adl"><line x1="343.9" x2="343.9" y1="224.1" y2="251.9" stroke="#26d07c" stroke-width="3"/><rect x="336.0" y="234.3" width="15.9" height="7.4" rx="3" fill="#26d07c"/></g><g id="a12" class="adl"><line x1="370.4" x2="370.4" y1="224.1" y2="281.5" stroke="#ff4d5e" stroke-width="3"/><rect x="362.4" y="234.3" width="15.9" height="37.0" rx="3" fill="#ff4d5e"/></g><g id="a13" class="adl"><line x1="396.8" x2="396.8" y1="261.1" y2="303.7" stroke="#ff4d5e" stroke-width="3"/><rect x="388.9" y="271.3" width="15.9" height="22.2" rx="3" fill="#ff4d5e"/></g><g id="a14" class="adl"><line x1="423.2" x2="423.2" y1="275.9" y2="303.7" stroke="#26d07c" stroke-width="3"/><rect x="415.3" y="286.1" width="15.9" height="7.4" rx="3" fill="#26d07c"/></g><g id="a15" class="adl"><line x1="449.6" x2="449.6" y1="275.9" y2="325.9" stroke="#ff4d5e" stroke-width="3"/><rect x="441.7" y="286.1" width="15.9" height="29.6" rx="3" fill="#ff4d5e"/></g><g id="a16" class="adl"><line x1="476.1" x2="476.1" y1="290.7" y2="325.9" stroke="#26d07c" stroke-width="3"/><rect x="468.1" y="300.9" width="15.9" height="14.8" rx="3" fill="#26d07c"/></g><g id="a17" class="adl"><line x1="502.5" x2="502.5" y1="290.7" y2="333.2" stroke="#ff4d5e" stroke-width="3"/><rect x="494.6" y="300.9" width="15.9" height="22.2" rx="3" fill="#ff4d5e"/></g><g id="a18" class="adl"><line x1="528.9" x2="528.9" y1="298.1" y2="333.2" stroke="#26d07c" stroke-width="3"/><rect x="521.0" y="308.3" width="15.9" height="14.8" rx="3" fill="#26d07c"/></g><g id="a19" class="adl"><line x1="555.4" x2="555.4" y1="298.1" y2="336.9" stroke="#ff4d5e" stroke-width="3"/><rect x="547.4" y="308.3" width="15.9" height="18.5" rx="3" fill="#ff4d5e"/></g><g id="a20" class="adl"><line x1="581.8" x2="581.8" y1="290.7" y2="336.9" stroke="#26d07c" stroke-width="3"/><rect x="573.9" y="300.9" width="15.9" height="25.9" rx="3" fill="#26d07c"/></g><g id="a21" class="adl"><line x1="608.2" x2="608.2" y1="290.7" y2="325.9" stroke="#ff4d5e" stroke-width="3"/><rect x="600.3" y="300.9" width="15.9" height="14.8" rx="3" fill="#ff4d5e"/></g><g id="a22" class="adl"><line x1="634.6" x2="634.6" y1="283.3" y2="325.9" stroke="#26d07c" stroke-width="3"/><rect x="626.7" y="293.5" width="15.9" height="22.2" rx="3" fill="#26d07c"/></g><g id="a23" class="adl"><line x1="661.1" x2="661.1" y1="283.3" y2="333.2" stroke="#ff4d5e" stroke-width="3"/><rect x="653.1" y="293.5" width="15.9" height="29.6" rx="3" fill="#ff4d5e"/></g><g id="a24" class="adl"><line x1="687.5" x2="687.5" y1="298.1" y2="333.2" stroke="#26d07c" stroke-width="3"/><rect x="679.6" y="308.3" width="15.9" height="14.8" rx="3" fill="#26d07c"/></g><g id="a25" class="adl"><line x1="713.9" x2="713.9" y1="298.1" y2="336.9" stroke="#ff4d5e" stroke-width="3"/><rect x="706.0" y="308.3" width="15.9" height="18.5" rx="3" fill="#ff4d5e"/></g><g id="a26" class="adl"><line x1="740.4" x2="740.4" y1="290.7" y2="336.9" stroke="#26d07c" stroke-width="3"/><rect x="732.4" y="300.9" width="15.9" height="25.9" rx="3" fill="#26d07c"/></g><g id="a27" class="adl"><line x1="766.8" x2="766.8" y1="290.7" y2="322.2" stroke="#ff4d5e" stroke-width="3"/><rect x="758.9" y="300.9" width="15.9" height="11.1" rx="3" fill="#ff4d5e"/></g>
+            </svg>
+            <div id="aBoring" class="abs baloo" style="left: 470px; top: 90px; font-size: 76px; color: var(--yellow)">BORING?</div>
+          </div>
+        </div>
+
+        <!-- B: CYCLE MAP — phase 1 accumulation -->
+        <div id="sB" class="scene clip" data-start="3.7" data-duration="4.6" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">PART 4 RECAP · CYCLE</div>
+          <div id="bT" class="abs center serif" style="top: 320px; font-size: 76px">Pehla phase</div>
+          <div id="bMap" class="glass" style="left: 90px; top: 450px; width: 900px; height: 420px">
+            <div class="label">WYCKOFF CYCLE</div>
+            <div id="z1" class="abs" style="left: 40px; top: 90px; width: 400px; height: 130px; border-radius: 22px; border: 3px solid var(--edge); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800">1 · ACCUMULATION</div>
+            <div id="z2" class="abs" style="left: 460px; top: 90px; width: 400px; height: 130px; border-radius: 22px; border: 3px solid var(--edge); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; color: var(--muted)">2 · MARKUP</div>
+            <div id="z3" class="abs" style="left: 460px; top: 250px; width: 400px; height: 130px; border-radius: 22px; border: 3px solid var(--edge); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; color: var(--muted)">3 · DISTRIBUTION</div>
+            <div id="z4" class="abs" style="left: 40px; top: 250px; width: 400px; height: 130px; border-radius: 22px; border: 3px solid var(--edge); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; color: var(--muted)">4 · MARKDOWN</div>
+          </div>
+          <div id="bKhel" class="glass" style="left: 190px; top: 930px; width: 700px; height: 220px; border-color: rgba(255,201,74,0.5)">
+            <div class="label">ISME EK CHUPA KHEL</div>
+            <div class="abs serif blurred" style="left: 0; width: 700px; top: 85px; text-align: center; font-size: 90px; color: var(--green)">SMART MONEY</div>
+          </div>
+        </div>
+
+        <!-- C+D: RANGE — support / resistance, weak vs strong hands -->
+        <div id="sC" class="scene clip" data-start="8.3" data-duration="10.6" data-track-index="1" data-track-kind="graphics">
+          <div class="grid"></div>
+          <div id="cT" class="abs center serif" style="top: 262px; font-size: 64px">Downtrend ke baad: sideways range</div>
+          <div id="dT" class="abs center serif" style="top: 262px; font-size: 64px; opacity: 0">Kaun bech raha, kaun le raha?</div>
+          <div id="cPanel" class="glass" style="left: 90px; top: 420px; width: 900px; height: 700px">
+            <div class="label">ACCUMULATION RANGE</div>
+            <svg class="abs" style="left: 40px; top: 80px" width="820" height="560" viewBox="0 0 820 560">
+              <rect id="cBox" x="378.8" y="421.3" width="406.0" height="73.5" rx="10" fill="rgba(255,201,74,0.08)" />
+              <line id="cRes" x1="378.8" x2="800" y1="421.3" y2="421.3" stroke="#ff4d5e" stroke-width="5" />
+              <line id="cSup" x1="378.8" x2="800" y1="494.8" y2="494.8" stroke="#26d07c" stroke-width="5" />
+              <g id="k0" class="kdl"><line x1="53.2" x2="53.2" y1="32.7" y2="80.8" stroke="#ff4d5e" stroke-width="3"/><rect x="45.3" y="48.3" width="15.9" height="17.0" rx="3" fill="#ff4d5e"/></g><g id="k1" class="kdl"><line x1="79.6" x2="79.6" y1="49.6" y2="114.7" stroke="#ff4d5e" stroke-width="3"/><rect x="71.7" y="65.2" width="15.9" height="33.9" rx="3" fill="#ff4d5e"/></g><g id="k2" class="kdl"><line x1="106.1" x2="106.1" y1="72.2" y2="114.7" stroke="#26d07c" stroke-width="3"/><rect x="98.1" y="87.8" width="15.9" height="11.3" rx="3" fill="#26d07c"/></g><g id="k3" class="kdl"><line x1="132.5" x2="132.5" y1="72.2" y2="159.9" stroke="#ff4d5e" stroke-width="3"/><rect x="124.6" y="87.8" width="15.9" height="56.5" rx="3" fill="#ff4d5e"/></g><g id="k4" class="kdl"><line x1="158.9" x2="158.9" y1="128.7" y2="193.9" stroke="#ff4d5e" stroke-width="3"/><rect x="151.0" y="144.3" width="15.9" height="33.9" rx="3" fill="#ff4d5e"/></g><g id="k5" class="kdl"><line x1="185.4" x2="185.4" y1="151.4" y2="193.9" stroke="#26d07c" stroke-width="3"/><rect x="177.4" y="167.0" width="15.9" height="11.3" rx="3" fill="#26d07c"/></g><g id="k6" class="kdl"><line x1="211.8" x2="211.8" y1="151.4" y2="239.1" stroke="#ff4d5e" stroke-width="3"/><rect x="203.9" y="167.0" width="15.9" height="56.5" rx="3" fill="#ff4d5e"/></g><g id="k7" class="kdl"><line x1="238.2" x2="238.2" y1="207.9" y2="284.3" stroke="#ff4d5e" stroke-width="3"/><rect x="230.3" y="223.5" width="15.9" height="45.2" rx="3" fill="#ff4d5e"/></g><g id="k8" class="kdl"><line x1="264.6" x2="264.6" y1="241.8" y2="284.3" stroke="#26d07c" stroke-width="3"/><rect x="256.7" y="257.4" width="15.9" height="11.3" rx="3" fill="#26d07c"/></g><g id="k9" class="kdl"><line x1="291.1" x2="291.1" y1="241.8" y2="329.5" stroke="#ff4d5e" stroke-width="3"/><rect x="283.1" y="257.4" width="15.9" height="56.5" rx="3" fill="#ff4d5e"/></g><g id="k10" class="kdl"><line x1="317.5" x2="317.5" y1="298.3" y2="374.7" stroke="#ff4d5e" stroke-width="3"/><rect x="309.6" y="313.9" width="15.9" height="45.2" rx="3" fill="#ff4d5e"/></g><g id="k11" class="kdl"><line x1="343.9" x2="343.9" y1="332.2" y2="374.7" stroke="#26d07c" stroke-width="3"/><rect x="336.0" y="347.8" width="15.9" height="11.3" rx="3" fill="#26d07c"/></g><g id="k12" class="kdl"><line x1="370.4" x2="370.4" y1="332.2" y2="419.9" stroke="#ff4d5e" stroke-width="3"/><rect x="362.4" y="347.8" width="15.9" height="56.5" rx="3" fill="#ff4d5e"/></g><g id="k13" class="kdl"><line x1="396.8" x2="396.8" y1="388.7" y2="453.9" stroke="#ff4d5e" stroke-width="3"/><rect x="388.9" y="404.3" width="15.9" height="33.9" rx="3" fill="#ff4d5e"/></g><g id="k14" class="kdl"><line x1="423.2" x2="423.2" y1="411.4" y2="453.9" stroke="#26d07c" stroke-width="3"/><rect x="415.3" y="427.0" width="15.9" height="11.3" rx="3" fill="#26d07c"/></g><g id="k15" class="kdl"><line x1="449.6" x2="449.6" y1="411.4" y2="487.8" stroke="#ff4d5e" stroke-width="3"/><rect x="441.7" y="427.0" width="15.9" height="45.2" rx="3" fill="#ff4d5e"/></g><g id="k16" class="kdl"><line x1="476.1" x2="476.1" y1="434.0" y2="487.8" stroke="#26d07c" stroke-width="3"/><rect x="468.1" y="449.6" width="15.9" height="22.6" rx="3" fill="#26d07c"/></g><g id="k17" class="kdl"><line x1="502.5" x2="502.5" y1="434.0" y2="499.1" stroke="#ff4d5e" stroke-width="3"/><rect x="494.6" y="449.6" width="15.9" height="33.9" rx="3" fill="#ff4d5e"/></g><g id="k18" class="kdl"><line x1="528.9" x2="528.9" y1="445.3" y2="499.1" stroke="#26d07c" stroke-width="3"/><rect x="521.0" y="460.9" width="15.9" height="22.6" rx="3" fill="#26d07c"/></g><g id="k19" class="kdl"><line x1="555.4" x2="555.4" y1="445.3" y2="504.7" stroke="#ff4d5e" stroke-width="3"/><rect x="547.4" y="460.9" width="15.9" height="28.3" rx="3" fill="#ff4d5e"/></g><g id="k20" class="kdl"><line x1="581.8" x2="581.8" y1="434.0" y2="504.7" stroke="#26d07c" stroke-width="3"/><rect x="573.9" y="449.6" width="15.9" height="39.6" rx="3" fill="#26d07c"/></g><g id="k21" class="kdl"><line x1="608.2" x2="608.2" y1="434.0" y2="487.8" stroke="#ff4d5e" stroke-width="3"/><rect x="600.3" y="449.6" width="15.9" height="22.6" rx="3" fill="#ff4d5e"/></g><g id="k22" class="kdl"><line x1="634.6" x2="634.6" y1="422.7" y2="487.8" stroke="#26d07c" stroke-width="3"/><rect x="626.7" y="438.3" width="15.9" height="33.9" rx="3" fill="#26d07c"/></g><g id="k23" class="kdl"><line x1="661.1" x2="661.1" y1="422.7" y2="499.1" stroke="#ff4d5e" stroke-width="3"/><rect x="653.1" y="438.3" width="15.9" height="45.2" rx="3" fill="#ff4d5e"/></g><g id="k24" class="kdl"><line x1="687.5" x2="687.5" y1="445.3" y2="499.1" stroke="#26d07c" stroke-width="3"/><rect x="679.6" y="460.9" width="15.9" height="22.6" rx="3" fill="#26d07c"/></g><g id="k25" class="kdl"><line x1="713.9" x2="713.9" y1="445.3" y2="504.7" stroke="#ff4d5e" stroke-width="3"/><rect x="706.0" y="460.9" width="15.9" height="28.3" rx="3" fill="#ff4d5e"/></g><g id="k26" class="kdl"><line x1="740.4" x2="740.4" y1="434.0" y2="504.7" stroke="#26d07c" stroke-width="3"/><rect x="732.4" y="449.6" width="15.9" height="39.6" rx="3" fill="#26d07c"/></g><g id="k27" class="kdl"><line x1="766.8" x2="766.8" y1="434.0" y2="482.1" stroke="#ff4d5e" stroke-width="3"/><rect x="758.9" y="449.6" width="15.9" height="17.0" rx="3" fill="#ff4d5e"/></g>
+              <circle class="bdot" cx="449.6" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="502.5" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="555.4" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="608.2" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="661.1" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="713.9" cy="510.8" r="10" fill="#26d07c" /><circle class="bdot" cx="766.8" cy="510.8" r="10" fill="#26d07c" />
+            </svg>
+            <div id="cResL" class="abs mono" style="left: 40px; top: 449px; font-size: 28px; color: var(--red)">RESISTANCE</div>
+            <div id="cSupL" class="abs mono" style="left: 40px; top: 611px; font-size: 28px; color: var(--green)">SUPPORT</div>
+            
+            <div id="dSell" class="abs" style="left: 380px; top: 385px; padding: 10px 18px; border-radius: 14px; background: var(--red); color: #fff; font-size: 32px; font-weight: 800">SELL <span style="font-size: 28px; font-weight: 700">(example)</span></div>
+            <div id="dWeak" class="abs mono" style="left: 380px; top: 335px; font-size: 28px; color: var(--orange)">WEAK HANDS · thak kar</div>
+            <div id="dStrong" class="abs mono" style="left: 380px; top: 611px; font-size: 28px; color: var(--green)">STRONG HANDS · chupchaap</div>
+          </div>
+          <div id="cRange" class="abs center baloo" style="top: 1150px; font-size: 72px; color: var(--yellow)">SIDEWAYS RANGE</div>
+          <div id="dEx" class="abs center exl" style="top: 1140px">Raju = example account</div>
+          <div id="dSrc" class="lower" style="top: 1200px"><div class="mono" style="font-size: 28px; color: var(--yellow)">CONCEPT</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Concept: Wyckoff Method (no data, concept only)</div></div>
+        </div>
+
+        <!-- E: RULE -->
+        <div id="sE" class="scene clip" data-start="18.9" data-duration="3.87" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">WYCKOFF RULE · PART 5</div>
+          <div id="eCard" class="glass" style="left: 108px; top: 380px; width: 864px; height: 560px; border-color: rgba(38,208,124,0.55)">
+            <div class="label" style="color: var(--green)">RULE</div>
+            <div id="e1" class="row" style="top: 110px; height: 170px; font-size: 42px"><div class="x">✕</div>Boring range ignore mat karo</div>
+            <div id="e2" class="row" style="top: 320px; height: 170px; font-size: 42px"><div class="ok">✓</div>Support ke paas dhyan do</div>
+          </div>
+        </div>
+
+        <!-- F: TEASE — range ke baad kya? -->
+        <div id="sF" class="scene clip" data-start="22.77" data-duration="3.68" data-track-index="1" data-track-kind="graphics">
+          <div id="fPush" class="abs" style="inset: 0">
+            <div id="fT" class="abs center serif" style="top: 320px; font-size: 92px">Range ke baad kya?</div>
+            <div class="abs" style="left: 140px; top: 560px; width: 800px; height: 300px">
+              <div class="serif" style="position: absolute; inset: 0; text-align: center; font-size: 190px; color: var(--green)">MARKUP</div>
+              <div id="fRed" class="abs" style="left: 0; top: 20px; width: 800px; height: 230px; background: #000; transform-origin: left center; box-shadow: 0 0 30px rgba(255, 138, 61, 0.9)"></div>
+            </div>
+            <div id="fLate" class="glass" style="left: 140px; top: 920px; width: 800px; height: 180px; border-color: rgba(255,138,61,0.5)">
+              <div class="label" style="color: var(--orange)">JAHAN RAJU (EXAMPLE)</div>
+              <div class="abs serif" style="left: 36px; top: 80px; font-size: 52px">hamesha <span style="color: var(--red)">late</span> pahunchta hai</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- G: SAVE + FOLLOW + next part -->
+        <div id="sH" class="scene clip" data-start="26.45" data-duration="8.65" data-track-index="1" data-track-kind="graphics">
+          <img id="Hlogo" class="abs" src="assets/tw-icon.svg" style="left: 420px; top: 280px; width: 240px; height: 240px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+          <div id="Hhandle" class="abs center" style="top: 550px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+          <div id="Hsave" class="abs" style="left: 130px; top: 650px; width: 390px; height: 110px; border-radius: 55px; background: var(--yellow); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 800; letter-spacing: 0.04em">SAVE KARO</div>
+          <div id="Hfbtn" class="abs" style="left: 560px; top: 650px; width: 390px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 800; letter-spacing: 0.04em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+          <div id="Hnext" class="glass" style="left: 108px; top: 820px; width: 864px; height: 200px; border-color: rgba(38,208,124,0.5)">
+            <div class="label" style="color: var(--green)">PART 6 · SATURDAY</div>
+            <div class="abs serif" style="left: 36px; top: 78px; font-size: 76px">Markup</div>
+          </div>
+          <div id="Hkal" class="glass" style="left: 108px; top: 1050px; width: 864px; height: 170px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">KAL SUBAH · EP18</div>
+            <div class="abs serif" style="left: 36px; top: 74px; font-size: 52px">Target aaya, phir bhi hold.</div>
+          </div>
+          <div class="abs center" style="top: 1260px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+        </div>
+
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="kBoring" class="kin clip" data-layout-allow-occlusion data-start="0.9" data-duration="0.5" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span data-layout-allow-overlap style="font-size: 260px; color: #0b0f1a">BORING?</span></div>
+      <div id="kAcc" class="kin clip" data-layout-allow-occlusion data-start="5.44" data-duration="0.5" data-track-index="2" data-track-kind="graphics" style="background: var(--green)"><span data-layout-allow-overlap style="font-size: 140px; color: #0b0f1a">ACCUMULATION</span></div>
+      <div id="kChup" class="kin clip" data-layout-allow-occlusion data-start="17.3" data-duration="0.5" data-track-index="2" data-track-kind="graphics" style="background: var(--green)"><span data-layout-allow-overlap style="font-size: 190px; color: #0b0f1a">CHUPCHAAP</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · WYCKOFF 5/10</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + self-generated SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="fx0" class="clip" src="assets/sfx/typekey.mp3" data-start="0.05" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="fx1" class="clip" src="assets/sfx/impact.mp3" data-start="0.90" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+      <audio id="fx2" class="clip" src="assets/sfx/pop.mp3" data-start="2.29" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx3" class="clip" src="assets/sfx/whoosh.mp3" data-start="3.50" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx4" class="clip" src="assets/sfx/tick.mp3" data-start="4.00" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="fx5" class="clip" src="assets/sfx/tick.mp3" data-start="4.15" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="fx6" class="clip" src="assets/sfx/tick.mp3" data-start="4.30" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="fx7" class="clip" src="assets/sfx/tick.mp3" data-start="4.45" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="fx8" class="clip" src="assets/sfx/impact.mp3" data-start="5.44" data-duration="0.9" data-track-index="14" data-volume="0.48"></audio>
+      <audio id="fx9" class="clip" src="assets/sfx/heartbeat.mp3" data-start="6.60" data-duration="0.9" data-track-index="17" data-volume="0.5"></audio>
+      <audio id="fx10" class="clip" src="assets/sfx/whoosh.mp3" data-start="8.10" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx11" class="clip" src="assets/sfx/pop.mp3" data-start="10.20" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx12" class="clip" src="assets/sfx/click.mp3" data-start="11.63" data-duration="0.1" data-track-index="19" data-volume="0.3"></audio>
+      <audio id="fx13" class="clip" src="assets/sfx/click.mp3" data-start="12.45" data-duration="0.1" data-track-index="19" data-volume="0.3"></audio>
+      <audio id="fx14" class="clip" src="assets/sfx/stamp.mp3" data-start="14.60" data-duration="0.5" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="fx15" class="clip" src="assets/sfx/pop.mp3" data-start="16.10" data-duration="0.12" data-track-index="18" data-volume="0.24"></audio>
+      <audio id="fx16" class="clip" src="assets/sfx/pop.mp3" data-start="16.50" data-duration="0.12" data-track-index="18" data-volume="0.24"></audio>
+      <audio id="fx17" class="clip" src="assets/sfx/pop.mp3" data-start="16.90" data-duration="0.12" data-track-index="18" data-volume="0.24"></audio>
+      <audio id="fx18" class="clip" src="assets/sfx/impact.mp3" data-start="17.30" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+      <audio id="fx19" class="clip" src="assets/sfx/whoosh.mp3" data-start="18.70" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx20" class="clip" src="assets/sfx/pop.mp3" data-start="19.59" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx21" class="clip" src="assets/sfx/pop.mp3" data-start="21.27" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx22" class="clip" src="assets/sfx/whoosh.mp3" data-start="22.50" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx23" class="clip" src="assets/sfx/heartbeat.mp3" data-start="23.00" data-duration="0.9" data-track-index="17" data-volume="0.5"></audio>
+      <audio id="fx24" class="clip" src="assets/sfx/shutter.mp3" data-start="23.40" data-duration="0.16" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="fx25" class="clip" src="assets/sfx/whoosh.mp3" data-start="26.25" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx26" class="clip" src="assets/sfx/pop.mp3" data-start="26.55" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx27" class="clip" src="assets/sfx/pop.mp3" data-start="27.20" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx28" class="clip" src="assets/sfx/pop.mp3" data-start="28.18" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+      <audio id="fx29" class="clip" src="assets/sfx/pop.mp3" data-start="30.46" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+    </div>
+
+    <script>
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const D = 35.1, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "3600px 2520px", duration: D, ease: "steps(" + Math.round(D * 15) + ")" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slide = (s, t) => tl.fromTo(s, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const unblur = (s, t) => tl.fromTo(s, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.35, ease: "power2.out" }, t);
+      const stampIn = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const typeW = (s, w, t, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || 0.6, ease: "steps(" + n + ")" }, t);
+      const counter = (id, from, to, t, d, f) => { const o = { v: from }; tl.to(o, { v: to, duration: d, ease: "power2.out", onUpdate: () => { document.getElementById(id).textContent = f(o.v); } }, t); };
+
+
+      // A — hook
+      tl.fromTo("#aPanel", { scale: 0.97 }, { scale: 1, duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#aBoring", { rotation: -4 }, { rotation: 4, duration: 0.5, yoyo: true, repeat: 5, ease: "sine.inOut" }, 0);
+      punch("#kBoring", 0.9);
+      tl.fromTo("#aBox", { fill: "rgba(255,201,74,0.10)" }, { fill: "rgba(38,208,124,0.28)", duration: 0.4 }, 2.29);
+      flash(2.3, 0.25);
+
+      // B — cycle
+      enter("#sB", 3.7); up("#bT", 3.75);
+      tl.fromTo("#bMap", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 3.9);
+      ["#z2", "#z3", "#z4"].forEach((s, i) => tl.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.1 + i * 0.15));
+      tl.fromTo("#z1", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.0);
+      punch("#kAcc", 5.44);
+      tl.to("#z1", { background: "rgba(38,208,124,0.25)", borderColor: "#26d07c", color: "#26d07c", duration: 0.2 }, 6.04);
+      tl.fromTo("#bKhel", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 6.51);
+      shake("#bKhel", 7.4);
+
+      // C — range
+      enter("#sC", 8.3); up("#cT", 8.32);
+      tl.fromTo("#cPanel", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 8.38);
+      tl.fromTo("#sC .kdl", { opacity: 0, scaleY: 0, transformOrigin: "50% 100%" }, { opacity: 1, scaleY: 1, duration: 0.12, stagger: 0.07, ease: "power2.out" }, 8.5);
+      tl.fromTo("#cBox", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.2);
+      tl.fromTo("#cRange", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 10.2);
+      tl.fromTo("#cRes", { attr: { x2: 378.8 } }, { attr: { x2: 800 }, duration: 0.4, ease: "power2.out" }, 11.63);
+      tl.fromTo("#cResL", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 11.7);
+      tl.fromTo("#cSup", { attr: { x2: 378.8 } }, { attr: { x2: 800 }, duration: 0.4, ease: "power2.out" }, 12.45);
+      tl.fromTo("#cSupL", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 12.5);
+      // D — weak vs strong hands
+      tl.to("#cT", { opacity: 0, duration: 0.15 }, 13.4); tl.to("#dT", { opacity: 1, duration: 0.25 }, 13.5);
+      tl.to("#cRange", { opacity: 0, duration: 0.2 }, 13.45);
+      tl.fromTo("#dEx", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 13.5);
+      tl.fromTo("#dSell", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "bounce.out" }, 14.6);
+      tl.fromTo("#dWeak", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 14.9);
+      tl.fromTo("#sC .bdot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.18, stagger: 0.12, ease: "back.out(2)" }, 16.1);
+      tl.fromTo("#dStrong", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 16.4);
+      punch("#kChup", 17.3);
+      slide("#dSrc", 16.1);
+
+      // E — rule
+      enter("#sE", 18.9);
+      tl.fromTo("#eCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 18.95);
+      tl.fromTo("#e1", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)" }, 19.59);
+      tl.fromTo("#e2", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)" }, 21.2);
+
+      // F — tease
+      enter("#sF", 22.77); up("#fT", 22.8);
+      tl.fromTo("#fPush", { scale: 1 }, { scale: 1.06, duration: 3.7, ease: "sine.in" }, 22.7);
+      tl.fromTo("#fRed", { scaleX: 1 }, { scaleX: 0.55, duration: 0.25, ease: "power2.in" }, 23.4);
+      tl.fromTo("#fLate", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 23.8);
+
+      // G — save + follow
+      enter("#sH", 26.45);
+      tl.fromTo("#Hlogo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 26.5);
+      up("#Hhandle", 26.6);
+      pop("#Hsave", 26.55); pop("#Hfbtn", 27.2);
+      up("#Hnext", 28.18);
+      tl.fromTo("#Hnext", { borderColor: "rgba(38,208,124,0.5)" }, { borderColor: "rgba(38,208,124,1)", duration: 0.2, yoyo: true, repeat: 1 }, 29.66);
+      up("#Hkal", 30.46);
+      tl.to(["#Hsave", "#Hfbtn"], { scale: 1.05, duration: 0.4, yoyo: true, repeat: 7, ease: "sine.inOut" }, 31.5);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
