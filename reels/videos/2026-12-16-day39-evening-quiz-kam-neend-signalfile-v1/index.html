@@ -176,7 +176,9 @@
       tl.to("#optB", { borderColor: "rgba(238,241,248,0.14)", scale: 1, duration: 0.25 }, 9.0);
       tl.to("#tArc", { attr: { "stroke-dashoffset": 754 }, duration: 1.8, ease: "none" }, 7.8);
       tl.set("#tNum", { textContent: "2" }, 8.4); tl.set("#tNum", { textContent: "1" }, 9.0);
-      [7.8, 8.4, 9.0].forEach((t, i) => tl.fromTo("#tNum", { scale: 1.4 }, { scale: 1, duration: 0.2, ease: "power3.out", immediateRender: i === 0 }, t));
+      tl.fromTo("#tNum", { scale: 1.4 }, { scale: 1, duration: 0.2, ease: "power3.out" }, 7.8);
+      tl.fromTo("#tNum", { scale: 1.4 }, { scale: 1, duration: 0.2, ease: "power3.out", immediateRender: false }, 8.4);
+      tl.fromTo("#tNum", { scale: 1.4 }, { scale: 1, duration: 0.2, ease: "power3.out", immediateRender: false }, 9.0);
       punch("#kB", 10.5);
       tl.to(["#timer", "#askC"], { opacity: 0, duration: 0.15 }, 10.9);
       tl.to("#optA", { opacity: 0.45, duration: 0.2 }, 10.9);
