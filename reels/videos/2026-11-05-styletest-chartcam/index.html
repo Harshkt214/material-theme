@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* Style test: CHART CAMERA — one big chart, the camera flies over it */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0e1424; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); }
+      #bgc { position: absolute; inset: 0; background: radial-gradient(90% 60% at 50% 50%, #16203a, var(--bg) 70%); }
+      #cam { position: absolute; inset: 0; overflow: hidden; }
+      #world { position: absolute; left: 0; top: 0; width: 3000px; height: 1500px; transform-origin: 0 0; }
+      .cap { position: absolute; left: 108px; width: 864px; text-align: center; font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 0.95; }
+      .pill { position: absolute; padding: 14px 30px; border-radius: 999px; font-weight: 800; font-size: 46px; letter-spacing: 0.06em; }
+      #brand { position: absolute; left: 108px; top: 196px; display: flex; align-items: center; gap: 16px; font-weight: 800; font-size: 28px; letter-spacing: 0.1em; }
+      #brand img { width: 64px; height: 64px; border-radius: 50%; }
+      #vignette { position: absolute; inset: 0; background: radial-gradient(110% 70% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.6)); }
+      #flash { position: absolute; inset: 0; background: var(--red); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8" data-width="1080" data-height="1920">
+      <div id="bgc"></div>
+      <div id="cam" class="clip" data-start="0" data-duration="8" data-track-index="1" data-track-kind="graphics">
+        <svg id="world" width="3000" height="1500" viewBox="0 0 3000 1500"></svg>
+      </div>
+      <div id="vignette"></div>
+      <div id="brand"><img src="assets/tw-icon.svg" />THE TRADING WIZAARD</div>
+
+      <div id="caps" class="clip" data-start="0" data-duration="8" data-track-index="2" data-track-kind="graphics" style="position: absolute; inset: 0">
+        <div id="c1" class="cap" style="top: 300px; font-size: 64px">Har loss ke baad</div>
+        <div id="c2" class="cap" style="top: 380px; font-size: 104px; color: var(--yellow); white-space: nowrap">NAYA INDICATOR</div>
+        <div id="pRSI" class="pill" style="left: 108px; top: 1240px; background: var(--orange); color: #0e1424">+ RSI</div>
+        <div id="pMACD" class="pill" style="left: 400px; top: 1240px; background: var(--yellow); color: #0e1424">+ MACD</div>
+        <div id="pCourse" class="pill" style="left: 108px; top: 1340px; background: var(--ink); color: #0e1424">+ NAYA COURSE ₹</div>
+        <div id="c3" class="cap" style="top: 300px; font-size: 90px">Phir bhi…</div>
+        <div id="c4" class="cap" style="top: 290px; font-size: 280px; color: var(--red); text-shadow: 0 0 60px rgba(255, 77, 94, 0.6)">LOSS</div>
+        <div id="c5" class="cap" style="top: 1250px; font-size: 30px; font-family: Inter; color: var(--muted); font-weight: 600">Raju = example account · educational only</div>
+      </div>
+      <div id="flash"></div>
+
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-media-start="7.31" data-duration="7.42" data-track-index="10" data-volume="1"></audio>
+      <audio id="p1" class="clip" src="assets/sfx/pop.mp3" data-start="2.78" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="p2" class="clip" src="assets/sfx/pop.mp3" data-start="3.7" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="p3" class="clip" src="assets/sfx/pop.mp3" data-start="5.0" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="wh" class="clip" src="assets/sfx/whoosh.mp3" data-start="5.9" data-duration="0.5" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="im" class="clip" src="assets/sfx/impact.mp3" data-start="6.44" data-duration="0.9" data-track-index="13" data-volume="0.55"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      // ---- build the world: downtrend chart + SL marks + RSI + MACD + course sticker ----
+      (function () {
+        let s = 0x2f6b; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+        const N = 48, x0 = 120, step = 56, Y = (v) => 880 - v * 760;
+        let p = 0.86, h = "", lows = [];
+        for (let i = 0; i < N; i++) {
+          const trend = -0.016, bounce = Math.sin(i / 2.6) * 0.03;
+          const o = p, c = Math.max(0.06, Math.min(0.95, p + trend + bounce + (r() - 0.5) * 0.05)); p = c;
+          const x = x0 + i * step, col = c > o ? "#26d07c" : "#ff4d5e";
+          h += `<g class="cdl"><line x1="${x}" x2="${x}" y1="${Y(Math.max(o, c) + 0.025)}" y2="${Y(Math.min(o, c) - 0.025)}" stroke="${col}" stroke-width="4"/><rect x="${x - 18}" y="${Y(Math.max(o, c))}" width="36" height="${Math.max(8, Math.abs(Y(o) - Y(c)))}" rx="4" fill="${col}"/></g>`;
+          if (i % 8 === 6) lows.push([x, Y(Math.min(o, c) - 0.03)]);
+        }
+        // grid
+        let g = "";
+        for (let y = 100; y <= 900; y += 100) g += `<line x1="60" x2="2940" y1="${y}" y2="${y}" stroke="rgba(238,241,248,0.06)" stroke-width="2"/>`;
+        // SL hit markers
+        let sl = lows.map(([x, y], k) => `<g class="sl" id="sl${k}"><circle cx="${x}" cy="${y + 26}" r="30" fill="#ff4d5e"/><text x="${x}" y="${y + 37}" text-anchor="middle" font-family="Inter" font-weight="800" font-size="28" fill="#fff">SL</text></g>`).join("");
+        // RSI band
+        let pts = []; for (let i = 0; i < 52; i++) pts.push(`${120 + i * 54},${1110 + Math.sin(i / 1.7) * 70 + Math.sin(i / 0.9) * 20}`);
+        const rsi = `<g id="rsiG"><rect x="80" y="990" width="2860" height="240" rx="24" fill="rgba(27,36,64,0.7)" stroke="rgba(238,241,248,0.12)" stroke-width="3"/><text x="110" y="1040" font-family="Inter" font-weight="800" font-size="40" fill="#ff8a3d">RSI</text><polyline id="rsiLine" points="${pts.join(" ")}" fill="none" stroke="#ff8a3d" stroke-width="7" stroke-linejoin="round"/></g>`;
+        // MACD band
+        let mb = ""; for (let i = 0; i < 52; i++) { const v = Math.sin(i / 2.2) * 70; mb += `<rect class="mb" x="${110 + i * 54}" y="${v > 0 ? 1360 - v : 1360}" width="34" height="${Math.abs(v)}" rx="4" fill="${v > 0 ? "#26d07c" : "#ff4d5e"}"/>`; }
+        const macd = `<g id="macdG"><rect x="80" y="1260" width="2860" height="220" rx="24" fill="rgba(27,36,64,0.7)" stroke="rgba(238,241,248,0.12)" stroke-width="3"/><text x="110" y="1310" font-family="Inter" font-weight="800" font-size="40" fill="#ffc94a">MACD</text>${mb}</g>`;
+        // course sticker
+        const course = `<g id="courseG" transform="rotate(-8 1820 560)"><rect x="1640" y="500" width="360" height="130" rx="24" fill="#eef1f8"/><text x="1820" y="550" text-anchor="middle" font-family="Inter" font-weight="800" font-size="32" fill="#0e1424">NAYA COURSE</text><text x="1820" y="605" text-anchor="middle" font-family="Inter" font-weight="800" font-size="44" fill="#0e1424">₹₹₹</text></g>`;
+        document.getElementById("world").innerHTML = g + h + sl + rsi + macd + course;
+      })();
+
+      const tl = gsap.timeline({ paused: true });
+      const cam = (px, py, sc) => ({ x: 540 - px * sc, y: 1000 - py * sc, scale: sc });
+      // camera path (seek-safe: one fromTo base, then .to keyframes)
+      tl.fromTo("#world", cam(320, 230, 1.7), { ...cam(1050, 430, 1.7), duration: 2.5, ease: "sine.inOut" }, 0);
+      tl.to("#world", { ...cam(1000, 1110, 1.35), duration: 0.6, ease: "power3.inOut" }, 2.5);
+      tl.to("#world", { ...cam(1400, 1300, 1.35), duration: 0.8, ease: "power2.inOut" }, 3.3);
+      tl.to("#world", { ...cam(1820, 600, 1.5), duration: 0.8, ease: "power3.inOut" }, 4.25);
+      tl.to("#world", { ...cam(2200, 760, 1.0), duration: 0.8, ease: "power2.inOut" }, 5.2);
+      tl.to("#world", { ...cam(1500, 900, 0.34), duration: 0.6, ease: "power4.inOut" }, 6.0);
+      tl.to("#world", { ...cam(1500, 900, 0.32), duration: 1.4, ease: "none" }, 6.6);
+
+      // SL markers pop as camera passes (har loss)
+      gsap.utils.toArray(".sl").forEach((el, k) => tl.fromTo(el, { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.25, ease: "back.out(3)" }, 0.3 + k * 0.55));
+      // indicators land on their words
+      tl.fromTo("#rsiG", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.78);
+      tl.fromTo("#rsiLine", { strokeDasharray: 3400, strokeDashoffset: 3400 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 2.8);
+      tl.fromTo("#macdG", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 3.65);
+      tl.fromTo("#macdG .mb", { scaleY: 0, transformOrigin: "50% 50%" }, { scaleY: 1, duration: 0.2, stagger: 0.012 }, 3.7);
+      tl.fromTo("#courseG", { scale: 2.4, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 5.0);
+
+      // captions
+      const show = (s, a, b) => { tl.fromTo(s, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, a); if (b) tl.to(s, { opacity: 0, duration: 0.2 }, b); };
+      tl.set("#c1", { opacity: 1 }, 0); tl.set("#c2", { opacity: 1 }, 0);
+      tl.fromTo("#c2", { scale: 1.06 }, { scale: 1, duration: 0.8 }, 0);
+      tl.to(["#c1", "#c2"], { opacity: 0, duration: 0.2 }, 5.5);
+      show("#pRSI", 2.78, 5.5); show("#pMACD", 3.7, 5.5); show("#pCourse", 5.0, 5.5);
+      show("#c3", 5.67, 6.4);
+      tl.fromTo("#c4", { scale: 1.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "power4.in" }, 6.44);
+      show("#c5", 6.9);
+      tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.3, duration: 0.07 }, 6.44).to("#flash", { opacity: 0, duration: 0.35 }, 6.51);
+      [14, -12, 8, -4, 0].forEach((x, i) => tl.to("#cam", { x, duration: 1 / 30 }, 6.5 + i / 30));
+
+      tl.set({}, {}, 8);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

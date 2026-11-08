@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 4 morning · EP4 Predict karna zaroori nahi */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --paper: #ece6da; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.04; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .baloo { font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 36px; font-weight: 700; }
+      .x { width: 50px; height: 50px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .ok { width: 50px; height: 50px; border-radius: 12px; background: var(--green); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .box { width: 50px; height: 50px; border-radius: 12px; border: 4px solid var(--muted); flex: none; position: relative; }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .tag { display: inline-block; padding: 8px 18px; border-radius: 10px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 28px; }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+      .stampbox { position: absolute; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-family: "Playfair Display", serif; font-weight: 800; letter-spacing: 0.06em; background: rgba(11, 15, 26, 0.45); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+      
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+<div id="sA" class="scene clip" data-start="0" data-duration="4.4" data-track-index="1" data-track-kind="graphics">
+<div class="abs center" style="top: 262px; height: 40px; overflow: hidden"><div id="tt1" class="mono" style="display: inline-block; font-size: 28px; color: var(--yellow); white-space: nowrap; overflow: hidden">CASE FILE #004 · NEXT CANDLE</div></div>
+  <div class="abs center serif" style="top: 320px; font-size: 70px; white-space: nowrap">Pro traders ko bhi nahi pata</div>
+  <div class="abs center" style="top: 420px; font-size: 56px; font-weight: 800">next candle <span style="color: var(--yellow)">kya hogi</span></div>
+  <div id="chA" class="glass" style="left: 90px; top: 540px; width: 900px; height: 560px">
+    <div class="label" style="color: var(--muted)">ILLUSTRATION · CHART</div>
+    <svg class="abs" style="left: 0; top: 90px" width="900" height="440" viewBox="0 0 900 440"><g class="cdl"><line x1="63.1" x2="63.1" y1="213.6" y2="292.8" stroke="#ff4d5e" stroke-width="3"/><rect x="49.3" y="228.0" width="27.8" height="50.4" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="109.4" x2="109.4" y1="262.9" y2="292.8" stroke="#26d07c" stroke-width="3"/><rect x="95.5" y="277.3" width="27.8" height="6.0" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="155.6" x2="155.6" y1="262.9" y2="306.2" stroke="#ff4d5e" stroke-width="3"/><rect x="141.8" y="277.3" width="27.8" height="14.5" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="201.9" x2="201.9" y1="277.4" y2="351.4" stroke="#ff4d5e" stroke-width="3"/><rect x="188.0" y="291.8" width="27.8" height="45.2" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="248.1" x2="248.1" y1="273.9" y2="351.4" stroke="#26d07c" stroke-width="3"/><rect x="234.3" y="288.3" width="27.8" height="48.7" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="294.4" x2="294.4" y1="273.9" y2="306.0" stroke="#ff4d5e" stroke-width="3"/><rect x="280.5" y="288.3" width="27.8" height="6.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="340.6" x2="340.6" y1="268.0" y2="306.0" stroke="#26d07c" stroke-width="3"/><rect x="326.8" y="282.4" width="27.8" height="9.2" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="386.9" x2="386.9" y1="264.5" y2="296.8" stroke="#26d07c" stroke-width="3"/><rect x="373.0" y="278.9" width="27.8" height="6.0" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="433.1" x2="433.1" y1="260.5" y2="293.3" stroke="#26d07c" stroke-width="3"/><rect x="419.3" y="274.9" width="27.8" height="6.0" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="479.4" x2="479.4" y1="260.5" y2="307.3" stroke="#ff4d5e" stroke-width="3"/><rect x="465.5" y="274.9" width="27.8" height="18.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="525.6" x2="525.6" y1="278.5" y2="332.5" stroke="#ff4d5e" stroke-width="3"/><rect x="511.8" y="292.9" width="27.8" height="25.2" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="571.9" x2="571.9" y1="271.9" y2="332.5" stroke="#26d07c" stroke-width="3"/><rect x="558.0" y="286.3" width="27.8" height="31.8" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="618.1" x2="618.1" y1="271.9" y2="334.9" stroke="#ff4d5e" stroke-width="3"/><rect x="604.3" y="286.3" width="27.8" height="34.2" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="664.4" x2="664.4" y1="306.1" y2="341.5" stroke="#ff4d5e" stroke-width="3"/><rect x="650.5" y="320.5" width="27.8" height="6.6" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="710.6" x2="710.6" y1="295.4" y2="341.5" stroke="#26d07c" stroke-width="3"/><rect x="696.8" y="309.8" width="27.8" height="17.3" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="756.9" x2="756.9" y1="250.5" y2="324.2" stroke="#26d07c" stroke-width="3"/><rect x="743.0" y="264.9" width="27.8" height="44.8" rx="3" fill="#26d07c"/></g>
+      <rect x="782.3" y="40" width="81.6" height="360" rx="10" fill="none" stroke="#ffc94a" stroke-width="4" stroke-dasharray="12 8" />
+    </svg>
+    <div id="qm" class="abs serif" style="left: 783px; top: 200px; font-size: 200px; color: var(--yellow); text-shadow: 0 0 40px rgba(255,201,74,0.5)">?</div>
+  </div>
+  <div id="aSub" class="abs center serif" style="top: 1160px; font-size: 64px">Phir paisa kaise banate hain?</div>
+</div>
+
+<div id="s6" class="scene clip" data-start="4.4" data-duration="2.9" data-track-index="1" data-track-kind="graphics">
+<div id="push7" class="abs" style="inset: 0">
+  <div class="abs center mono" style="top: 300px; font-size: 28px; color: var(--muted)">EXHIBIT A · JAWAB</div>
+  <div id="t10" class="abs center serif" style="top: 380px; font-size: 88px">Jawab ek line ka.</div>
+  <div id="bc8" class="glass" style="left: 140px; top: 640px; width: 800px; height: 300px; border-color: rgba(255,201,74,0.4)">
+    <div class="label">JAWAB · LOCKED</div>
+    <div class="abs serif" style="left: 0; width: 800px; top: 100px; text-align: center; font-size: 84px; filter: blur(18px); color: var(--yellow)">JAANNA ZAROORI NAHI</div>
+    <div id="rd9" class="abs" style="left: 60px; top: 110px; width: 680px; height: 110px; background: #000; transform-origin: left center; box-shadow: 0 0 30px rgba(255, 138, 61, 0.9)"></div>
+  </div>
+  <div id="t11" class="abs center serif" style="top: 1010px; font-size: 76px">End tak dekhna.</div>
+</div>
+</div>
+
+<div id="sC" class="scene clip" data-start="7.3" data-duration="7.4" data-track-index="1" data-track-kind="graphics">
+<div class="grid"></div>
+  <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT B · RAJU KI AADAT</div>
+  <div id="cT" class="abs center serif" style="top: 320px; font-size: 64px; white-space: nowrap">Har trade mein <span style="color: var(--yellow)">sahi</span> hona hai</div>
+  <div id="cP" class="glass" style="left: 90px; top: 470px; width: 900px; height: 560px">
+    <div class="label" style="color: var(--orange)">RAJU · EXAMPLE ACCOUNT</div>
+    <svg class="abs" style="left: 40px; top: 80px" width="820" height="360" viewBox="0 0 820 360"><g class="cdl"><line x1="66.4" x2="66.4" y1="108.0" y2="160.5" stroke="#ff4d5e" stroke-width="3"/><rect x="50.6" y="120.0" width="31.7" height="28.5" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="119.3" x2="119.3" y1="136.5" y2="187.9" stroke="#ff4d5e" stroke-width="3"/><rect x="103.4" y="148.5" width="31.7" height="27.4" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="172.1" x2="172.1" y1="163.9" y2="200.5" stroke="#ff4d5e" stroke-width="3"/><rect x="156.3" y="175.9" width="31.7" height="12.6" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="225.0" x2="225.0" y1="176.5" y2="206.0" stroke="#ff4d5e" stroke-width="3"/><rect x="209.1" y="188.5" width="31.7" height="6.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="277.9" x2="277.9" y1="182.0" y2="223.8" stroke="#ff4d5e" stroke-width="3"/><rect x="262.0" y="194.0" width="31.7" height="17.8" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="330.7" x2="330.7" y1="199.8" y2="250.8" stroke="#ff4d5e" stroke-width="3"/><rect x="314.9" y="211.8" width="31.7" height="27.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="383.6" x2="383.6" y1="226.8" y2="275.8" stroke="#ff4d5e" stroke-width="3"/><rect x="367.7" y="238.8" width="31.7" height="25.1" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="436.4" x2="436.4" y1="251.8" y2="278.6" stroke="#ff4d5e" stroke-width="3"/><rect x="420.6" y="263.8" width="31.7" height="6.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="489.3" x2="489.3" y1="254.6" y2="280.9" stroke="#ff4d5e" stroke-width="3"/><rect x="473.4" y="266.6" width="31.7" height="6.0" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="542.1" x2="542.1" y1="256.9" y2="288.4" stroke="#ff4d5e" stroke-width="3"/><rect x="526.3" y="268.9" width="31.7" height="7.6" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="595.0" x2="595.0" y1="258.5" y2="288.4" stroke="#26d07c" stroke-width="3"/><rect x="579.1" y="270.5" width="31.7" height="6.0" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="647.9" x2="647.9" y1="247.2" y2="282.5" stroke="#26d07c" stroke-width="3"/><rect x="632.0" y="259.2" width="31.7" height="11.3" rx="3" fill="#26d07c"/></g><g class="cdl"><line x1="700.7" x2="700.7" y1="247.2" y2="295.0" stroke="#ff4d5e" stroke-width="3"/><rect x="684.9" y="259.2" width="31.7" height="23.8" rx="3" fill="#ff4d5e"/></g><g class="cdl"><line x1="753.6" x2="753.6" y1="266.1" y2="295.0" stroke="#26d07c" stroke-width="3"/><rect x="737.7" y="278.1" width="31.7" height="6.0" rx="3" fill="#26d07c"/></g></svg>
+    <div id="slLine" class="abs" style="left: 60px; top: 420px; width: 780px; height: 0; border-top: 5px dashed var(--red)"></div>
+    <div id="slLab" class="abs mono" style="left: 60px; top: 436px; font-size: 30px; color: var(--red)">STOP LOSS</div>
+    <div id="slX" class="stampbox" style="left: 420px; top: 400px; width: 400px; height: 100px; border: 8px solid var(--red); color: var(--red); font-size: 48px; transform: rotate(-6deg)">SL HATAYA</div>
+  </div>
+  <div id="cNote" class="abs center" style="top: 1080px; font-size: 50px; font-weight: 800">Galat hua → <span style="color: var(--orange)">ego hurt</span></div>
+</div>
+
+<div id="sD" class="scene clip" data-start="14.7" data-duration="5.5" data-track-index="1" data-track-kind="graphics">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT C · MARK DOUGLAS</div>
+  <div id="dT" class="abs center serif" style="top: 320px; font-size: 80px">Truth number 2</div>
+  <div id="ans" class="glass" style="left: 108px; top: 470px; width: 864px; height: 430px; border-color: rgba(255,201,74,0.55)">
+    <div class="label">JAWAB · UNLOCKED</div>
+    <div class="abs center serif" style="left: 0; width: 864px; top: 90px; font-size: 56px; line-height: 1.15">Paisa banane ke liye ye</div>
+    <div class="abs baloo" style="left: 0; width: 864px; top: 170px; text-align: center; font-size: 76px; white-space: nowrap; color: var(--yellow)">JAANNA ZAROORI NAHI</div>
+    <div class="abs center serif" style="left: 0; width: 864px; top: 300px; font-size: 56px">ki aage kya hoga.</div>
+  </div>
+  <div id="src18" class="lower" style="top: 960px; border-left-color: var(--yellow)"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Mark Douglas, Trading in the Zone (2000): fundamental truth #2</div></div>
+</div>
+
+<div id="s23" class="scene clip" data-start="20.2" data-duration="5" data-track-index="1" data-track-kind="graphics">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">AAJ KA KAAM</div>
+  <div id="t24" class="abs center serif" style="top: 320px; font-size: 92px; color: var(--green)">Aaj ka kaam</div>
+  <div id="t25" class="abs center serif" style="top: 440px; font-size: 56px">Trade se pehle likho</div>
+  <div id="pn26" class="glass" style="left: 90px; top: 580px; width: 900px; height: 506px">
+    <div class="label" style="color: var(--green)">NEXT TRADE · NOTEPAD</div>
+    <div id="r27" class="row" style="top: 96px; height: 110px; font-size: 36px"><div class="box"><div id="ck28" class="abs" style="inset: -4px; border-radius: 12px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800">✓</div></div><div>SL: ________</div></div><div id="r31" class="row" style="top: 226px; height: 110px; font-size: 36px"><div class="box"><div id="ck32" class="abs" style="inset: -4px; border-radius: 12px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800">✓</div></div><div>Target: ________</div></div><div id="r35" class="row" style="top: 356px; height: 110px; font-size: 36px"><div class="box"><div id="ck36" class="abs" style="inset: -4px; border-radius: 12px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800">✓</div></div><div>Direction guess? <span style='color: var(--red)'>Nahi</span></div></div>
+  </div>
+</div>
+
+<div id="s40" class="scene clip" data-start="25.2" data-duration="4.15" data-track-index="1" data-track-kind="graphics">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE FILE · DM MEIN</div>
+  <div id="t41" class="abs center serif" style="top: 320px; font-size: 84px; white-space: nowrap">5 truths chahiye?</div>
+  <div id="toast42" class="glass" style="left: 140px; top: 500px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+    <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+    <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">Trading in the Zone · 5 Truths</div>
+  </div>
+  <div id="cbar43" class="glass" style="left: 108px; top: 740px; width: 864px; height: 130px; border-radius: 65px">
+    <div id="ph44" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+    <div class="abs" style="left: 50px; top: 30px; height: 70px; overflow: hidden"><div id="typed45" style="font-family: 'Baloo 2'; font-size: 54px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap">ZONE</div></div>
+    <div id="send46" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+  </div>
+  <div id="cta47" class="abs center" style="top: 940px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; color: var(--yellow); white-space: nowrap">Comment karo: ZONE</div>
+</div>
+
+<div id="s57" class="scene clip" data-start="29.8" data-duration="4.2" data-track-index="1" data-track-kind="graphics">
+<div id="next58" class="glass" style="left: 108px; top: 290px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+    <div id="next58lab" class="label" style="color: var(--orange)">CASE #005 · KAL SUBAH</div>
+    <div id="next58txt" class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 56px">Perfect setup, phir bhi SL. Kyun?</div>
+  </div>
+  <img id="logo59" class="abs" src="assets/tw-icon.svg" style="left: 420px; top: 660px; width: 240px; height: 240px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+  <div id="h60" class="abs center" style="top: 930px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+  <div id="fbtn61" class="abs" style="left: 330px; top: 1030px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+  <div class="abs center" style="top: 1220px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+</div>
+      </div>
+
+<div id="k16" class="kin clip" data-start="11.6" data-duration="0.5" data-track-index="2" data-track-kind="graphics" style="background: var(--orange)"><span style="font-size: 420px">EGO</span></div>
+<div id="k21" class="kin clip" data-start="15.75" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span style="font-size: 240px">TRUTH #2</span></div>
+<div id="k55" class="kin clip" data-start="29.42" data-duration="0.42" data-track-index="2" data-track-kind="graphics" style="background: var(--orange)"><span style="font-size: 300px">KAL</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · CASE FILES</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + self-generated SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+<audio id="a2" class="clip" src="assets/sfx/typekey.mp3" data-start="0.05" data-duration="0.05" data-track-index="11" data-volume="0.24"></audio>
+<audio id="a3" class="clip" src="assets/sfx/typekey.mp3" data-start="0.3" data-duration="0.05" data-track-index="11" data-volume="0.24"></audio>
+<audio id="a4" class="clip" src="assets/sfx/typekey.mp3" data-start="0.55" data-duration="0.05" data-track-index="11" data-volume="0.24"></audio>
+<audio id="a5" class="clip" src="assets/sfx/pop.mp3" data-start="2.98" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+<audio id="a12" class="clip" src="assets/sfx/whoosh.mp3" data-start="4.2" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a13" class="clip" src="assets/sfx/heartbeat.mp3" data-start="5" data-duration="0.9" data-track-index="17" data-volume="0.5"></audio>
+<audio id="a14" class="clip" src="assets/sfx/whoosh.mp3" data-start="7.1" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a15" class="clip" src="assets/sfx/stamp.mp3" data-start="13.6" data-duration="0.5" data-track-index="12" data-volume="0.45"></audio>
+<audio id="a17" class="clip" src="assets/sfx/impact.mp3" data-start="11.6" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+<audio id="a19" class="clip" src="assets/sfx/whoosh.mp3" data-start="14.5" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a20" class="clip" src="assets/sfx/shutter.mp3" data-start="18.2" data-duration="0.16" data-track-index="16" data-volume="0.38"></audio>
+<audio id="a22" class="clip" src="assets/sfx/impact.mp3" data-start="15.75" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+<audio id="a29" class="clip" src="assets/sfx/pop.mp3" data-start="21.6" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+<audio id="a30" class="clip" src="assets/sfx/tick.mp3" data-start="22.05" data-duration="0.07" data-track-index="13" data-volume="0.32"></audio>
+<audio id="a33" class="clip" src="assets/sfx/pop.mp3" data-start="22.7" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+<audio id="a34" class="clip" src="assets/sfx/tick.mp3" data-start="23.15" data-duration="0.07" data-track-index="13" data-volume="0.32"></audio>
+<audio id="a37" class="clip" src="assets/sfx/pop.mp3" data-start="23.68" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+<audio id="a38" class="clip" src="assets/sfx/tick.mp3" data-start="24.13" data-duration="0.07" data-track-index="13" data-volume="0.32"></audio>
+<audio id="a39" class="clip" src="assets/sfx/whoosh.mp3" data-start="20" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a48" class="clip" src="assets/sfx/whoosh.mp3" data-start="25" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a49" class="clip" src="assets/sfx/pop.mp3" data-start="25.7" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+<audio id="a50" class="clip" src="assets/sfx/typekey.mp3" data-start="28.81" data-duration="0.05" data-track-index="11" data-volume="0.24"></audio>
+<audio id="a51" class="clip" src="assets/sfx/typekey.mp3" data-start="28.87" data-duration="0.05" data-track-index="31" data-volume="0.24"></audio>
+<audio id="a52" class="clip" src="assets/sfx/typekey.mp3" data-start="28.93" data-duration="0.05" data-track-index="11" data-volume="0.24"></audio>
+<audio id="a53" class="clip" src="assets/sfx/typekey.mp3" data-start="28.99" data-duration="0.05" data-track-index="31" data-volume="0.24"></audio>
+<audio id="a54" class="clip" src="assets/sfx/click.mp3" data-start="29.04" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+<audio id="a56" class="clip" src="assets/sfx/impact.mp3" data-start="29.42" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+<audio id="a62" class="clip" src="assets/sfx/whoosh.mp3" data-start="29.6" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+<audio id="a63" class="clip" src="assets/sfx/pop.mp3" data-start="31.2" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const D = 34, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "5100px 3570px", duration: D, ease: "steps(510)" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const slide = (s, t) => tl.fromTo(s, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)" }, t);
+      const popIn = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const stampIn = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.3 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const src = (s, t) => tl.fromTo(s, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const unblur = (s, t) => tl.fromTo(s, { filter: "blur(22px)", opacity: 0.55 }, { filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power2.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const typeW = (s, w, t, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || n * 0.035, ease: "steps(" + n + ")" }, t);
+
+typeW("#tt1", 584, 0, 28, 0.6);
+tl.fromTo("#qm", { scale: 1 }, { scale: 1.18, duration: 0.45, yoyo: true, repeat: 7, ease: "sine.inOut" }, 0);
+up("#aSub", 2.8);
+enter("#s6", 4.4); up("#t10", 4.43);
+tl.fromTo("#push7", { scale: 1 }, { scale: 1.07, duration: 2.9, ease: "sine.in" }, 4.4);
+tl.fromTo("#rd9", { scaleX: 1 }, { scaleX: 0.05, duration: 0.18, ease: "power2.in", yoyo: true, repeat: 1 }, 5.1);
+up("#t11", 6.2);
+enter("#sC", 7.3); up("#cT", 9.33); tl.fromTo("#cP", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 7.5);
+tl.fromTo("#sC .cdl", { opacity: 0, scaleY: 0, transformOrigin: "50% 100%" }, { opacity: 1, scaleY: 1, duration: 0.16, stagger: 0.08, ease: "power2.out" }, 7.7);
+up("#cNote", 12.2);
+tl.to(["#slLine", "#slLab"], { opacity: 0, duration: 0.5 }, 13.3); stampIn("#slX", 13.6); shake("#cP", 13.65);
+punch("#k16", 11.6);
+src("#src18", 15);
+enter("#sD", 14.7); up("#dT", 14.75); tl.fromTo("#ans", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 16.6); unblur("#ans", 18.2); flash(18.2, 0.3);
+punch("#k21", 15.75);
+enter("#s23", 20.2); up("#t24", 20.23);
+up("#t25", 20.6);
+tl.fromTo("#pn26", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 20.55);
+slide("#r27", 21.6); popIn("#ck28", 22.05);
+slide("#r31", 22.7); popIn("#ck32", 23.15);
+slide("#r35", 23.68); popIn("#ck36", 24.13);
+enter("#s40", 25.2); up("#t41", 25.23);
+tl.fromTo("#cbar43", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 25.5);
+tl.fromTo("#toast42", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 25.7);
+tl.to("#ph44", { opacity: 0, duration: 0.05 }, 28.81); typeW("#typed45", 196, 28.81, 4, 0.18);
+tl.fromTo("#send46", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, 29.04);
+up("#cta47", 27.51);
+punch("#k55", 29.42);
+enter("#s57", 29.8); up("#next58", 29.85);
+tl.fromTo("#logo59", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 31);
+up("#h60", 31.1);
+tl.fromTo("#fbtn61", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 31.2);
+tl.to("#fbtn61", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 5, ease: "sine.inOut" }, 31.7);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

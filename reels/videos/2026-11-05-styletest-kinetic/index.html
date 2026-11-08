@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* Style test: KINETIC TYPE — one word at a time, on the voice, colour flips */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0e1424; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Baloo 2", sans-serif; color: var(--ink); }
+      #bgc { position: absolute; inset: 0; background: var(--bg); }
+      #grain { position: absolute; inset: 0; opacity: 0.06; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 6px 6px; }
+      .w { position: absolute; left: 108px; width: 864px; top: 520px; height: 640px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: 800; line-height: 0.9; text-transform: uppercase; opacity: 0; white-space: nowrap; }
+      #brand { position: absolute; left: 108px; top: 196px; display: flex; align-items: center; gap: 16px; font-family: "Inter", sans-serif; font-weight: 800; font-size: 28px; letter-spacing: 0.1em; }
+      #brand img { width: 64px; height: 64px; border-radius: 50%; }
+      #progTrack { position: absolute; left: 108px; top: 290px; width: 864px; height: 6px; border-radius: 3px; background: rgba(238, 241, 248, 0.15); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 6px; border-radius: 3px; background: var(--ink); transform-origin: left center; }
+      #strike { position: absolute; left: 230px; top: 830px; width: 620px; height: 26px; border-radius: 13px; background: var(--red); transform-origin: left center; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8" data-width="1080" data-height="1920">
+      <div id="bgc"></div>
+      <div id="grain"></div>
+      <div id="brand"><img src="assets/tw-icon.svg" />THE TRADING WIZAARD</div>
+      <div id="progTrack"><div id="prog"></div></div>
+
+      <div id="words" class="clip" data-start="0" data-duration="8" data-track-index="1" data-track-kind="graphics" style="position: absolute; inset: 0">
+        <div id="w0" class="w" style="opacity: 1"><span style="font-size: 64px; color: var(--yellow)">SEBI ka data:</span><span style="font-size: 150px; margin-top: 20px">10 mein se <span style="color: var(--red)">9</span></span></div>
+        <div id="w1" class="w" style="font-size: 320px">DAS</div>
+        <div id="w2" class="w" style="font-size: 220px">MEIN SE</div>
+        <div id="w3" class="w" style="font-size: 210px; color: var(--yellow)">LAGBHAG</div>
+        <div id="w4" class="w" style="font-size: 760px; color: var(--red)">9</div>
+        <div id="w5" class="w" style="font-size: 330px">F&amp;O</div>
+        <div id="w6" class="w" style="font-size: 200px">TRADERS</div>
+        <div id="w7" class="w" style="font-size: 360px; color: var(--bg)">LOSS</div>
+        <div id="w8" class="w" style="font-size: 150px; color: var(--bg)">MEIN HAIN.</div>
+        <div id="w9" class="w" style="font-size: 300px">AUR</div>
+        <div id="w10" class="w" style="font-size: 260px">SABSE</div>
+        <div id="w11" class="w" style="font-size: 300px">BADI</div>
+        <div id="w12" class="w" style="font-size: 220px; color: var(--yellow)">WAJAH…</div>
+        <div id="w13" class="w" style="font-size: 300px">CHART</div>
+        <div id="w14" class="w" style="font-size: 190px; color: var(--bg)">NAHI HAI.</div>
+        <div id="w15" class="w"><img src="assets/tw-icon.svg" style="width: 260px; height: 260px; border-radius: 50%" /><span style="font-family: Inter; font-size: 48px; margin-top: 30px">@thetradingwizaard</span><span style="font-family: Inter; font-size: 30px; margin-top: 18px; color: var(--muted); text-transform: none">Educational content, not investment advice.</span></div>
+        <div id="strike"></div>
+      </div>
+
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-media-start="0" data-duration="7.3" data-track-index="10" data-volume="1"></audio>
+      <audio id="i1" class="clip" src="assets/sfx/impact.mp3" data-start="2.26" data-duration="0.9" data-track-index="11" data-volume="0.4"></audio>
+      <audio id="i2" class="clip" src="assets/sfx/impact.mp3" data-start="3.65" data-duration="0.9" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="i3" class="clip" src="assets/sfx/impact.mp3" data-start="6.17" data-duration="0.9" data-track-index="11" data-volume="0.4"></audio>
+      <audio id="wh" class="clip" src="assets/sfx/whoosh.mp3" data-start="4.45" data-duration="0.5" data-track-index="13" data-volume="0.4"></audio>
+      <audio id="po" class="clip" src="assets/sfx/pop.mp3" data-start="7.3" data-duration="0.12" data-track-index="14" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      // [id, start, background]
+      const seq = [["#w0", 0, "#0e1424"], ["#w1", 1.26, "#0e1424"], ["#w2", 1.46, "#0e1424"], ["#w3", 1.86, "#0e1424"], ["#w4", 2.26, "#0e1424"],
+        ["#w5", 2.46, "#0e1424"], ["#w6", 3.06, "#0e1424"], ["#w7", 3.65, "#ff4d5e"], ["#w8", 3.95, "#ff4d5e"], ["#w9", 4.69, "#0e1424"],
+        ["#w10", 4.86, "#0e1424"], ["#w11", 5.2, "#0e1424"], ["#w12", 5.54, "#0e1424"], ["#w13", 6.17, "#0e1424"], ["#w14", 6.5, "#ffc94a"], ["#w15", 7.3, "#0e1424"]];
+      seq.forEach(([id, t, bg], i) => {
+        const end = i + 1 < seq.length ? seq[i + 1][1] : 8;
+        if (i > 0) tl.set(id, { opacity: 1 }, t);
+        tl.set(id, { opacity: 0 }, end);
+        tl.set("#bgc", { backgroundColor: bg }, t);
+        if (i > 0) tl.fromTo(id, { scale: 1.35, rotation: i % 2 ? -3 : 3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out", immediateRender: false }, t);
+      });
+      // frame-0 hook breathes, LOSS shakes, CHART gets struck
+      tl.fromTo("#w0", { scale: 1.04 }, { scale: 1, duration: 1.2, ease: "power1.out" }, 0);
+      [16, -14, 10, -6, 0].forEach((x, i) => tl.to("#w7", { x, duration: 1 / 30 }, 3.8 + i / 30));
+      tl.set("#strike", { scaleX: 0 }, 0).fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: "power3.out", immediateRender: false }, 6.3).set("#strike", { scaleX: 0 }, 6.5);
+      tl.fromTo("#w12", { scale: 1 }, { scale: 1.06, duration: 0.6, ease: "sine.out", immediateRender: false }, 5.6);
+      tl.fromTo("#w15", { y: 40 }, { y: 0, duration: 0.4, ease: "back.out(1.7)", immediateRender: false }, 7.3);
+      tl.set("#brand", { color: "#eef1f8" }, 0).set("#brand", { color: "#0e1424" }, 3.65).set("#brand", { color: "#eef1f8" }, 4.69).set("#brand", { color: "#0e1424" }, 6.5).set("#brand", { color: "#eef1f8" }, 7.3);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: 8, ease: "none" }, 0);
+      tl.set({}, {}, 8);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

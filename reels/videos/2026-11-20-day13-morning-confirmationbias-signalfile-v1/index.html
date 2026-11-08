@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 13 morning · EP13 Confirmation bias */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --paper: #ece6da; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.02; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 36px; font-weight: 700; }
+      .x { width: 50px; height: 50px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .ok { width: 50px; height: 50px; border-radius: 12px; background: var(--green); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .chip { position: absolute; padding: 12px 26px; border-radius: 40px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 30px; }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+      .stampbox { position: absolute; border: 12px solid var(--red); border-radius: 18px; color: var(--red); display: flex; align-items: center; justify-content: center; font-family: "Playfair Display", serif; font-weight: 800; letter-spacing: 0.06em; background: rgba(11, 15, 26, 0.45); }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+
+      .feed { position: absolute; left: 36px; width: 828px; height: 112px; border-radius: 20px; display: flex; align-items: center; gap: 22px; padding: 0 26px; font-size: 36px; font-weight: 700; background: rgba(11,15,26,0.8); }
+      .feed.g { border: 2px solid rgba(38,208,124,0.6); }
+      .feed.r { border: 2px solid rgba(255,77,94,0.6); }
+      .tag { font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 28px; padding: 6px 14px; border-radius: 10px; flex: none; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34.41" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+<div id="sA" class="scene clip" data-start="0.00" data-duration="6.20" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center serif" style="top: 262px; font-size: 96px; white-space: nowrap">Bullish ho?</div>
+<div id="aSub" class="abs center serif" style="top: 380px; font-size: 62px; white-space: nowrap">Har chart <span style="color: var(--green)">bullish</span> dikhega.</div>
+<div id="aPanel" class="glass" style="left: 90px; top: 500px; width: 900px; height: 540px">
+  <div id="aLbl" class="label" style="color: var(--green); font-size: 30px">TUMHARI NAZAR SE</div>
+  <svg id="chart" class="abs" style="left: 40px; top: 200px" width="820" height="320" viewBox="0 0 820 320"></svg>
+  <div id="aStamp" class="stampbox" data-layout-allow-overlap style="left: 470px; top: 60px; width: 380px; height: 130px; font-size: 72px; transform: rotate(-8deg)">BIAS?</div>
+</div>
+<div id="aTruth" class="abs center serif" style="top: 1080px; font-size: 58px; white-space: nowrap">Yahi tumhe <span style="color: var(--red)">sach se door</span> rakhta hai</div>
+<div id="aFix" class="glass" style="left: 290px; top: 1190px; width: 500px; height: 120px; border-color: rgba(255,201,74,0.5)"><div class="label">FIX · END MEIN</div><div class="abs serif" style="left: 36px; top: 62px; font-size: 40px; color: var(--muted); filter: blur(10px)">Against reason</div></div>
+
+</div>
+
+<div id="sB" class="scene clip" data-start="6.20" data-duration="7.70" data-track-index="1" data-track-kind="graphics">
+
+<div id="acB" class="glass" style="left: 108px; top: 270px; width: 864px; height: 120px; border-color: rgba(255,138,61,0.55)"><div class="abs mono" style="left: 32px; top: 22px; font-size: 28px; color: var(--orange)">RAJU KA ACCOUNT</div><div class="abs mono" style="left: 32px; top: 60px; font-size: 28px; color: var(--muted)">example</div><div id="acBV" class="abs" style="right: 110px; top: 22px; font-family: 'Baloo 2'; font-weight: 800; font-size: 66px; line-height: 1">₹1,00,000</div><div id="acBA" class="abs" style="right: 32px; top: 26px; font-size: 60px; color: var(--red); line-height: 1">▼</div></div>
+<div id="bBuy" class="chip" style="left: 108px; top: 420px; background: var(--green); color: #0b0f1a">BUY · example</div>
+<div id="bPanel" class="glass" style="left: 90px; top: 510px; width: 900px; height: 720px">
+  <div class="label" style="color: var(--orange)">RAJU KA FEED · EXAMPLE</div>
+  <div id="f1" class="feed g" style="top: 90px"><span class="tag" style="background: rgba(38,208,124,0.2); color: var(--green)">NEWS</span>“Bull run shuru!”</div>
+  <div id="f2" class="feed g" style="top: 222px"><span class="tag" style="background: rgba(38,208,124,0.2); color: var(--green)">POST</span>“Breakout confirm 🚀”</div>
+  <div id="f3" class="feed r" style="top: 354px"><span class="tag" style="background: rgba(255,77,94,0.2); color: var(--red)">NEWS</span>“Resistance strong hai”</div>
+  <div id="f4" class="feed r" style="top: 486px"><span class="tag" style="background: rgba(255,77,94,0.2); color: var(--red)">DATA</span>“Volume gir raha hai”</div>
+  <div id="bSkip" class="abs mono" style="left: 36px; top: 630px; font-size: 32px; color: var(--red)">BEARISH = SKIP ✕</div>
+</div>
+
+</div>
+
+<div id="sC" class="scene clip" data-start="13.90" data-duration="5.30" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT · NAAM</div>
+<div id="cCard" class="glass" style="left: 90px; top: 320px; width: 900px; height: 250px; border-color: rgba(255,201,74,0.6)">
+  <div class="label">ISE KEHTE HAIN</div>
+  <div id="cW" class="abs serif" style="left: 0; width: 900px; top: 96px; text-align: center; font-size: 76px; color: var(--yellow); filter: blur(14px)">Confirmation Bias</div>
+</div>
+<div id="cT" class="abs center serif" style="top: 620px; font-size: 50px; white-space: nowrap">Dimaag sirf wo saboot dhoondta hai<br>jo <span style="color: var(--green)">uski raay</span> ke saath ho</div>
+<div id="cP" class="glass" style="left: 140px; top: 800px; width: 800px; height: 300px">
+  <div class="label" style="color: var(--muted)">SABOOT</div>
+  <div id="cR1" class="row" style="top: 76px"><div class="ok">✓</div>Raay ke saath: padha</div>
+  <div id="cR2" class="row" style="top: 186px; color: var(--muted)"><div class="x">✕</div>Raay ke khilaaf: ignore</div>
+</div>
+<div id="srcC" class="lower" style="top: 1150px"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Kahneman, Thinking, Fast and Slow (2011)</div></div>
+
+</div>
+
+<div id="sD" class="scene clip" data-start="19.20" data-duration="4.30" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT · AAJ KA KAAM</div>
+<div id="dT" class="abs center serif" style="top: 320px; font-size: 92px; color: var(--green)">Aaj ka kaam</div>
+<div id="dT2" class="abs center serif" style="top: 440px; font-size: 50px; white-space: nowrap">Har trade se pehle, ek reason likho</div>
+<div id="dCard" class="glass" style="left: 90px; top: 580px; width: 900px; height: 440px; border-color: rgba(255,77,94,0.6)">
+  <div class="label" style="color: var(--muted)">TRADE PLAN · EXAMPLE</div>
+  <div class="abs" style="left: 36px; top: 90px; font-size: 38px; font-weight: 700"><span style="color: var(--green)">FOR:</span> Breakout dikha</div>
+  <div class="abs" style="left: 36px; top: 170px; width: 828px; height: 2px; background: var(--edge)"></div>
+  <div class="abs" style="left: 36px; top: 210px; font-family: 'Baloo 2'; font-weight: 800; font-size: 64px; color: var(--red); line-height: 1">AGAINST:</div>
+  <div class="abs" style="left: 36px; top: 300px; height: 70px; overflow: hidden"><div id="dTy" style="font-size: 46px; line-height: 70px; font-weight: 700; white-space: nowrap; overflow: hidden; width: 0">Resistance paas hai</div></div>
+  <div id="dLine" class="abs" style="left: 36px; top: 374px; width: 828px; height: 3px; background: rgba(255,77,94,0.5)"></div>
+</div>
+
+</div>
+
+<div id="sE" class="scene clip" data-start="23.50" data-duration="3.45" data-track-index="1" data-track-kind="graphics">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE FILE</div>
+<div id="sET" class="abs center serif" style="top: 320px; font-size: 78px; line-height: 1.08">Raju ki 10 galtiyan<br>PDF chahiye?</div>
+<div id="sEcbar" class="glass" style="left: 108px; top: 600px; width: 864px; height: 130px; border-radius: 65px">
+  <div id="sEph" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+  <div class="abs" style="left: 50px; top: 22px; height: 88px; overflow: hidden"><div id="sEtyped" style="font-family: 'Baloo 2'; font-size: 54px; line-height: 88px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap">GALTI</div></div>
+  <div id="sEsend" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+</div>
+<div id="sECta" class="abs center" style="top: 800px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; color: var(--yellow); white-space: nowrap">Comment karo: GALTI</div>
+<div id="sEtoast" class="glass" style="left: 140px; top: 960px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+  <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+  <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">Raju ki 10 Galtiyan · PDF 📕</div>
+</div>
+</div>
+
+<div id="sF" class="scene clip" data-start="26.95" data-duration="7.46" data-track-index="1" data-track-kind="graphics">
+<div id="sFnext" class="glass" style="left: 108px; top: 290px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+  <div class="label" style="color: var(--orange)">AAJ SHAAM · MYTH YA FACT?</div>
+  <div class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 56px; line-height: 1.08">Jitni zyada news, <span style="color: var(--yellow)">utna sahi trade?</span></div>
+</div>
+
+<img id="sFlogo" class="abs" src="assets/tw-icon.svg" style="left: 430px; top: 660px; width: 220px; height: 220px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+<div id="sFhandle" class="abs center" style="top: 910px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+<div id="sFfbtn" class="abs" style="left: 330px; top: 1010px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+<div class="abs center" style="top: 1200px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+</div>
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="kSkip" class="kin clip" data-layout-allow-overlap data-start="13.19" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--red)"><span style="font-size: 330px">SKIP</span></div>
+      <div id="kBias" class="kin clip" data-layout-allow-overlap data-start="13.91" data-duration="0.40" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span style="font-size: 380px">BIAS</span></div>
+      <div id="kAg" class="kin clip" data-layout-allow-overlap data-start="22.07" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--red)"><span style="font-size: 230px">AGAINST</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · CASE FILES · EP13</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + self-generated SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="sx0" class="clip" src="assets/sfx/stamp.mp3" data-start="1.90" data-duration="0.5" data-track-index="12" data-volume="0.35"></audio>
+      <audio id="sx1" class="clip" src="assets/sfx/shutter.mp3" data-start="3.10" data-duration="0.16" data-track-index="16" data-volume="0.38"></audio>
+      <audio id="sx2" class="clip" src="assets/sfx/pop.mp3" data-start="5.10" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx3" class="clip" src="assets/sfx/whoosh.mp3" data-start="6.02" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx4" class="clip" src="assets/sfx/pop.mp3" data-start="8.07" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx5" class="clip" src="assets/sfx/pop.mp3" data-start="8.90" data-duration="0.12" data-track-index="18" data-volume="0.25"></audio>
+      <audio id="sx6" class="clip" src="assets/sfx/pop.mp3" data-start="10.30" data-duration="0.12" data-track-index="18" data-volume="0.25"></audio>
+      <audio id="sx7" class="clip" src="assets/sfx/whoosh.mp3" data-start="12.50" data-duration="0.5" data-track-index="15" data-volume="0.3"></audio>
+      <audio id="sx8" class="clip" src="assets/sfx/whoosh.mp3" data-start="12.75" data-duration="0.5" data-track-index="35" data-volume="0.3"></audio>
+      <audio id="sx9" class="clip" src="assets/sfx/impact.mp3" data-start="13.19" data-duration="0.9" data-track-index="14" data-volume="0.48"></audio>
+      <audio id="sx10" class="clip" src="assets/sfx/whoosh.mp3" data-start="13.72" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx11" class="clip" src="assets/sfx/impact.mp3" data-start="13.91" data-duration="0.9" data-track-index="34" data-volume="0.48"></audio>
+      <audio id="sx12" class="clip" src="assets/sfx/tick.mp3" data-start="17.00" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx13" class="clip" src="assets/sfx/tick.mp3" data-start="17.60" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx14" class="clip" src="assets/sfx/whoosh.mp3" data-start="19.02" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx15" class="clip" src="assets/sfx/impact.mp3" data-start="22.07" data-duration="0.9" data-track-index="14" data-volume="0.48"></audio>
+      <audio id="sx16" class="clip" src="assets/sfx/typekey.mp3" data-start="22.57" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx17" class="clip" src="assets/sfx/typekey.mp3" data-start="22.72" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx18" class="clip" src="assets/sfx/typekey.mp3" data-start="22.87" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx19" class="clip" src="assets/sfx/typekey.mp3" data-start="23.02" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx20" class="clip" src="assets/sfx/whoosh.mp3" data-start="23.32" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx21" class="clip" src="assets/sfx/pop.mp3" data-start="24.22" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx22" class="clip" src="assets/sfx/typekey.mp3" data-start="26.22" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx23" class="clip" src="assets/sfx/typekey.mp3" data-start="26.31" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx24" class="clip" src="assets/sfx/typekey.mp3" data-start="26.40" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx25" class="clip" src="assets/sfx/click.mp3" data-start="26.55" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="sx26" class="clip" src="assets/sfx/whoosh.mp3" data-start="26.77" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx27" class="clip" src="assets/sfx/pop.mp3" data-start="31.40" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      (function () {
+        let s = 11; const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+        const svg = document.getElementById("chart"), W = 820, H = 320, n = 20, cw = (W - 40) / n; let p = 0, c0 = [];
+        for (let i = 0; i < n; i++) { const o = p, c = p + 0.6 + (rnd() - 0.5) * 3.2; p = c; c0.push([o, c, Math.max(o, c) + 0.3 + rnd() * 0.4, Math.min(o, c) - 0.3 - rnd() * 0.4]); }
+        const lo = Math.min(...c0.map((k) => k[3])), hi = Math.max(...c0.map((k) => k[2])), Y = (v) => H - 10 - ((v - lo) / (hi - lo)) * (H - 20);
+        let h = "";
+        c0.forEach(([o, c, hh, ll], i) => { const dn = c < o, x = 20 + i * cw + cw / 2;
+          h += `<g class="${dn ? "dn" : "upc"}"><line x1="${x}" x2="${x}" y1="${Y(hh)}" y2="${Y(ll)}" stroke="#26d07c" stroke-width="3"/><rect x="${x - cw * 0.32}" y="${Y(Math.max(o, c))}" width="${cw * 0.64}" height="${Math.max(6, Math.abs(Y(o) - Y(c)))}" rx="3" fill="#26d07c"/></g>`; });
+        svg.innerHTML = h;
+      })();
+
+      const tl = gsap.timeline({ paused: true });
+      const D = 34.41, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "5023px 3509px", duration: D, ease: "steps(516)" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slideL = (s, t) => tl.fromTo(s, { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const stampIn = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.3 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const unblur = (s, t, col) => tl.to(s, { filter: "blur(0px)", color: col || "#ffc94a", duration: 0.3, ease: "power2.out" }, t);
+      const typeOn = (s, t, w, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || n * 0.035, ease: "steps(" + n + ")" }, t);
+      const counter = (id, t, a, b, d, fmt) => { const o = { v: a }; tl.to(o, { v: b, duration: d, ease: "none", onUpdate: () => { document.getElementById(id).textContent = fmt(o.v); } }, t); };
+      const strike = (s, t) => tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: "power3.out" }, t);
+
+      tl.fromTo("#aPanel", { scale: 0.98 }, { scale: 1, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#aStamp", { scale: 1 }, { scale: 1.12, duration: 0.12, yoyo: true, repeat: 1 }, 1.9);
+      tl.to("#chart .dn rect", { attr: { fill: "#ff4d5e" }, duration: 0.2, stagger: 0.04 }, 3.1); tl.to("#chart .dn line", { attr: { stroke: "#ff4d5e" }, duration: 0.2, stagger: 0.04 }, 3.1);
+      tl.to("#aLbl", { color: "#ff4d5e", duration: 0.2 }, 3.1); tl.set("#aLbl", { textContent: "ASLI CHART" }, 3.2);
+      up("#aTruth", 3.1); pop("#aFix", 5.1); flash(3.1, 0.25);
+      enter("#sB", 6.2); slideL("#acB", 6.45); pop("#bBuy", 8.07);
+      tl.fromTo("#bPanel", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 8.6);
+      slideL("#f1", 8.9); slideL("#f2", 10.3); slideL("#f3", 11.1); slideL("#f4", 11.35);
+      tl.to("#f3", { x: 900, opacity: 0, duration: 0.3, ease: "power2.in" }, 12.5); tl.to("#f4", { x: 900, opacity: 0, duration: 0.3, ease: "power2.in" }, 12.75);
+      up("#bSkip", 12.9);
+      counter("acBV", 13.2, 100000, 97200, 0.5, (v) => "₹" + Math.round(v).toLocaleString("en-IN"));
+      punch("#kSkip", 13.19);
+      enter("#sC", 14.3); tl.fromTo("#cCard", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 }, 14.3); unblur("#cW", 14.6);
+      punch("#kBias", 13.91);
+      slideL("#srcC", 14.8); up("#cT", 15.8); up("#cP", 16.6); slideL("#cR1", 17.0); slideL("#cR2", 17.6);
+      enter("#sD", 19.2); up("#dT", 19.25); up("#dT2", 20.16);
+      tl.fromTo("#dCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 20.6);
+      punch("#kAg", 22.07);
+      typeOn("#dTy", 22.4, 470, 19, 0.45);
+      enter("#sE", 23.50); up("#sET", 23.53);
+      tl.fromTo("#sEcbar", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 23.80);
+      up("#sECta", 24.40);
+      tl.to("#sEph", { opacity: 0, duration: 0.05 }, 26.20);
+      tl.fromTo("#sEtyped", { width: 0 }, { width: 230, duration: 0.3, ease: "steps(5)" }, 26.20);
+      tl.fromTo("#sEsend", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, 26.55);
+      tl.fromTo("#sEtoast", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 24.20);
+      enter("#sF", 26.95); up("#sFnext", 27.00);
+      tl.fromTo("#sFlogo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, 31.10);
+      up("#sFhandle", 31.20);
+      tl.fromTo("#sFfbtn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 31.40);
+      tl.to("#sFfbtn", { scale: 1.06, duration: 0.45, yoyo: true, repeat: 5, ease: "sine.inOut" }, 31.80);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

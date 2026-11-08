@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 40 morning · Series finale: process par focus */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.04; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 38px; font-weight: 700; }
+      .x { width: 54px; height: 54px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 32px; flex: none; }
+      .ok { width: 54px; height: 54px; border-radius: 12px; background: var(--green); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 32px; flex: none; }
+      .num { width: 64px; height: 64px; border-radius: 50%; background: var(--yellow); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 34px; flex: none; font-family: "IBM Plex Mono", monospace; }
+      .chip { position: absolute; padding: 10px 24px; border-radius: 40px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 30px; }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .blur { filter: blur(14px); }
+      .stampbox { position: absolute; border: 12px solid var(--red); border-radius: 18px; color: var(--red); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; background: rgba(11, 15, 26, 0.55); }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="42.95" data-width="1080" data-height="1920">
+      <div class="grid" data-layout-ignore></div>
+      <div id="world" class="abs" style="inset: 0">
+        <!-- A: HOOK — 40 tile grid + blurred account -->
+        <div id="sA" class="scene clip" data-start="0.00" data-duration="5.75" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--yellow)">SERIES FINALE · EPISODE 40</div>
+          <div class="abs center serif" style="top: 316px; font-size: 62px; white-space: nowrap"><span style="color: var(--yellow)">40 din, 40 galtiyan.</span><br/>Raju ka account bacha ya nahi?</div>
+          <div id="gridCard" class="glass" style="left: 90px; top: 520px; width: 900px; height: 420px">
+            <div class="label">40 DIN · 40 GALTIYAN</div>
+            <div class="tl40" style="position: absolute; left: 36px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>1</div><div class="tl40" style="position: absolute; left: 138px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>2</div><div class="tl40" style="position: absolute; left: 240px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>3</div><div class="tl40" style="position: absolute; left: 342px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>4</div><div class="tl40" style="position: absolute; left: 444px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>5</div><div class="tl40" style="position: absolute; left: 546px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>6</div><div class="tl40" style="position: absolute; left: 648px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>7</div><div class="tl40" style="position: absolute; left: 750px; top: 80px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>8</div><div class="tl40" style="position: absolute; left: 36px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>9</div><div class="tl40" style="position: absolute; left: 138px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>10</div><div class="tl40" style="position: absolute; left: 240px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>11</div><div class="tl40" style="position: absolute; left: 342px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>12</div><div class="tl40" style="position: absolute; left: 444px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>13</div><div class="tl40" style="position: absolute; left: 546px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>14</div><div class="tl40" style="position: absolute; left: 648px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>15</div><div class="tl40" style="position: absolute; left: 750px; top: 142px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>16</div><div class="tl40" style="position: absolute; left: 36px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>17</div><div class="tl40" style="position: absolute; left: 138px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>18</div><div class="tl40" style="position: absolute; left: 240px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>19</div><div class="tl40" style="position: absolute; left: 342px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>20</div><div class="tl40" style="position: absolute; left: 444px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>21</div><div class="tl40" style="position: absolute; left: 546px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>22</div><div class="tl40" style="position: absolute; left: 648px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>23</div><div class="tl40" style="position: absolute; left: 750px; top: 204px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>24</div><div class="tl40" style="position: absolute; left: 36px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>25</div><div class="tl40" style="position: absolute; left: 138px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>26</div><div class="tl40" style="position: absolute; left: 240px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>27</div><div class="tl40" style="position: absolute; left: 342px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>28</div><div class="tl40" style="position: absolute; left: 444px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>29</div><div class="tl40" style="position: absolute; left: 546px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>30</div><div class="tl40" style="position: absolute; left: 648px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>31</div><div class="tl40" style="position: absolute; left: 750px; top: 266px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>32</div><div class="tl40" style="position: absolute; left: 36px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>33</div><div class="tl40" style="position: absolute; left: 138px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>34</div><div class="tl40" style="position: absolute; left: 240px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>35</div><div class="tl40" style="position: absolute; left: 342px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>36</div><div class="tl40" style="position: absolute; left: 444px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>37</div><div class="tl40" style="position: absolute; left: 546px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>38</div><div class="tl40" style="position: absolute; left: 648px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>39</div><div class="tl40" style="position: absolute; left: 750px; top: 328px; width: 90px; height: 50px; border-radius: 10px; background: rgba(255,77,94,0.85); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 24px; color: #0b0f1a" data-layout-ignore>40</div>
+          </div>
+          <div id="acctCard" class="glass" style="left: 190px; top: 980px; width: 700px; height: 230px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">RAJU KA ACCOUNT · example</div>
+            <div class="abs blur" data-layout-allow-occlusion style="left: 0; width: 700px; top: 80px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 110px; line-height: 1; color: var(--green)">BACHA?</div>
+          </div>
+        </div>
+
+        <!-- B: TEASE — locked counter -->
+        <div id="sB" class="scene clip" data-start="5.75" data-duration="1.90" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center serif" style="top: 330px; font-size: 84px">Jawab agle<br/><span style="color: var(--yellow)">10 second</span> mein.</div>
+          <div id="lockCard" class="glass" style="left: 190px; top: 660px; width: 700px; height: 400px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">RAJU KA ACCOUNT · example</div>
+            <div class="abs" style="left: 290px; top: 120px; width: 120px; height: 150px">
+              <div style="position: absolute; left: 25px; top: 0; width: 70px; height: 80px; border: 14px solid var(--yellow); border-bottom: none; border-radius: 35px 35px 0 0"></div>
+              <div style="position: absolute; left: 0; top: 65px; width: 120px; height: 85px; border-radius: 14px; background: var(--yellow)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C: account bacha — why -->
+        <div id="sC" class="scene clip" data-start="7.65" data-duration="6.20" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--orange)">RAJU · example account, hypothetical</div>
+          <div id="cCard" class="glass" style="left: 90px; top: 320px; width: 900px; height: 520px">
+            <div class="label">RAJU NE KYA BADLA</div>
+            <div id="r1" class="row" style="top: 90px"><div class="x">✗</div><span id="r1t" style="position: relative">Indicator badalna <span style="color: var(--muted)">· chhoda</span></span></div>
+            <div id="r2" class="row" style="top: 210px"><div class="ok">✓</div>Rules likhe</div>
+            <div id="r3" class="row" style="top: 330px"><div class="ok">✓</div>Journal rakha</div>
+          </div>
+          <div id="acct2" class="glass" style="left: 140px; top: 880px; width: 800px; height: 300px; border-color: rgba(38,208,124,0.6)">
+            <div class="label" style="color: var(--green)">RAJU KA ACCOUNT · example</div>
+            <div class="abs" style="left: 60px; top: 90px; font-family: 'Baloo 2'; font-weight: 800; font-size: 120px; line-height: 1; color: var(--green)">BACHA <span id="arrow" style="display: inline-block">↑</span></div>
+            <div id="whyTag" class="chip" style="left: 36px; top: 225px; background: rgba(38,208,124,0.18); border: 2px solid var(--green); color: var(--green)">KYUNKI: LOSS CHHOTE HUE</div>
+          </div>
+        </div>
+
+        <!-- D: 7 principles -->
+        <div id="sD" class="scene clip" data-start="13.85" data-duration="11.35" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center serif" style="top: 270px; font-size: 60px; white-space: nowrap">Mark Douglas ke <span style="color: var(--yellow)">7 principles</span></div>
+          <div id="pCard" class="glass" style="left: 90px; top: 370px; width: 900px; height: 810px">
+            <div class="label">TRADING IN THE ZONE</div>
+            <div id="p0" class="row" style="top: 84px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">1</div><span style="flex: 1">Edge pehchano</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p1" class="row" style="top: 184px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">2</div><span style="flex: 1">Risk pehle tay</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p2" class="row" style="top: 284px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">3</div><span style="flex: 1">Risk poora accept</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p3" class="row" style="top: 384px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">4</div><span style="flex: 1">Bina hichak entry</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p4" class="row" style="top: 484px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">5</div><span style="flex: 1">Profit lo jab market de</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p5" class="row" style="top: 584px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">6</div><span style="flex: 1">Galtiyon par nazar</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+            <div id="p6" class="row" style="top: 684px; height: 86px; font-size: 38px"><div class="num" style="width: 56px; height: 56px; font-size: 30px">7</div><span style="flex: 1">In principles ko kabhi mat todo</span><div class="ok" style="width: 46px; height: 46px; font-size: 26px">✓</div></div>
+          </div>
+          <div id="srcD" class="lower" style="top: 1220px">
+            <div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div>
+            <div style="font-size: 30px; font-weight: 600; margin-top: 6px">Mark Douglas, Trading in the Zone (2000)</div>
+          </div>
+        </div>
+
+        <!-- E: 20/20 challenge complete -->
+        <div id="sE" class="scene clip" data-start="25.20" data-duration="3.70" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center serif" style="top: 290px; font-size: 70px">20-trade challenge<br/><span style="color: var(--green)">aaj khatam.</span></div>
+          <div id="chCard" class="glass" style="left: 90px; top: 520px; width: 900px; height: 290px">
+            <div class="label" style="color: var(--green)">20 / 20 TRADES</div>
+            <div class="cht" style="position: absolute; left: 36px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>1</div><div class="cht" style="position: absolute; left: 118px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>2</div><div class="cht" style="position: absolute; left: 200px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>3</div><div class="cht" style="position: absolute; left: 282px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>4</div><div class="cht" style="position: absolute; left: 364px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>5</div><div class="cht" style="position: absolute; left: 446px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>6</div><div class="cht" style="position: absolute; left: 528px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>7</div><div class="cht" style="position: absolute; left: 610px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>8</div><div class="cht" style="position: absolute; left: 692px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>9</div><div class="cht" style="position: absolute; left: 774px; top: 90px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>10</div><div class="cht" style="position: absolute; left: 36px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>11</div><div class="cht" style="position: absolute; left: 118px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>12</div><div class="cht" style="position: absolute; left: 200px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>13</div><div class="cht" style="position: absolute; left: 282px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>14</div><div class="cht" style="position: absolute; left: 364px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>15</div><div class="cht" style="position: absolute; left: 446px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>16</div><div class="cht" style="position: absolute; left: 528px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>17</div><div class="cht" style="position: absolute; left: 610px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>18</div><div class="cht" style="position: absolute; left: 692px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>19</div><div class="cht" style="position: absolute; left: 774px; top: 172px; width: 70px; height: 70px; border-radius: 14px; background: var(--green); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 26px; color: #0b0f1a" data-layout-ignore>20</div>
+          </div>
+          <div id="chChip" class="chip" style="left: 200px; top: 850px; background: rgba(255,201,74,0.15); border: 2px solid var(--yellow); color: var(--yellow)">CHALLENGE · EP14 → EP26 → EP40</div>
+          <div id="resC" class="abs center" style="top: 960px; font-size: 54px; font-weight: 800">Apna result <span style="color: var(--yellow)">comment</span> mein batao.</div>
+        </div>
+
+        <!-- F: one-page card -->
+        <div id="sF2" class="scene clip" data-start="28.90" data-duration="4.35" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 280px; font-size: 32px; color: var(--yellow)">AAJ KA KAAM</div>
+          <div class="abs center serif" style="top: 330px; font-size: 62px">Top 3 rules + top 3 galtiyan,<br/>ek page par.</div>
+          <div id="pageCard" class="abs" style="left: 190px; top: 520px; width: 700px; height: 720px; border-radius: 20px; background: #ece6da; box-shadow: 0 30px 60px rgba(0,0,0,0.6); color: #0b0f1a; padding: 40px">
+            <div class="mono" style="font-size: 30px; color: #1a7a4a">TOP 3 RULES</div>
+            <div class="pl" style="margin-top: 16px; font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">1.</div>
+            <div class="pl" style="font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">2.</div>
+            <div class="pl" style="font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">3.</div>
+            <div class="mono" style="margin-top: 36px; font-size: 30px; color: #b3202e">TOP 3 GALTIYAN</div>
+            <div class="pl" style="margin-top: 16px; font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">1.</div>
+            <div class="pl" style="font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">2.</div>
+            <div class="pl" style="font-size: 40px; font-weight: 800; border-bottom: 3px solid #b8b0a0; height: 70px">3.</div>
+          </div>
+        </div>
+
+        <!-- COMMENT CTA -->
+        <div id="sCta" class="scene clip" data-start="33.25" data-duration="3.40" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE FILE</div>
+          <div id="eT" class="abs center serif" style="top: 320px; font-size: 76px">Trading in the Zone ke 5 truths?</div>
+          <div id="toast" class="glass" style="left: 140px; top: 560px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+            <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+            <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">5 Truths · Trading in the Zone 📘</div>
+          </div>
+          <div id="cbar" class="glass" style="left: 108px; top: 780px; width: 864px; height: 130px; border-radius: 65px">
+            <div id="ph" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+            <div class="abs" style="left: 50px; top: 30px; height: 70px; overflow: hidden"><div id="typed" style="font-family: 'Baloo 2'; font-size: 54px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap">ZONE</div></div>
+            <div id="send" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+          </div>
+          <div id="eCta" class="abs center" style="top: 980px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; color: var(--yellow); white-space: nowrap">Comment karo: ZONE</div>
+        </div>
+
+        <!-- TEASER + FOLLOW -->
+        <div id="sF" class="scene clip" data-start="36.65" data-duration="6.30" data-track-index="1" data-track-kind="graphics">
+          <div id="next" class="glass" style="left: 108px; top: 300px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">AAJ SHAAM · RECAP</div>
+            <div class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 58px"><span style="color: var(--yellow)">40 din ke 10 rules</span>, ek screen par.</div>
+          </div>
+
+          <img id="logo" class="abs" src="assets/tw-icon.svg" style="left: 420px; top: 690px; width: 240px; height: 240px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+          <div id="handle" class="abs center" style="top: 960px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+          <div id="fbtn" class="abs" style="left: 330px; top: 1060px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+          <div class="abs center" style="top: 1240px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+        </div>
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="kBacha" class="kin clip" data-layout-allow-occlusion data-layout-allow-overlap data-start="11.53" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--green); color: #0b0f1a"><span style="font-size: 380px">BACHA</span></div>
+      <div id="kSeven" class="kin clip" data-layout-allow-occlusion data-layout-allow-overlap data-start="14.90" data-duration="0.4" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow); color: #0b0f1a"><span style="font-size: 900px">7</span></div>
+      <div id="k2020" class="kin clip" data-layout-allow-occlusion data-layout-allow-overlap data-start="26.50" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--green); color: #0b0f1a"><span style="font-size: 380px">20/20</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · EPISODE 40 · FINALE</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="sx0" class="clip" src="assets/sfx/typekey.mp3" data-start="0.10" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="sx1" class="clip" src="assets/sfx/tick.mp3" data-start="0.60" data-duration="0.07" data-track-index="12" data-volume="0.25"></audio>
+      <audio id="sx2" class="clip" src="assets/sfx/tick.mp3" data-start="1.20" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="sx3" class="clip" src="assets/sfx/tick.mp3" data-start="1.80" data-duration="0.07" data-track-index="14" data-volume="0.25"></audio>
+      <audio id="sx4" class="clip" src="assets/sfx/whoosh.mp3" data-start="5.60" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx5" class="clip" src="assets/sfx/heartbeat.mp3" data-start="6.00" data-duration="0.9" data-track-index="16" data-volume="0.45"></audio>
+      <audio id="sx6" class="clip" src="assets/sfx/whoosh.mp3" data-start="7.50" data-duration="0.5" data-track-index="17" data-volume="0.36"></audio>
+      <audio id="sx7" class="clip" src="assets/sfx/shutter.mp3" data-start="9.00" data-duration="0.16" data-track-index="18" data-volume="0.35"></audio>
+      <audio id="sx8" class="clip" src="assets/sfx/pop.mp3" data-start="9.75" data-duration="0.12" data-track-index="19" data-volume="0.3"></audio>
+      <audio id="sx9" class="clip" src="assets/sfx/pop.mp3" data-start="10.57" data-duration="0.12" data-track-index="20" data-volume="0.3"></audio>
+      <audio id="sx10" class="clip" src="assets/sfx/impact.mp3" data-start="11.53" data-duration="0.9" data-track-index="21" data-volume="0.5"></audio>
+      <audio id="sx11" class="clip" src="assets/sfx/whoosh.mp3" data-start="13.70" data-duration="0.5" data-track-index="22" data-volume="0.36"></audio>
+      <audio id="sx12" class="clip" src="assets/sfx/impact.mp3" data-start="14.90" data-duration="0.9" data-track-index="23" data-volume="0.42"></audio>
+      <audio id="sx13" class="clip" src="assets/sfx/click.mp3" data-start="15.91" data-duration="0.1" data-track-index="24" data-volume="0.28"></audio>
+      <audio id="sx14" class="clip" src="assets/sfx/click.mp3" data-start="16.84" data-duration="0.1" data-track-index="25" data-volume="0.28"></audio>
+      <audio id="sx15" class="clip" src="assets/sfx/click.mp3" data-start="17.98" data-duration="0.1" data-track-index="26" data-volume="0.28"></audio>
+      <audio id="sx16" class="clip" src="assets/sfx/click.mp3" data-start="19.24" data-duration="0.1" data-track-index="27" data-volume="0.28"></audio>
+      <audio id="sx17" class="clip" src="assets/sfx/click.mp3" data-start="20.50" data-duration="0.1" data-track-index="28" data-volume="0.28"></audio>
+      <audio id="sx18" class="clip" src="assets/sfx/click.mp3" data-start="22.08" data-duration="0.1" data-track-index="29" data-volume="0.28"></audio>
+      <audio id="sx19" class="clip" src="assets/sfx/stamp.mp3" data-start="23.25" data-duration="0.5" data-track-index="30" data-volume="0.4"></audio>
+      <audio id="sx20" class="clip" src="assets/sfx/whoosh.mp3" data-start="25.05" data-duration="0.5" data-track-index="31" data-volume="0.36"></audio>
+      <audio id="sx21" class="clip" src="assets/sfx/impact.mp3" data-start="26.50" data-duration="0.9" data-track-index="32" data-volume="0.45"></audio>
+      <audio id="sx22" class="clip" src="assets/sfx/pop.mp3" data-start="27.00" data-duration="0.12" data-track-index="33" data-volume="0.3"></audio>
+      <audio id="sx23" class="clip" src="assets/sfx/whoosh.mp3" data-start="28.75" data-duration="0.5" data-track-index="34" data-volume="0.36"></audio>
+      <audio id="sx24" class="clip" src="assets/sfx/shutter.mp3" data-start="29.84" data-duration="0.16" data-track-index="35" data-volume="0.35"></audio>
+      <audio id="sx25" class="clip" src="assets/sfx/whoosh.mp3" data-start="33.10" data-duration="0.5" data-track-index="36" data-volume="0.36"></audio>
+      <audio id="sx26" class="clip" src="assets/sfx/pop.mp3" data-start="33.65" data-duration="0.12" data-track-index="37" data-volume="0.3"></audio>
+      <audio id="sx27" class="clip" src="assets/sfx/typekey.mp3" data-start="35.95" data-duration="0.05" data-track-index="38" data-volume="0.24"></audio>
+      <audio id="sx28" class="clip" src="assets/sfx/typekey.mp3" data-start="36.07" data-duration="0.05" data-track-index="39" data-volume="0.24"></audio>
+      <audio id="sx29" class="clip" src="assets/sfx/click.mp3" data-start="36.24" data-duration="0.1" data-track-index="40" data-volume="0.28"></audio>
+      <audio id="sx30" class="clip" src="assets/sfx/whoosh.mp3" data-start="36.50" data-duration="0.5" data-track-index="41" data-volume="0.36"></audio>
+      <audio id="sx31" class="clip" src="assets/sfx/pop.mp3" data-start="39.80" data-duration="0.12" data-track-index="42" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const D = 42.95, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "3600px 2520px", duration: D, ease: "steps(360)" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slideL = (s, t) => tl.fromTo(s, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const slam = (s, t) => tl.fromTo(s, { scale: 2.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.18, ease: "power4.in" }, t);
+      const unblur = (s, t) => tl.fromTo(s, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.4, ease: "power2.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const typeOn = (s, t, w, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || 0.5, ease: "steps(" + n + ")" }, t);
+
+      // A
+      tl.fromTo(".tl40", { opacity: 0.12 }, { opacity: 1, duration: 0.12, stagger: 0.045 }, 0.05);
+      tl.fromTo("#acctCard", { scale: 1 }, { scale: 1.04, duration: 0.6, yoyo: true, repeat: 3, ease: "sine.inOut" }, 3.0);
+      // B
+      enter("#sB", 5.75);
+      tl.fromTo("#lockCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 5.85);
+      shake("#lockCard", 6.9);
+      // C
+      enter("#sC", 7.65);
+      slideL("#r1", 7.75);
+      tl.fromTo("#r1", { opacity: 1 }, { opacity: 0.5, duration: 0.3, immediateRender: false }, 9.0);
+      slideL("#r2", 9.75); slideL("#r3", 10.57);
+      punch("#kBacha", 11.53);
+      tl.fromTo("#acct2", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(1.6)" }, 11.98);
+      tl.fromTo("#arrow", { y: 30 }, { y: -10, duration: 0.5, ease: "power2.out" }, 12.1);
+      pop("#whyTag", 12.47);
+      // D
+      enter("#sD", 13.85);
+      punch("#kSeven", 14.9);
+      [15.91, 16.84, 17.98, 19.24, 20.5, 22.08, 23.25].forEach((t, i) => slideL("#p" + i, t));
+      slideL("#srcD", 15.4);
+      // E
+      enter("#sE", 25.2);
+      tl.fromTo(".cht", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.15, stagger: 0.04, ease: "back.out(2)" }, 25.35);
+      punch("#k2020", 26.5);
+      pop("#chChip", 27.0);
+      up("#resC", 27.37);
+      // F
+      enter("#sF2", 28.9);
+      tl.fromTo("#pageCard", { y: 80, rotation: 3, opacity: 0 }, { y: 0, rotation: -1, opacity: 1, duration: 0.45, ease: "power3.out" }, 29.84);
+      // CTA
+      enter("#sCta", 33.25); up("#eT", 33.28);
+      tl.fromTo("#cbar", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 33.60);
+      tl.fromTo("#toast", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 33.65);
+      up("#eCta", 34.05);
+      tl.to("#ph", { opacity: 0, duration: 0.05 }, 35.95);
+      typeOn("#typed", 35.95, 238, 4, 0.24);
+      tl.fromTo("#send", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, 36.24);
+      // FOLLOW
+      enter("#sF", 36.65); up("#next", 36.70);
+
+      tl.fromTo("#logo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 39.60);
+      up("#handle", 39.70);
+      tl.fromTo("#fbtn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 39.80);
+      tl.to("#fbtn", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 5, ease: "sine.inOut" }, 40.40);
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
