@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 22 evening · Myth: 5 win = system perfect */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.02; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .baloo { font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 36px; font-weight: 700; }
+      .box { width: 50px; height: 50px; border-radius: 12px; border: 4px solid var(--green); color: var(--green); font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 34px; flex: none; }
+      .chip { position: absolute; padding: 12px 26px; border-radius: 40px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 30px; white-space: nowrap; }
+      .tag { position: absolute; padding: 8px 18px; border-radius: 12px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; font-size: 28px; white-space: nowrap; background: rgba(11,15,26,0.85); border: 2px solid var(--edge); color: var(--muted); }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .stamp { position: absolute; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-family: "Playfair Display", serif; font-weight: 800; letter-spacing: 0.06em; background: rgba(11, 15, 26, 0.45); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="26.47" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+        <!-- A: MYTH stamp on 5 ticks -->
+        <div id="sA" class="scene clip" data-start="0" data-duration="3.5" data-track-index="1" data-track-kind="graphics">
+
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--red)">MYTH vs FACT · #22</div>
+          <div class="abs center serif" style="top: 320px; font-size: 92px; white-space: nowrap">5 win lagatar?</div>
+          <div id="aS" class="abs center" style="top: 440px; font-size: 52px; font-weight: 800">= system perfect, <span style="color: var(--orange)">size badhao ▲</span></div>
+          <div id="aPanel" class="glass" style="left: 90px; top: 580px; width: 900px; height: 300px">
+            <div class="label" style="color: var(--green)">WIN STREAK · 5/5 · example</div>
+            <div class="abs" style="left: 44px; top: 96px; width: 140px; height: 140px; border-radius: 26px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 90px; font-weight: 800; color: #0b0f1a">✓</div><div class="abs" style="left: 212px; top: 96px; width: 140px; height: 140px; border-radius: 26px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 90px; font-weight: 800; color: #0b0f1a">✓</div><div class="abs" style="left: 380px; top: 96px; width: 140px; height: 140px; border-radius: 26px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 90px; font-weight: 800; color: #0b0f1a">✓</div><div class="abs" style="left: 548px; top: 96px; width: 140px; height: 140px; border-radius: 26px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 90px; font-weight: 800; color: #0b0f1a">✓</div><div class="abs" style="left: 716px; top: 96px; width: 140px; height: 140px; border-radius: 26px; background: var(--green); display: flex; align-items: center; justify-content: center; font-size: 90px; font-weight: 800; color: #0b0f1a">✓</div>
+          </div>
+          <div id="myth" class="stamp" data-layout-allow-overlap style="left: 260px; top: 640px; width: 560px; height: 200px; border: 14px solid var(--red); color: var(--red); font-size: 130px; transform: rotate(-8deg)">MYTH</div>
+        </div>
+        <!-- B: GALAT + 10s timer -->
+        <div id="sB" class="scene clip" data-start="3.5" data-duration="3.55" data-track-index="1" data-track-kind="graphics">
+
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">KYUN?</div>
+          <div class="abs center serif" style="top: 320px; font-size: 120px; color: var(--red)">Galat.</div>
+          <div id="bS" class="abs center serif" style="top: 480px; font-size: 68px; white-space: nowrap">Kyun, ye 10 second mein.</div>
+          <div id="timer" class="glass" style="left: 340px; top: 660px; width: 400px; height: 400px; border-radius: 50%; border-color: rgba(255,201,74,0.5)">
+            <svg class="abs" style="left: 20px; top: 20px" width="360" height="360" viewBox="0 0 360 360"><circle cx="180" cy="180" r="160" fill="none" stroke="rgba(238,241,248,0.1)" stroke-width="20"/><circle id="tArc" cx="180" cy="180" r="160" fill="none" stroke="#ffc94a" stroke-width="20" stroke-linecap="round" transform="rotate(-90 180 180)" stroke-dasharray="1005.3" stroke-dashoffset="0"/></svg>
+            <div id="tNum" class="abs baloo" style="left: 0; width: 400px; top: 120px; text-align: center; font-size: 170px; color: var(--yellow)">10s</div>
+          </div>
+        </div>
+        <!-- C: FACT — 20-box grid, only 5 filled -->
+        <div id="sC" class="scene clip" data-start="7.05" data-duration="7.05" data-track-index="1" data-track-kind="graphics">
+
+          <div class="grid"></div>
+          <div id="fact" class="stamp" style="left: 330px; top: 262px; width: 420px; height: 140px; border: 12px solid var(--green); color: var(--green); font-size: 92px; transform: rotate(-5deg)">FACT</div>
+          <div id="cT" class="abs center serif" style="top: 440px; font-size: 58px; white-space: nowrap">5 trades kuch prove nahi karte</div>
+          <div id="gPanel" class="glass" style="left: 90px; top: 560px; width: 900px; height: 520px">
+            <div class="label" style="color: var(--muted)">SAMPLE · <span id="gCnt">5</span>/20 · example</div>
+            <div id="gb0" class="abs" style="left: 36px; top: 90px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb1" class="abs" style="left: 204px; top: 90px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb2" class="abs" style="left: 372px; top: 90px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb3" class="abs" style="left: 540px; top: 90px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb4" class="abs" style="left: 708px; top: 90px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb5" class="abs" style="left: 36px; top: 194px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb6" class="abs" style="left: 204px; top: 194px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb7" class="abs" style="left: 372px; top: 194px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb8" class="abs" style="left: 540px; top: 194px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb9" class="abs" style="left: 708px; top: 194px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb10" class="abs" style="left: 36px; top: 298px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb11" class="abs" style="left: 204px; top: 298px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb12" class="abs" style="left: 372px; top: 298px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb13" class="abs" style="left: 540px; top: 298px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb14" class="abs" style="left: 708px; top: 298px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb15" class="abs" style="left: 36px; top: 402px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb16" class="abs" style="left: 204px; top: 402px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb17" class="abs" style="left: 372px; top: 402px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb18" class="abs" style="left: 540px; top: 402px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div><div id="gb19" class="abs" style="left: 708px; top: 402px; width: 150px; height: 84px; border-radius: 14px; border: 3px solid var(--edge); background: rgba(11,15,26,0.6)"></div>
+          </div>
+          <div id="loss3" class="abs" style="left: 108px; top: 1110px; width: 864px; display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 800">
+            <div style="width: 54px; height: 54px; border-radius: 10px; background: var(--red)"></div><div style="width: 54px; height: 54px; border-radius: 10px; background: var(--red)"></div><div style="width: 54px; height: 54px; border-radius: 10px; background: var(--red)"></div>
+            <span>3 loss bhi kuch prove nahi karte</span></div>
+          <div id="srcC" class="lower" style="top: 1210px"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Mark Douglas, Trading in the Zone</div></div>
+        </div>
+        <!-- D: size lock -->
+        <div id="sD" class="scene clip" data-start="14.1" data-duration="2.8" data-track-index="1" data-track-kind="graphics">
+
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">TO KARNA KYA HAI?</div>
+          <div id="dT" class="abs center serif" style="top: 320px; font-size: 96px; color: var(--green)">Size fixed rakho</div>
+          <div id="lockCard" class="glass" style="left: 240px; top: 500px; width: 600px; height: 280px">
+            <div class="label" style="color: var(--muted)">LOT SIZE</div>
+            <div class="abs baloo" style="left: 70px; top: 96px; font-size: 160px; color: var(--ink)">1x</div>
+            <div id="lock" class="abs" style="left: 330px; top: 86px; font-size: 140px; line-height: 1">🔒</div>
+          </div>
+          <div id="dS" class="abs center" style="top: 830px; font-size: 52px; font-weight: 800">streak ho <span style="color: var(--yellow)">ya na ho</span></div>
+          <div id="srcD" class="lower" style="top: 960px"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Jared Tendler; Mark Douglas</div></div>
+        </div>
+        <!-- COMMENT CTA -->
+        <div id="sCta" class="scene clip" data-start="16.9" data-duration="2.75" data-track-index="1" data-track-kind="graphics">
+
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE FILE</div>
+          <div id="ctaT" class="abs center serif" style="top: 320px; font-size: 80px; white-space: nowrap">Free journal chahiye?</div>
+          <div id="toast" class="glass" style="left: 140px; top: 500px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+            <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+            <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">Free Trading Journal 📒</div>
+          </div>
+          <div id="cbar" class="glass" style="left: 108px; top: 740px; width: 864px; height: 130px; border-radius: 65px">
+            <div id="ph" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+            <div class="abs" style="left: 50px; top: 30px; height: 70px; overflow: hidden"><div id="typed" style="font-family: 'Baloo 2'; font-size: 54px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap">JOURNAL</div></div>
+            <div id="send" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+          </div>
+          <div id="ctaK" class="abs center" style="top: 940px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; color: var(--yellow); white-space: nowrap">Comment karo: JOURNAL</div>
+        </div>
+        <!-- TEASER + FOLLOW -->
+        <div id="sFol" class="scene clip" data-start="19.65" data-duration="6.82" data-track-index="1" data-track-kind="graphics">
+
+          <div id="next" class="glass" style="left: 108px; top: 290px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">KAL SUBAH · EP23</div>
+            <div class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 56px">SL hata diya… ab bas umeed bachi hai.</div>
+          </div>
+          <img id="logo" class="abs" src="assets/tw-icon.svg" style="left: 420px; top: 680px; width: 240px; height: 240px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+          <div id="handle" class="abs center" style="top: 950px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+          <div id="fbtn" class="abs" style="left: 330px; top: 1050px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+          
+          <div class="abs center" style="top: 1230px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+        </div>
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="kGalat" class="kin clip" data-start="3.55" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--red)"><span style="font-size: 300px">GALAT</span></div>
+      <div id="kSample" class="kin clip" data-start="12.95" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span style="font-size: 260px">SAMPLE</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · MYTH vs FACT</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + self-generated SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="fx0" class="clip" src="assets/sfx/stamp.mp3" data-start="2.6" data-duration="0.5" data-track-index="12" data-volume="0.45"></audio>
+      <audio id="fx1" class="clip" src="assets/sfx/impact.mp3" data-start="3.55" data-duration="0.9" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="fx2" class="clip" src="assets/sfx/whoosh.mp3" data-start="3.9" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx3" class="clip" src="assets/sfx/pop.mp3" data-start="5.3" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx4" class="clip" src="assets/sfx/tick.mp3" data-start="5.75" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="fx5" class="clip" src="assets/sfx/tick.mp3" data-start="6.22" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="fx6" class="clip" src="assets/sfx/tick.mp3" data-start="6.69" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="fx7" class="clip" src="assets/sfx/whoosh.mp3" data-start="6.9" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx8" class="clip" src="assets/sfx/stamp.mp3" data-start="7.1" data-duration="0.5" data-track-index="12" data-volume="0.5"></audio>
+      <audio id="fx9" class="clip" src="assets/sfx/tick.mp3" data-start="8.3" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="fx10" class="clip" src="assets/sfx/tick.mp3" data-start="8.42" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="fx11" class="clip" src="assets/sfx/tick.mp3" data-start="8.54" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="fx12" class="clip" src="assets/sfx/tick.mp3" data-start="8.66" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="fx13" class="clip" src="assets/sfx/tick.mp3" data-start="8.78" data-duration="0.07" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="fx14" class="clip" src="assets/sfx/pop.mp3" data-start="10.4" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx15" class="clip" src="assets/sfx/impact.mp3" data-start="12.95" data-duration="0.9" data-track-index="14" data-volume="0.45"></audio>
+      <audio id="fx16" class="clip" src="assets/sfx/whoosh.mp3" data-start="13.9" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx17" class="clip" src="assets/sfx/stamp.mp3" data-start="14.75" data-duration="0.5" data-track-index="12" data-volume="0.38"></audio>
+      <audio id="fx18" class="clip" src="assets/sfx/whoosh.mp3" data-start="16.7" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx19" class="clip" src="assets/sfx/pop.mp3" data-start="17.45" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="fx20" class="clip" src="assets/sfx/typekey.mp3" data-start="19.02" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="fx21" class="clip" src="assets/sfx/typekey.mp3" data-start="19.1" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="fx22" class="clip" src="assets/sfx/typekey.mp3" data-start="19.18" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="fx23" class="clip" src="assets/sfx/click.mp3" data-start="19.27" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="fx24" class="clip" src="assets/sfx/whoosh.mp3" data-start="19.45" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="fx25" class="clip" src="assets/sfx/pop.mp3" data-start="21.05" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      const D = 26.47, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "3600px 2520px", duration: D, ease: "steps(" + Math.round(D * 15) + ")" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slide = (s, t) => tl.fromTo(s, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const stampIn = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.3 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const unblur = (s, t) => tl.fromTo(s, { filter: "blur(18px)" }, { filter: "blur(0px)", duration: 0.35, ease: "power2.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const typeW = (s, t, w, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || 0.24, ease: "steps(" + n + ")" }, t);
+
+
+      // A — myth stamp (visible on frame 0), re-slam on "perfect"
+      tl.fromTo("#aPanel", { scale: 0.98 }, { scale: 1, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#myth", { scale: 1.25 }, { scale: 1, duration: 0.15, ease: "power4.in" }, 2.6);
+      shake("#aPanel", 2.75);
+
+      // B — galat + countdown
+      punch("#kGalat", 3.55);
+      enter("#sB", 4.0); up("#bS", 4.5);
+      tl.fromTo("#timer", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.8)" }, 5.3);
+      tl.fromTo("#tArc", { attr: { "stroke-dashoffset": 0 } }, { attr: { "stroke-dashoffset": 1005.3 * 0.3 }, duration: 1.4, ease: "none" }, 5.7);
+      const tn = { v: 10 }; tl.fromTo(tn, { v: 10 }, { v: 7, duration: 1.4, ease: "steps(3)", onUpdate: () => { document.getElementById("tNum").textContent = Math.round(tn.v) + "s"; } }, 5.7);
+
+      // C — FACT, grid
+      enter("#sC", 7.05);
+      stampIn("#fact", 7.1); flash(7.25, 0.25);
+      up("#cT", 7.8);
+      tl.fromTo("#gPanel", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 7.9);
+      [0, 1, 2, 3, 4].forEach((i) => tl.fromTo("#gb" + i, { backgroundColor: "rgba(11,15,26,0.6)", borderColor: "rgba(238,241,248,0.14)" }, { backgroundColor: "#26d07c", borderColor: "#26d07c", duration: 0.12 }, 8.3 + i * 0.12));
+      slide("#srcC", 8.6);
+      tl.fromTo("#loss3", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "back.out(1.6)" }, 10.4);
+      const gc = { v: 5 }; tl.fromTo(gc, { v: 5 }, { v: 20, duration: 1.0, ease: "steps(15)", onUpdate: () => { document.getElementById("gCnt").textContent = Math.round(gc.v); } }, 13.4);
+      for (let i = 5; i < 20; i++) tl.fromTo("#gb" + i, { backgroundColor: "rgba(11,15,26,0.6)", borderColor: "rgba(238,241,248,0.14)" }, { backgroundColor: [6, 9, 12, 15, 17, 18].includes(i) ? "#ff4d5e" : "#26d07c", borderColor: "rgba(238,241,248,0.3)", duration: 0.08 }, 13.4 + (i - 5) * 0.066);
+
+      // D — size lock
+      enter("#sD", 14.1); up("#dT", 14.15);
+      tl.fromTo("#lockCard", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 14.35);
+      tl.fromTo("#lock", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: "bounce.out" }, 14.7);
+      up("#dS", 15.15);
+      slide("#srcD", 15.0);
+
+      // CTA
+      enter("#sCta", 16.9); up("#ctaT", 16.93);
+      tl.fromTo("#cbar", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 17.20);
+      up("#ctaK", 18.40);
+      tl.to("#ph", { opacity: 0, duration: 0.05 }, 19.00);
+      typeW("#typed", 19.00, 320, 7);
+      tl.fromTo("#send", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, 19.27);
+      tl.fromTo("#toast", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 17.45);
+
+      // FOLLOW
+      enter("#sFol", 19.65); up("#next", 19.70);
+      tl.fromTo("#logo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 20.85);
+      up("#handle", 20.95);
+      tl.fromTo("#fbtn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 21.05);
+      tl.to("#fbtn", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 5, ease: "sine.inOut" }, 23.53);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

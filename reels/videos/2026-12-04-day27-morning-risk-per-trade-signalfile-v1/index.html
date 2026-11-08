@@ -1,0 +1,284 @@
+<!doctype html>
+<!--FMT:EPISODE 27-->
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.02; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .baloo { font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .lower .k { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .lower .v { font-size: 30px; font-weight: 600; margin-top: 6px; }
+      .chip { position: absolute; padding: 12px 22px; border-radius: 14px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 28px; white-space: nowrap; }
+      .tag { position: absolute; padding: 8px 18px; border-radius: 10px; border: 2px solid var(--orange); color: var(--orange); font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; font-size: 28px; white-space: nowrap; }
+      .stampbox { position: absolute; border: 10px solid var(--red); border-radius: 16px; color: var(--red); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.08em; background: rgba(11, 15, 26, 0.55); white-space: nowrap; }
+      .blurcard { filter: blur(26px); opacity: 0.45; }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+      #cbar #typed { font-family: 'Baloo 2'; font-size: 54px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap; }
+      /* SIGNAL FILE · Day 27 morning · EP27 Ek trade mein kitna risk? */
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="33.7" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+        <!-- A: HOOK — capital pie, 20% slice -->
+        <div id="sA" class="scene clip" data-start="0" data-duration="5.35" data-track-index="1" data-track-kind="graphics">
+          <div class="grid"></div>
+          <div class="abs center" style="top: 262px; height: 40px; overflow: hidden"><div id="aType" class="mono" style="display: inline-block; font-size: 28px; color: var(--yellow); white-space: nowrap; overflow: hidden">CASE FILE #027 · S4 PROBABILITIES</div></div>
+          <div class="abs center serif" style="top: 320px; font-size: 74px">Raju ne ek trade mein capital ka <span style="color: var(--red)">20%</span> laga diya.</div>
+          <div id="pieCard" class="glass" style="left: 90px; top: 520px; width: 900px; height: 620px; border-color: rgba(255,77,94,0.45)">
+            <div class="label">CAPITAL · 1 TRADE</div>
+            <div class="tag" style="right: 30px; top: 22px">RAJU = EXAMPLE ACCOUNT</div>
+            <svg class="abs" style="left: 230px; top: 95px" width="440" height="440" viewBox="0 0 440 440">
+              <circle cx="220" cy="220" r="170" fill="none" stroke="rgba(38,208,124,0.35)" stroke-width="70" />
+              <circle id="pArc" cx="220" cy="220" r="170" fill="none" stroke="#ff4d5e" stroke-width="70" transform="rotate(-90 220 220)" stroke-dasharray="1068.1" stroke-dashoffset="854.5" style="filter: drop-shadow(0 0 18px rgba(255,77,94,0.7))" />
+              <text x="220" y="240" text-anchor="middle" font-family="Inter" font-weight="800" font-size="104" fill="#ff4d5e">20%</text>
+              <text x="220" y="292" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="30" fill="#8d97ad" letter-spacing="4">EK TRADE</text>
+            </svg>
+            <div class="abs mono" style="left: 0; width: 900px; top: 556px; text-align: center; font-size: 28px; color: var(--muted)">example · koi asli account nahi</div>
+          </div>
+          <div id="aCounter" class="chip" style="left: 108px; top: 1180px; background: rgba(255,138,61,0.14); color: var(--orange); border: 2px solid rgba(255,138,61,0.5)">RAJU KA ACCOUNT (example) <span id="aArrow" style="color: var(--green)">▲</span></div>
+          <div id="balCard" class="glass" style="left: 108px; top: 1270px; width: 864px; height: 250px; border-color: rgba(255,201,74,0.45)">
+            <div class="label">3 TRADE BAAD BALANCE</div>
+            <div class="abs blurcard" data-layout-ignore style="left: 0; width: 864px; top: 78px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 130px; line-height: 1; color: var(--ink)">51.2</div>
+            <div id="qmark" class="abs serif" style="left: 0; width: 864px; top: 70px; text-align: center; font-size: 140px; color: var(--yellow)">?</div>
+          </div>
+        </div>
+
+        <!-- B: 3 losses: 100 → 80 → 64 → 51 -->
+        <div id="sB" class="scene clip" data-start="5.35" data-duration="6.55" data-track-index="1" data-track-kind="graphics">
+          <div id="bBoard" class="abs" style="inset: 0">
+            <div class="grid"></div>
+            <div id="bT" class="abs center serif" style="top: 262px; font-size: 96px">Teen loss.</div>
+            <div id="bCard" class="glass" style="left: 90px; top: 400px; width: 900px; height: 430px; border-color: rgba(255,77,94,0.45)">
+              <div class="label" style="color: var(--red)">BALANCE · 20% RISK / TRADE</div>
+              <div id="bNum" class="abs" style="left: 0; width: 900px; top: 90px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 210px; line-height: 1; color: var(--ink)">100</div>
+              <div class="abs" style="left: 90px; top: 340px; width: 720px; height: 30px; border-radius: 15px; background: rgba(238,241,248,0.1)"><div id="bBar" style="width: 720px; height: 30px; border-radius: 15px; background: linear-gradient(90deg, var(--red), var(--orange)); transform-origin: left center"></div></div>
+            </div>
+            <div id="r1" class="glass" style="left: 90px; top: 860px; width: 900px; height: 104px; border-radius: 22px"><div class="abs mono" style="left: 30px; top: 32px; font-size: 32px; color: var(--muted)">LOSS 1</div><div class="abs" style="left: 250px; top: 22px; font-size: 48px; font-weight: 800">100 → 80</div><div class="abs mono" style="right: 30px; top: 32px; font-size: 32px; color: var(--red)">−20%</div></div>
+            <div id="r2" class="glass" style="left: 90px; top: 984px; width: 900px; height: 104px; border-radius: 22px"><div class="abs mono" style="left: 30px; top: 32px; font-size: 32px; color: var(--muted)">LOSS 2</div><div class="abs" style="left: 250px; top: 22px; font-size: 48px; font-weight: 800">80 → 64</div><div class="abs mono" style="right: 30px; top: 32px; font-size: 32px; color: var(--red)">−20%</div></div>
+            <div id="r3" class="glass" style="left: 90px; top: 1108px; width: 900px; height: 104px; border-radius: 22px"><div class="abs mono" style="left: 30px; top: 32px; font-size: 32px; color: var(--muted)">LOSS 3</div><div class="abs" style="left: 250px; top: 22px; font-size: 48px; font-weight: 800">64 → 51</div><div class="abs mono" style="right: 30px; top: 32px; font-size: 32px; color: var(--red)">−20%</div></div>
+            <div id="bCounter" class="chip" style="left: 108px; top: 1240px; background: rgba(255,138,61,0.14); color: var(--orange); border: 2px solid rgba(255,138,61,0.5)">RAJU KA ACCOUNT (example) <span style="color: var(--red)">▼▼▼</span></div>
+            <div id="srcB" class="lower" style="top: 1340px">
+              <div class="k">SOURCE · EXAMPLE MATHS</div>
+              <div class="v">100 × 0.8³ = 51.2 (0.8³ = 0.512) · example numbers</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C: small fixed risk, 1–2% common practice -->
+        <div id="sC" class="scene clip" data-start="11.9" data-duration="8.2" data-track-index="1" data-track-kind="graphics">
+          <div class="grid"></div>
+          <div id="cT" class="abs center serif" style="top: 262px; font-size: 76px">Chhota, <span style="color: var(--green)">fixed</span> risk = game mein</div>
+          <div id="cCard" class="glass" style="left: 90px; top: 450px; width: 900px; height: 520px">
+            <div class="label">RISK PER TRADE</div>
+            <div class="abs mono" style="left: 40px; top: 120px; font-size: 34px; color: var(--green)">1–2%</div>
+            <div class="abs" style="left: 220px; top: 118px; width: 620px; height: 46px; border-radius: 12px; background: rgba(238,241,248,0.08)"><div id="cBarG" style="width: 62px; height: 46px; border-radius: 12px; background: var(--green); transform-origin: left center"></div></div>
+            <div class="abs mono" style="left: 40px; top: 220px; font-size: 34px; color: var(--red)">20%</div>
+            <div class="abs" style="left: 220px; top: 218px; width: 620px; height: 46px; border-radius: 12px; background: rgba(238,241,248,0.08)"><div id="cBarR" style="width: 620px; height: 46px; border-radius: 12px; background: var(--red); transform-origin: left center"></div></div>
+            <div id="cBig" class="abs" style="left: 0; width: 900px; top: 310px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 150px; line-height: 1; color: var(--green); text-shadow: 0 0 40px rgba(38,208,124,0.4)">1–2%</div>
+          </div>
+          <div id="cNote" class="glass" style="left: 140px; top: 1000px; width: 800px; height: 190px; border-color: rgba(255,201,74,0.5)">
+            <div id="cN1" class="abs" style="left: 0; width: 800px; top: 34px; text-align: center; font-size: 50px; font-weight: 800; color: var(--green)">COMMON PRACTICE ✓</div>
+            <div id="cN2" class="abs" style="left: 0; width: 800px; top: 108px; text-align: center; font-size: 46px; font-weight: 800; color: var(--yellow)">niyam nahi</div>
+          </div>
+          <div id="srcC" class="lower" style="top: 1260px">
+            <div class="k">SOURCE</div>
+            <div class="v">Jack Schwager, Market Wizards (1989) · risk control. 1–2% = common practice, rule nahi</div>
+          </div>
+        </div>
+
+        <!-- D: Aaj ka kaam -->
+        <div id="sD" class="scene clip" data-start="20.1" data-duration="3.75" data-track-index="1" data-track-kind="graphics">
+          <div class="grid"></div>
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">AAJ KA KAAM</div>
+          <div id="dT" class="abs center serif" style="top: 320px; font-size: 80px">Risk rupees mein. Entry se pehle.</div>
+          <div id="dField" class="glass" style="left: 140px; top: 600px; width: 800px; height: 220px; border-color: rgba(38,208,124,0.55)">
+            <div class="label" style="color: var(--green)">TRADE PLAN · EXAMPLE</div>
+            <div class="abs" style="left: 40px; top: 90px; font-size: 80px; font-weight: 800">Risk: ₹<span id="dBlank" style="color: var(--yellow)">_____</span></div>
+          </div>
+          <div id="dTick" class="glass" style="left: 140px; top: 860px; width: 800px; height: 130px; border-radius: 24px">
+            <div id="dBox" class="abs" style="left: 34px; top: 33px; width: 64px; height: 64px; border: 5px solid var(--green); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 52px; font-weight: 800; color: var(--green)"><span id="dChk" style="opacity: 0">✓</span></div>
+            <div class="abs" style="left: 130px; top: 38px; font-size: 44px; font-weight: 700">Entry se pehle risk tay</div>
+          </div>
+        </div>
+
+        <!-- E: COMMENT CTA -->
+        <div id="sE" class="scene clip" data-start="23.85" data-duration="3.45" data-track-index="1" data-track-kind="graphics">
+          <div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE TOOL</div>
+          <div id="eT" class="abs center serif" style="top: 320px; font-size: 70px">Risk + position size calculator?</div>
+          <div id="toast" class="glass" style="left: 140px; top: 560px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+            <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+            <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">Risk + Position Size Calculator 🧮</div>
+          </div>
+          <div id="cbar" class="glass" style="left: 108px; top: 780px; width: 864px; height: 130px; border-radius: 65px">
+            <div id="ph" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+            <div class="abs" style="left: 50px; top: 30px; height: 70px; overflow: hidden"><div id="typed">RISK</div></div>
+            <div id="send" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+          </div>
+          <div id="eCta" class="abs center" style="top: 980px; font-family: 'Baloo 2'; font-weight: 800; font-size: 84px; color: var(--yellow); white-space: nowrap">Comment karo: RISK</div>
+        </div>
+
+        <!-- F: TEASER + FOLLOW -->
+        <div id="sF" class="scene clip" data-start="27.3" data-duration="6.4" data-track-index="1" data-track-kind="graphics">
+          <div id="next" class="glass" style="left: 108px; top: 290px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+            <div class="label" style="color: var(--orange)">SHAAM: DATA DROP</div>
+            <div class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 62px"><span style="color: var(--green)">1%</span> vs <span style="color: var(--red)">20%</span> risk, numbers mein.</div>
+          </div>
+          <img id="logo" class="abs" src="assets/tw-icon.svg" style="left: 420px; top: 680px; width: 240px; height: 240px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+          <div id="handle" class="abs center" style="top: 950px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+          <div id="fbtn" class="abs" style="left: 330px; top: 1050px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+          <div class="abs center" style="top: 1230px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+        </div>
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="k20" class="kin clip" data-layout-allow-occlusion data-start="1.75" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--red)"><span style="font-size: 400px">20%</span></div>
+      <div id="kAadha" class="kin clip" data-layout-allow-occlusion data-start="11.2" data-duration="0.5" data-track-index="2" data-track-kind="graphics" style="background: var(--red)"><span style="font-size: 280px">AADHA</span></div>
+      <div id="kFixed" class="kin clip" data-layout-allow-occlusion data-start="12.8" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--green)"><span style="font-size: 300px">FIXED</span></div>
+      <div id="kShaam" class="kin clip" data-layout-allow-occlusion data-start="27.35" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--orange)"><span style="font-size: 280px">SHAAM</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · EPISODE 27</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="ky1" class="clip" src="assets/sfx/typekey.mp3" data-start="0.05" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="ky2" class="clip" src="assets/sfx/typekey.mp3" data-start="0.3" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="ky3" class="clip" src="assets/sfx/typekey.mp3" data-start="0.55" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="im1" class="clip" src="assets/sfx/impact.mp3" data-start="1.75" data-duration="0.9" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="wh1" class="clip" src="assets/sfx/whoosh.mp3" data-start="3.0" data-duration="0.5" data-track-index="15" data-volume="0.35"></audio>
+      <audio id="hb1" class="clip" src="assets/sfx/heartbeat.mp3" data-start="4.2" data-duration="0.9" data-track-index="17" data-volume="0.5"></audio>
+      <audio id="wh2" class="clip" src="assets/sfx/whoosh.mp3" data-start="5.2" data-duration="0.5" data-track-index="15" data-volume="0.38"></audio>
+      <audio id="tc1" class="clip" src="assets/sfx/tick.mp3" data-start="6.68" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="tc2" class="clip" src="assets/sfx/tick.mp3" data-start="7.88" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="tc3" class="clip" src="assets/sfx/tick.mp3" data-start="9.12" data-duration="0.07" data-track-index="13" data-volume="0.35"></audio>
+      <audio id="im2" class="clip" src="assets/sfx/impact.mp3" data-start="11.2" data-duration="0.9" data-track-index="14" data-volume="0.5"></audio>
+      <audio id="im3" class="clip" src="assets/sfx/impact.mp3" data-start="12.8" data-duration="0.9" data-track-index="14" data-volume="0.42"></audio>
+      <audio id="po1" class="clip" src="assets/sfx/pop.mp3" data-start="14.76" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="st1" class="clip" src="assets/sfx/stamp.mp3" data-start="18.16" data-duration="0.5" data-track-index="12" data-volume="0.42"></audio>
+      <audio id="wh3" class="clip" src="assets/sfx/whoosh.mp3" data-start="19.95" data-duration="0.5" data-track-index="15" data-volume="0.38"></audio>
+      <audio id="ck1" class="clip" src="assets/sfx/click.mp3" data-start="23.2" data-duration="0.1" data-track-index="19" data-volume="0.3"></audio>
+      <audio id="wh4" class="clip" src="assets/sfx/whoosh.mp3" data-start="23.7" data-duration="0.5" data-track-index="15" data-volume="0.38"></audio>
+      <audio id="po2" class="clip" src="assets/sfx/pop.mp3" data-start="24.2" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="ty1" class="clip" src="assets/sfx/typekey.mp3" data-start="26.5" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="ty2" class="clip" src="assets/sfx/typekey.mp3" data-start="26.58" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="ty3" class="clip" src="assets/sfx/typekey.mp3" data-start="26.66" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="ck2" class="clip" src="assets/sfx/click.mp3" data-start="26.8" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="im4" class="clip" src="assets/sfx/impact.mp3" data-start="27.35" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="po3" class="clip" src="assets/sfx/pop.mp3" data-start="30.7" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      const D = 33.7;
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "3600px 2520px", duration: D, ease: "steps(" + Math.round(D * 15) + ")" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slideL = (s, t) => tl.fromTo(s, { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const stamp = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.3 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const unblur = (s, t) => tl.fromTo(s, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.35, ease: "power2.out" }, t);
+      const typeKw = (t, w, n) => { tl.to("#ph", { opacity: 0, duration: 0.05 }, t); tl.fromTo("#typed", { width: 0 }, { width: w, duration: 0.06 * n, ease: "steps(" + n + ")" }, t); tl.fromTo("#send", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, t + 0.06 * n + 0.05); };
+      const count = (id, from, to, t, dur, fmt, ease) => { const o = { v: from }; tl.fromTo(o, { v: from }, { v: to, duration: dur, ease: ease || "power2.out", onUpdate: () => { document.getElementById(id).textContent = fmt(o.v); } }, t); };
+
+      // A — hook: pie at 20% from frame 0, punch on "बीस percent", blurred balance on question
+      tl.fromTo("#aType", { width: 0 }, { width: 720, duration: 0.7, ease: "steps(33)" }, 0);
+      tl.fromTo("#pieCard", { scale: 0.97 }, { scale: 1, duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#pArc", { attr: { "stroke-width": 70 } }, { attr: { "stroke-width": 84 }, duration: 0.3, yoyo: true, repeat: 1 }, 2.2);
+      punch("#k20", 1.75);
+      tl.fromTo("#aCounter", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3 }, 0.6);
+      up("#balCard", 3.16);
+      tl.fromTo("#qmark", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 3.6);
+      tl.to("#qmark", { scale: 1.15, duration: 0.25, yoyo: true, repeat: 1 }, 4.65);
+
+      // B — losses compound
+      enter("#sB", 5.35); up("#bT", 5.4);
+      tl.fromTo("#bCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 5.5);
+      [["#r1", 6.68, 100, 80, 0.8], ["#r2", 7.88, 80, 64, 0.64], ["#r3", 9.12, 64, 51, 0.512]].forEach(([s, t, a, v, k], i) => {
+        tl.fromTo(s, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)" }, t);
+        count("bNum", a, v, t + 0.45, 0.35, (x) => String(Math.round(x)));
+        tl.to("#bBar", { scaleX: k, duration: 0.35, ease: "power3.out" }, t + 0.45);
+        tl.fromTo("#bNum", { scale: 1.15, color: "#ff4d5e" }, { scale: 1, color: "#eef1f8", duration: 0.35 }, t + 0.45);
+        flash(t + 0.45, 0.18);
+      });
+      tl.to("#bNum", { color: "#ff4d5e", duration: 0.2 }, 10.52);
+      tl.fromTo("#bCounter", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.0);
+      slideL("#srcB", 6.0);
+      tl.fromTo("#bBoard", { scale: 1 }, { scale: 1.04, duration: 6.5, ease: "none" }, 5.35);
+
+      // C — fixed risk, 1–2%
+      enter("#sC", 11.9); up("#cT", 11.95);
+      tl.fromTo("#cCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 13.3);
+      tl.fromTo("#cBarR", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 13.5);
+      tl.fromTo("#cBarG", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 14.76);
+      pop("#cBig", 15.6);
+      slideL("#srcC", 15.0);
+      tl.fromTo("#cNote", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 }, 18.1);
+      stamp("#cN1", 18.16);
+      tl.fromTo("#cN2", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.3 }, 19.27);
+      shake("#cNote", 18.3);
+
+      // D — today's task
+      enter("#sD", 20.1); up("#dT", 20.15);
+      pop("#dField", 21.03);
+      tl.fromTo("#dBlank", { opacity: 1 }, { opacity: 0.25, duration: 0.3, yoyo: true, repeat: 3 }, 21.4);
+      up("#dTick", 22.2);
+      tl.fromTo("#dChk", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.15 }, 23.2);
+
+      // E — comment CTA
+      enter("#sE", 23.85); up("#eT", 23.9);
+      tl.fromTo("#toast", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 24.2);
+      tl.fromTo("#cbar", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 24.6);
+      up("#eCta", 26.0);
+      typeKw(26.5, 200, 4);
+
+      // F — teaser + follow
+      punch("#kShaam", 27.35);
+      enter("#sF", 27.8);
+      up("#next", 27.85);
+      tl.fromTo("#logo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.7)" }, 28.4);
+      up("#handle", 28.6);
+      tl.fromTo("#fbtn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 30.7);
+      tl.to("#fbtn", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, 31.2);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* SIGNAL FILE · Day 12 morning · EP12 Zyada trade = zyada loss (Barber & Odean 2000) */
+      @font-face { font-family: "Baloo 2"; font-weight: 800; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); }
+      :root { --bg: #0b0f1a; --green: #26d07c; --red: #ff4d5e; --yellow: #ffc94a; --orange: #ff8a3d; --ink: #eef1f8; --muted: #8d97ad; --paper: #ece6da; --glass: rgba(27, 36, 64, 0.62); --edge: rgba(238, 241, 248, 0.14); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: var(--ink); background: var(--bg); }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .serif { font-family: "Playfair Display", serif; font-weight: 800; line-height: 1.02; }
+      .mono { font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; }
+      .center { left: 108px; width: 864px; text-align: center; }
+      .glass { position: absolute; background: var(--glass); border: 2px solid var(--edge); border-radius: 32px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+      .label { position: absolute; left: 36px; top: 26px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.12em; font-size: 28px; color: var(--yellow); }
+      .row { position: absolute; left: 36px; right: 36px; height: 96px; border-radius: 20px; background: rgba(11, 15, 26, 0.75); border: 2px solid var(--edge); display: flex; align-items: center; padding: 0 26px; gap: 22px; font-size: 36px; font-weight: 700; }
+      .x { width: 50px; height: 50px; border-radius: 12px; background: var(--red); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .ok { width: 50px; height: 50px; border-radius: 12px; background: var(--green); color: #0b0f1a; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 30px; flex: none; }
+      .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Baloo 2", sans-serif; font-weight: 800; color: #0b0f1a; line-height: 0.9; white-space: nowrap; }
+      .lower { position: absolute; left: 108px; width: 864px; padding: 20px 26px; border-left: 8px solid var(--yellow); background: rgba(11, 15, 26, 0.88); }
+      .chip { position: absolute; padding: 12px 26px; border-radius: 40px; font-family: "IBM Plex Mono", monospace; font-weight: 700; letter-spacing: 0.1em; font-size: 30px; }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(238,241,248,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(238,241,248,0.04) 2px, transparent 2px); background-size: 60px 60px; }
+      .stampbox { position: absolute; border: 12px solid var(--red); border-radius: 18px; color: var(--red); display: flex; align-items: center; justify-content: center; font-family: "Playfair Display", serif; font-weight: 800; letter-spacing: 0.06em; background: rgba(11, 15, 26, 0.45); }
+      #spot { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 45%, rgba(255, 255, 255, 0.06), transparent 70%), radial-gradient(120% 75% at 50% 48%, transparent 45%, rgba(0, 0, 0, 0.72) 100%); }
+      #grain { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>"); }
+      .bar { position: absolute; left: 0; width: 1080px; background: #05070d; }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #progTrack { position: absolute; left: 108px; top: 230px; width: 864px; height: 5px; border-radius: 3px; background: rgba(238, 241, 248, 0.1); }
+      #prog { position: absolute; left: 0; top: 0; width: 864px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform-origin: left center; }
+
+      .bar2 { position: absolute; bottom: 0; width: 200px; border-radius: 18px 18px 0 0; }
+      .tile { position: absolute; width: 140px; height: 140px; border-radius: 22px; background: rgba(11,15,26,0.8); border: 2px solid var(--edge); }
+      .tile b { position: absolute; left: 0; width: 140px; top: 22px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 50px; line-height: 1; }
+      .tile i { position: absolute; left: 0; width: 140px; top: 84px; text-align: center; font-style: normal; font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 28px; color: var(--yellow); }
+      .tx { position: absolute; right: 8px; top: 6px; font-size: 28px; font-weight: 800; color: var(--red); opacity: 0; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="40.31" data-width="1080" data-height="1920">
+      <div id="world" class="abs" style="inset: 0">
+<div id="sA" class="scene clip" data-start="0.00" data-duration="7.05" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center" style="top: 262px; height: 40px; overflow: hidden"><div id="aType" class="mono" style="display: inline-block; font-size: 28px; color: var(--yellow); white-space: nowrap; overflow: hidden">CASE FILE · EP12 · US STUDY</div></div>
+<div class="abs center serif" style="top: 316px; font-size: 76px; line-height: 1.06">Sabse zyada trade,<br><span style="color: var(--red)">sabse kam return</span></div>
+<div id="aCard" class="glass" style="left: 90px; top: 520px; width: 900px; height: 640px">
+  <div class="label">SAALANA RETURN (NET)</div>
+  <div class="abs" style="left: 0; top: 80px; width: 900px; height: 430px">
+    <div id="barR" class="bar2" style="left: 170px; height: 191px; background: var(--red); box-shadow: 0 0 40px rgba(255,77,94,0.45)"></div>
+    <div id="barG" class="bar2" style="left: 530px; height: 300px; opacity: 0.35; background: var(--green); box-shadow: 0 0 40px rgba(38,208,124,0.45)"></div>
+    <div id="vR" class="abs" style="left: 120px; width: 300px; top: 149px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 76px; line-height: 1">11.4%</div>
+    <div id="vG" class="abs" style="left: 480px; width: 300px; top: 40px; text-align: center; font-family: 'Baloo 2'; font-weight: 800; font-size: 76px; line-height: 1; opacity: 0.35">17.9%</div>
+  </div>
+  <div class="abs" style="left: 0; top: 530px; width: 900px; height: 2px; background: var(--edge)"></div>
+  <div class="abs" style="left: 120px; width: 300px; top: 552px; text-align: center; font-size: 32px; font-weight: 800; color: var(--red); line-height: 1.1">Sabse zyada<br>trade karne wale</div>
+  <div id="lG" class="abs" style="left: 480px; width: 300px; top: 552px; text-align: center; font-size: 32px; font-weight: 800; color: var(--green); line-height: 1.1; opacity: 0.35">Market</div>
+</div>
+<div id="srcA" class="lower" style="top: 1200px"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">US study · Barber &amp; Odean (2000), Journal of Finance · US households 1991–96 · top 20% traders vs market</div></div>
+
+</div>
+
+<div id="sB" class="scene clip" data-start="7.05" data-duration="4.10" data-track-index="1" data-track-kind="graphics">
+
+<div id="bPush" class="abs" style="inset: 0">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT A · GADBAD KAHAN?</div>
+<div id="bT1" class="abs center serif" style="top: 330px; font-size: 92px">Zyada mehnat,</div>
+<div id="bT2" class="abs center serif" style="top: 440px; font-size: 92px; color: var(--red)">kam kamai.</div>
+<div id="bCard" class="glass" style="left: 140px; top: 640px; width: 800px; height: 300px; border-color: rgba(255,201,74,0.5)"><div class="label">WAJAH: ???</div><div id="bCardQ" class="abs serif" style="left: 0; width: 800px; top: 125px; text-align: center; font-size: 70px; color: var(--muted); filter: blur(14px)">OVERCONFIDENCE</div></div>
+<div id="bEnd" class="chip" style="left: 330px; top: 1020px; width: 420px; text-align: center; background: rgba(255,201,74,0.14); color: var(--yellow); border: 2px solid rgba(255,201,74,0.5)">END TAK DEKHNA ▸</div>
+</div>
+
+</div>
+
+<div id="sC" class="scene clip" data-start="11.15" data-duration="7.15" data-track-index="1" data-track-kind="graphics">
+
+<div id="acC" class="glass" style="left: 108px; top: 270px; width: 864px; height: 120px; border-color: rgba(255,138,61,0.55)"><div class="abs mono" style="left: 32px; top: 22px; font-size: 26px; color: var(--orange)">RAJU KA ACCOUNT</div><div class="abs mono" style="left: 32px; top: 60px; font-size: 28px; color: var(--muted)">example</div><div id="acCV" class="abs" style="right: 110px; top: 22px; font-family: 'Baloo 2'; font-weight: 800; font-size: 66px; line-height: 1">₹1,00,000</div><div id="acCA" class="abs" style="right: 32px; top: 26px; font-size: 60px; color: var(--red); line-height: 1">▼</div></div>
+<div id="cT" class="abs center serif" style="top: 425px; font-size: 76px">Din mein <span style="color: var(--orange)">15 trade</span></div>
+<div id="cPanel" class="glass" style="left: 90px; top: 545px; width: 900px; height: 680px">
+  <div class="label" style="color: var(--orange)">TRADE LOG · EXAMPLE</div>
+  <div id="cCnt" class="abs mono" style="right: 36px; top: 22px; font-size: 34px; color: var(--yellow)">00/15</div>
+  <div id="tl0" class="tile" style="left: 52px; top: 110px"><b>1</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl1" class="tile" style="left: 216px; top: 110px"><b>2</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl2" class="tile" style="left: 380px; top: 110px"><b>3</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl3" class="tile" style="left: 544px; top: 110px"><b>4</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl4" class="tile" style="left: 708px; top: 110px"><b>5</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl5" class="tile" style="left: 52px; top: 274px"><b>6</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl6" class="tile" style="left: 216px; top: 274px"><b>7</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl7" class="tile" style="left: 380px; top: 274px"><b>8</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl8" class="tile" style="left: 544px; top: 274px"><b>9</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl9" class="tile" style="left: 708px; top: 274px"><b>10</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl10" class="tile" style="left: 52px; top: 438px"><b>11</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl11" class="tile" style="left: 216px; top: 438px"><b>12</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl12" class="tile" style="left: 380px; top: 438px"><b>13</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl13" class="tile" style="left: 544px; top: 438px"><b>14</b><i>₹ fee</i><div class="tx">✕</div></div><div id="tl14" class="tile" style="left: 708px; top: 438px"><b>15</b><i>₹ fee</i><div class="tx">✕</div></div>
+  <div id="cNote" class="abs" style="left: 52px; top: 600px; font-size: 34px; font-weight: 700">Har trade = <span style="color: var(--yellow)">charge</span> + <span style="color: var(--red)">naya decision</span></div>
+</div>
+
+</div>
+
+<div id="sD" class="scene clip" data-start="18.30" data-duration="6.00" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT B · ASLI WAJAH</div>
+<div id="dCard" class="glass" style="left: 90px; top: 320px; width: 900px; height: 250px; border-color: rgba(255,201,74,0.6)">
+  <div class="label">WAJAH</div>
+  <div id="dW" class="abs serif" style="left: 0; width: 900px; top: 100px; text-align: center; font-size: 84px; color: var(--yellow)">Overconfidence</div>
+</div>
+<div id="dQ" class="glass" style="left: 140px; top: 620px; width: 800px; height: 170px">
+  <div class="label" style="color: var(--muted)">DIMAAG KAHTA HAI</div>
+  <div class="abs serif" style="left: 36px; top: 78px; font-size: 56px; white-space: nowrap">“<span id="dHM" style="position: relative">Har move<span id="dStrike" class="abs" style="left: -6px; top: 30px; width: 250px; height: 12px; background: var(--red); transform-origin: left center"></span></span> pakad lunga”</div>
+</div>
+<div id="dT1" class="glass" style="left: 140px; top: 840px; width: 380px; height: 170px; border-color: rgba(255,77,94,0.6)"><div class="label" style="color: var(--red)">TRADES</div><div class="abs" style="left: 36px; top: 70px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; line-height: 1; color: var(--red)">▲ ZYADA</div></div>
+<div id="dT2" class="glass" style="left: 560px; top: 840px; width: 380px; height: 170px; border-color: rgba(255,77,94,0.6)"><div class="label" style="color: var(--red)">RETURN</div><div class="abs" style="left: 36px; top: 70px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; line-height: 1; color: var(--red)">▼ KAM</div></div>
+<div id="srcD" class="lower" style="top: 1080px"><div class="mono" style="font-size: 28px; color: var(--yellow)">SOURCE</div><div style="font-size: 30px; font-weight: 600; margin-top: 6px">Barber &amp; Odean (2000): overconfidence → zyada trading → kam net return</div></div>
+
+</div>
+
+<div id="sE" class="scene clip" data-start="24.30" data-duration="6.90" data-track-index="1" data-track-kind="graphics">
+
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">EXHIBIT C · AAJ KA KAAM</div>
+<div id="eT" class="abs center serif" style="top: 320px; font-size: 92px; color: var(--green)">Aaj ka kaam</div>
+<div id="ePanel" class="glass" style="left: 90px; top: 470px; width: 900px; height: 470px; border-color: rgba(38,208,124,0.5)">
+  <div class="label" style="color: var(--green)">MERE RULES · DIN KA</div>
+  <div id="e1" class="row" style="top: 96px"><div class="ok">✓</div>Max trades / din: <span style="color: var(--yellow); margin-left: -8px">3</span><span class="mono" style="font-size: 28px; color: var(--muted)">example</span></div>
+  <div id="e2" class="row" style="top: 214px"><div class="ok">✓</div>Limit poori = screen band</div>
+  <div id="e3" class="row" style="top: 332px"><div class="ok">✓</div>Kal se follow</div>
+</div>
+<div id="eK1" class="chip" style="left: 108px; top: 1000px; background: rgba(38,208,124,0.16); color: var(--green); border: 2px solid rgba(38,208,124,0.5)">KAM TRADE</div>
+<div id="eK2" class="chip" style="left: 390px; top: 1000px; background: rgba(38,208,124,0.16); color: var(--green); border: 2px solid rgba(38,208,124,0.5)">KAM CHARGES</div>
+<div id="eK3" class="chip" style="left: 260px; top: 1100px; background: rgba(38,208,124,0.16); color: var(--green); border: 2px solid rgba(38,208,124,0.5)">KAM BURE TRADES</div>
+
+</div>
+
+<div id="sF" class="scene clip" data-start="31.20" data-duration="2.80" data-track-index="1" data-track-kind="graphics">
+<div class="abs center mono" style="top: 262px; font-size: 28px; color: var(--muted)">FREE FILE</div>
+<div id="sFT" class="abs center serif" style="top: 320px; font-size: 78px; line-height: 1.08">Trading rules<br>template chahiye?</div>
+<div id="sFcbar" class="glass" style="left: 108px; top: 600px; width: 864px; height: 130px; border-radius: 65px">
+  <div id="sFph" class="abs" style="left: 50px; top: 38px; font-size: 40px; color: var(--muted); font-weight: 600">Add a comment…</div>
+  <div class="abs" style="left: 50px; top: 22px; height: 88px; overflow: hidden"><div id="sFtyped" style="font-family: 'Baloo 2'; font-size: 54px; line-height: 88px; font-weight: 800; color: var(--yellow); letter-spacing: 0.08em; width: 0; overflow: hidden; white-space: nowrap">RULES</div></div>
+  <div id="sFsend" class="abs" style="right: 22px; top: 18px; width: 94px; height: 94px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 44px; color: #0b0f1a; font-weight: 800">➤</div>
+</div>
+<div id="sFCta" class="abs center" style="top: 800px; font-family: 'Baloo 2'; font-weight: 800; font-size: 80px; color: var(--yellow); white-space: nowrap">Comment karo: RULES</div>
+<div id="sFtoast" class="glass" style="left: 140px; top: 960px; width: 800px; height: 150px; border-color: rgba(38,208,124,0.6)">
+  <div class="abs mono" style="left: 36px; top: 26px; font-size: 28px; color: var(--green)">NEW DM</div>
+  <div class="abs" style="left: 36px; top: 70px; font-size: 38px; font-weight: 700">Trading Rules Template 📋</div>
+</div>
+</div>
+
+<div id="sG" class="scene clip" data-start="34.00" data-duration="6.31" data-track-index="1" data-track-kind="graphics">
+<div id="sGnext" class="glass" style="left: 108px; top: 290px; width: 864px; height: 300px; border-color: rgba(255,138,61,0.5)">
+  <div class="label" style="color: var(--orange)">AAJ SHAAM · AAJ KA RULE</div>
+  <div class="abs serif" style="left: 36px; top: 84px; width: 790px; font-size: 56px; line-height: 1.08">Limit poori? <span style="color: var(--red)">Screen band.</span></div>
+</div>
+
+<img id="sGlogo" class="abs" src="assets/tw-icon.svg" style="left: 430px; top: 660px; width: 220px; height: 220px; border-radius: 50%; box-shadow: 0 0 80px rgba(38,208,124,0.35)" />
+<div id="sGhandle" class="abs center" style="top: 910px; font-size: 52px; font-weight: 800">@thetradingwizaard</div>
+<div id="sGfbtn" class="abs" style="left: 330px; top: 1010px; width: 420px; height: 110px; border-radius: 55px; background: var(--green); color: #0b0f1a; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; letter-spacing: 0.06em; box-shadow: 0 0 50px rgba(38,208,124,0.5)">FOLLOW KARO</div>
+<div class="abs center" style="top: 1200px; font-size: 28px; color: var(--muted); font-weight: 600">Educational content, not investment advice.</div>
+</div>
+      </div>
+
+      <!-- KINETIC PUNCHES -->
+      <div id="kKyun" class="kin clip" data-start="8.35" data-duration="0.50" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span style="font-size: 300px">KYUN?</span></div>
+      <div id="kOver" class="kin clip" data-start="18.46" data-duration="0.55" data-track-index="2" data-track-kind="graphics" style="background: var(--yellow)"><span style="font-size: 104px">OVERCONFIDENCE</span></div>
+      <div id="kLimit" class="kin clip" data-start="26.30" data-duration="0.45" data-track-index="2" data-track-kind="graphics" style="background: var(--green)"><span style="font-size: 300px">LIMIT</span></div>
+
+      <div id="spot" data-layout-ignore></div>
+      <div id="grain" data-layout-ignore></div>
+      <div class="bar" style="top: 0; height: 176px"></div>
+      <div class="bar" style="top: 1640px; height: 280px"></div>
+      <div class="abs mono" style="left: 108px; top: 186px; font-size: 28px; color: var(--muted)">THE TRADING WIZAARD · CASE FILES · EP12</div>
+      <img class="abs" src="assets/tw-watermark.png" data-layout-ignore style="left: 812px; top: 1560px; width: 180px; height: 44px; opacity: 0.55" />
+      <div id="progTrack"><div id="prog"></div></div>
+      <div id="flash"></div>
+
+      <!-- AUDIO: voice + self-generated SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="sx0" class="clip" src="assets/sfx/typekey.mp3" data-start="0.05" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="sx1" class="clip" src="assets/sfx/typekey.mp3" data-start="0.30" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="sx2" class="clip" src="assets/sfx/typekey.mp3" data-start="0.55" data-duration="0.05" data-track-index="11" data-volume="0.22"></audio>
+      <audio id="sx3" class="clip" src="assets/sfx/tick.mp3" data-start="3.40" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx4" class="clip" src="assets/sfx/pop.mp3" data-start="5.30" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx5" class="clip" src="assets/sfx/tick.mp3" data-start="6.10" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx6" class="clip" src="assets/sfx/whoosh.mp3" data-start="6.87" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx7" class="clip" src="assets/sfx/impact.mp3" data-start="8.35" data-duration="0.9" data-track-index="14" data-volume="0.48"></audio>
+      <audio id="sx8" class="clip" src="assets/sfx/heartbeat.mp3" data-start="9.30" data-duration="0.9" data-track-index="17" data-volume="0.5"></audio>
+      <audio id="sx9" class="clip" src="assets/sfx/click.mp3" data-start="10.10" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="sx10" class="clip" src="assets/sfx/whoosh.mp3" data-start="10.97" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx11" class="clip" src="assets/sfx/pop.mp3" data-start="12.90" data-duration="0.12" data-track-index="18" data-volume="0.28"></audio>
+      <audio id="sx12" class="clip" src="assets/sfx/shutter.mp3" data-start="14.10" data-duration="0.16" data-track-index="16" data-volume="0.35"></audio>
+      <audio id="sx13" class="clip" src="assets/sfx/tick.mp3" data-start="17.15" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx14" class="clip" src="assets/sfx/tick.mp3" data-start="17.31" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx15" class="clip" src="assets/sfx/tick.mp3" data-start="17.47" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx16" class="clip" src="assets/sfx/tick.mp3" data-start="17.63" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx17" class="clip" src="assets/sfx/tick.mp3" data-start="17.79" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx18" class="clip" src="assets/sfx/whoosh.mp3" data-start="18.12" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx19" class="clip" src="assets/sfx/impact.mp3" data-start="18.46" data-duration="0.9" data-track-index="14" data-volume="0.48"></audio>
+      <audio id="sx20" class="clip" src="assets/sfx/stamp.mp3" data-start="21.25" data-duration="0.5" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sx21" class="clip" src="assets/sfx/pop.mp3" data-start="21.96" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx22" class="clip" src="assets/sfx/impact.mp3" data-start="23.18" data-duration="0.9" data-track-index="14" data-volume="0.4"></audio>
+      <audio id="sx23" class="clip" src="assets/sfx/whoosh.mp3" data-start="24.12" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx24" class="clip" src="assets/sfx/tick.mp3" data-start="25.40" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx25" class="clip" src="assets/sfx/impact.mp3" data-start="26.30" data-duration="0.9" data-track-index="14" data-volume="0.42"></audio>
+      <audio id="sx26" class="clip" src="assets/sfx/tick.mp3" data-start="26.95" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx27" class="clip" src="assets/sfx/tick.mp3" data-start="27.55" data-duration="0.07" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx28" class="clip" src="assets/sfx/pop.mp3" data-start="28.50" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx29" class="clip" src="assets/sfx/pop.mp3" data-start="29.20" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx30" class="clip" src="assets/sfx/pop.mp3" data-start="30.09" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx31" class="clip" src="assets/sfx/whoosh.mp3" data-start="31.02" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx32" class="clip" src="assets/sfx/pop.mp3" data-start="31.92" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+      <audio id="sx33" class="clip" src="assets/sfx/typekey.mp3" data-start="33.12" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx34" class="clip" src="assets/sfx/typekey.mp3" data-start="33.21" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx35" class="clip" src="assets/sfx/typekey.mp3" data-start="33.30" data-duration="0.05" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx36" class="clip" src="assets/sfx/click.mp3" data-start="33.45" data-duration="0.1" data-track-index="19" data-volume="0.28"></audio>
+      <audio id="sx37" class="clip" src="assets/sfx/whoosh.mp3" data-start="33.82" data-duration="0.5" data-track-index="15" data-volume="0.36"></audio>
+      <audio id="sx38" class="clip" src="assets/sfx/pop.mp3" data-start="37.20" data-duration="0.12" data-track-index="18" data-volume="0.3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      const D = 40.31, F = 1 / 30;
+      tl.fromTo("#grain", { backgroundPosition: "0px 0px" }, { backgroundPosition: "5885px 4111px", duration: D, ease: "steps(604)" }, 0);
+      tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: D, ease: "none" }, 0);
+      tl.set("#flash", { opacity: 0 }, 0);
+      const flash = (t, o) => tl.to("#flash", { opacity: o, duration: F }, t).to("#flash", { opacity: 0, duration: 0.12 }, t + F);
+      const enter = (s, t) => tl.fromTo(s, { scale: 0.94, opacity: 0, filter: "blur(12px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out" }, t);
+      const up = (s, t) => tl.fromTo(s, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const pop = (s, t) => tl.fromTo(s, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, t);
+      const slideL = (s, t) => tl.fromTo(s, { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
+      const punch = (s, t) => tl.fromTo(s + " span", { scale: 1.45, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "power3.out" }, t);
+      const shake = (s, t) => [14, -12, 8, -4, 0].forEach((x, i) => tl.to(s, { x, duration: F }, t + i * F));
+      const stampIn = (s, t) => tl.fromTo(s, { opacity: 0, scale: 2.3 }, { opacity: 1, scale: 1, duration: 0.15, ease: "power4.in" }, t);
+      const unblur = (s, t, col) => tl.to(s, { filter: "blur(0px)", color: col || "#ffc94a", duration: 0.3, ease: "power2.out" }, t);
+      const typeOn = (s, t, w, n, d) => tl.fromTo(s, { width: 0 }, { width: w, duration: d || n * 0.035, ease: "steps(" + n + ")" }, t);
+      const counter = (id, t, a, b, d, fmt) => { const o = { v: a }; tl.to(o, { v: b, duration: d, ease: "none", onUpdate: () => { document.getElementById(id).textContent = fmt(o.v); } }, t); };
+      const strike = (s, t) => tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: "power3.out" }, t);
+
+      tl.fromTo("#aType", { width: 0 }, { width: 560, duration: 0.7, ease: "steps(27)" }, 0);
+      tl.fromTo("#aCard", { scale: 0.98 }, { scale: 1, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#barR", { scaleY: 0.9, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.5, ease: "back.out(2)" }, 3.0);
+      flash(3.4, 0.2); tl.fromTo("#vR", { scale: 1 }, { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1 }, 3.4);
+      tl.to(["#vG", "#lG", "#barG"], { opacity: 1, duration: 0.25 }, 5.25);
+      tl.fromTo("#barG", { scaleY: 0.9, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.5, ease: "back.out(2)" }, 5.25);
+      tl.fromTo("#srcA", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 0.9);
+      enter("#sB", 7.05); up("#bT1", 7.1); up("#bT2", 7.7);
+      tl.fromTo("#bCard", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 8.9);
+      tl.fromTo("#bPush", { scale: 1 }, { scale: 1.06, duration: 4.1, ease: "sine.in" }, 7.05);
+      pop("#bEnd", 9.85);
+      punch("#kKyun", 8.35);
+      enter("#sC", 11.15); slideL("#acC", 11.2);
+      up("#cT", 12.7); tl.fromTo("#cPanel", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 12.75);
+      tl.fromTo("#cPanel .tile", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, stagger: 0.075, ease: "back.out(2)" }, 12.85);
+      counter("cCnt", 12.85, 0, 15, 1.1, (v) => String(Math.round(v)).padStart(2, "0") + "/15");
+      tl.to("#cPanel .tile i", { color: "#ff8a3d", duration: 0.12, stagger: 0.03 }, 14.1);
+      up("#cNote", 15.25);
+      tl.to("#tl2", { borderColor: "#ff4d5e", background: "rgba(255,77,94,0.22)", duration: 0.1 }, 17.15); tl.to("#tl2 .tx", { opacity: 1, duration: 0.1 }, 17.15);
+      tl.to("#tl6", { borderColor: "#ff4d5e", background: "rgba(255,77,94,0.22)", duration: 0.1 }, 17.31); tl.to("#tl6 .tx", { opacity: 1, duration: 0.1 }, 17.31);
+      tl.to("#tl8", { borderColor: "#ff4d5e", background: "rgba(255,77,94,0.22)", duration: 0.1 }, 17.47); tl.to("#tl8 .tx", { opacity: 1, duration: 0.1 }, 17.47);
+      tl.to("#tl11", { borderColor: "#ff4d5e", background: "rgba(255,77,94,0.22)", duration: 0.1 }, 17.63); tl.to("#tl11 .tx", { opacity: 1, duration: 0.1 }, 17.63);
+      tl.to("#tl13", { borderColor: "#ff4d5e", background: "rgba(255,77,94,0.22)", duration: 0.1 }, 17.79); tl.to("#tl13 .tx", { opacity: 1, duration: 0.1 }, 17.79);
+      counter("acCV", 17.15, 100000, 96350, 0.8, (v) => "₹" + Math.round(v).toLocaleString("en-IN"));
+      tl.fromTo("#acCA", { y: -10 }, { y: 10, duration: 0.2, yoyo: true, repeat: 3 }, 17.15);
+      punch("#kOver", 18.46);
+      enter("#sD", 18.6); tl.fromTo("#dCard", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 19.0);
+      tl.fromTo("#dW", { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.35 }, 19.05);
+      up("#dQ", 20.2); strike("#dStrike", 21.25); flash(21.25, 0.2);
+      pop("#dT1", 21.96); pop("#dT2", 23.18); slideL("#srcD", 20.9);
+      enter("#sE", 24.3); up("#eT", 24.35);
+      tl.fromTo("#ePanel", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 25.2);
+      slideL("#e1", 25.35); slideL("#e2", 26.9); slideL("#e3", 27.5);
+      punch("#kLimit", 26.30);
+      pop("#eK1", 28.5); pop("#eK2", 29.2); pop("#eK3", 30.09);
+      enter("#sF", 31.20); up("#sFT", 31.23);
+      tl.fromTo("#sFcbar", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 31.50);
+      up("#sFCta", 32.85);
+      tl.to("#sFph", { opacity: 0, duration: 0.05 }, 33.10);
+      tl.fromTo("#sFtyped", { width: 0 }, { width: 230, duration: 0.3, ease: "steps(5)" }, 33.10);
+      tl.fromTo("#sFsend", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1 }, 33.45);
+      tl.fromTo("#sFtoast", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 31.90);
+      enter("#sG", 34.00); up("#sGnext", 34.05);
+      tl.fromTo("#sGlogo", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, 36.90);
+      up("#sGhandle", 37.00);
+      tl.fromTo("#sGfbtn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2.2)" }, 37.20);
+      tl.to("#sGfbtn", { scale: 1.06, duration: 0.45, yoyo: true, repeat: 5, ease: "sine.inOut" }, 37.60);
+
+      tl.set({}, {}, D);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
