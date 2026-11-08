@@ -22,6 +22,7 @@ Measured: 15.2 s, 30 fps, integrated −14 LUFS, LRA 2.2 LU (music runs wall-to-
 - Nothing in the top 168 px. All words and graphics sit in the band y 168–1330. Below 1330 there is only texture. Keep x within 60–940 (right action rail).
 
 ## Learned rules
+- 2026-11-08: Trading channel official style = Signal File (Case File + Signal Glass + Kinetic). Candle Night retired for new reels. — why: Harshit picked it after 5 style tests on the Day 1 voice.
 - 2026-11-03: Read Notion (Trading Channel HQ, Day Workflow, Memories style + audio pages) BEFORE building; never invent brand colours, fonts or music. "Day N" = run that Content Calendar row. — why: Harshit said "Notion se dekho"; the first reel used the wrong style + music.
 - 2026-11-03: Trading reels have NO music (Notion audio rule overrides the one-off "music 43%" brief). — why: Notion rule "No music, ever" (2026-10-31).
 - 2026-11-03: Frame 0 = the hook: a small line plus the giant word already on screen and readable. Never start black. — why: reference style, first-second retention.
