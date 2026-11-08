@@ -1,0 +1,27 @@
+/* Shared print style for @thetradingwizaard PDF freebies (A4, light paper + navy band) */
+@font-face{font-family:P;src:url(../../brand/fonts/playfair-display-latin-800-normal.woff2)}
+@font-face{font-family:B;src:url(../../brand/fonts/baloo-2-latin-800-normal.woff2)}
+@font-face{font-family:M;src:url(../../brand/fonts/ibm-plex-mono-latin-700-normal.woff2)}
+:root{--navy:#0b0f1a;--navy2:#1b2440;--green:#26d07c;--red:#ff4d5e;--yellow:#ffc94a;--orange:#ff8a3d;--ink:#141a2b;--mute:#5d6680;--line:#d7dbe6;--paper:#fbfaf6}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,sans-serif;color:var(--ink);background:var(--paper);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:var(--paper);page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+.band{background:var(--navy);color:#eef1f8;padding:11mm 14mm 9mm;position:relative;
+  background-image:linear-gradient(rgba(238,241,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(238,241,248,.05) 1px,transparent 1px);background-size:8mm 8mm}
+.band .kicker{font-family:M;font-size:9pt;letter-spacing:.14em;color:var(--yellow)}
+.band h1{font-family:P;font-size:30pt;line-height:1.05;margin:2mm 0 2mm}
+.band h1 em{font-style:normal;color:var(--green)}
+.band .sub{font-size:10.5pt;color:#c9cfdd;max-width:150mm}
+.band img.logo{position:absolute;right:14mm;top:10mm;width:18mm;height:18mm;border-radius:50%}
+.body{padding:7mm 14mm 0}
+.foot{position:absolute;left:14mm;right:14mm;bottom:7mm;display:flex;justify-content:space-between;align-items:center;font-size:8pt;color:var(--mute);border-top:1px solid var(--line);padding-top:2.5mm}
+.foot b{color:var(--ink)}
+.mono{font-family:M;letter-spacing:.1em}
+.tag{display:inline-block;font-family:M;font-size:7.5pt;letter-spacing:.1em;padding:.6mm 2mm;border-radius:2mm;background:var(--navy);color:var(--yellow)}
+.punch{font-family:B;font-size:15pt;line-height:1.1}
+.write{border-bottom:1.2px dashed #9aa2b8;height:7.5mm}
+.box{border:1.2px solid var(--line);border-radius:3mm;background:#fff}
+.src{font-size:7.5pt;color:var(--mute)}
