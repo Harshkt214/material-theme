@@ -1,9 +1,11 @@
-# News case: Trump haare — US gira, India kyun nahi? (v1, 9 Nov 2026)
+# News case: Trump haare — US gira, India kyun nahi? (v2, 9 Nov 2026)
 
-Style: Signal File (The Trading Wizaard). 35 s, 1080x1920, 30 fps. SFX only, no music.
-Voice: **not recorded yet** — needs Harshit's script OK (ElevenLabs "Harshit Reel Narrator", eleven_v4, 1 take, ~35 s ≈ 490 credits).
+Style: Signal File (The Trading Wizaard). 49.8 s, 1080x1920, 30 fps. VO + SFX, no music, -14 LUFS.
+Voice: ElevenLabs "Harshit Reel Narrator (Hinglish, punchy)" (voice_id aO3xl59z32X2s95vrLCe), eleven_v4, 1 take, 739 credits, 9 Nov 2026.
+Raw take was 49.87 s; leading 1.15 s silence trimmed (assets/vo.mp3). Visuals retimed to the spoken words
+(pauses + script order; Whisper only as a timing hint). renders/news-us-vs-india-v1.mp4 = the earlier 35 s SFX-only cut.
 
-## VO script (timed to the current visuals)
+## VO script (times below are from the v1 35 s cut; v2 follows the voice)
 
 | Time | Screen | VO (Hinglish) |
 |---|---|---|
