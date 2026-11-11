@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="hi" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* WIZAARD EXPLAINER style (FVG / PCR shorts) · Progressive Demand Area · original chart, no third-party footage */
+      @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-latin-800-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-devanagari-500-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+      @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-devanagari-600-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+      @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-devanagari-700-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+      @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-devanagari-800-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+      @font-face { font-family: "Noto Color Emoji"; src: url("assets/fonts/NotoColorEmoji.ttf") format("truetype"); }
+      :root { --bg: #101421; --green: #26d07c; --red: #ef4444; --yellow: #ffc94a; --orange: #f59e0b; --ink: #f4f6fb; --muted: #8d97ad; --card: #131a2b; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Poppins", "Noto Color Emoji", sans-serif; color: var(--ink);
+        background: radial-gradient(70% 18% at 50% 0%, rgba(38, 208, 124, 0.12), transparent 100%), radial-gradient(130% 80% at 50% 50%, #101421 55%, #141829 100%); }
+      #grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.035) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.035) 2px, transparent 2px); background-size: 60px 60px; }
+      .abs { position: absolute; }
+      .scene { position: absolute; inset: 0; }
+      .center { left: 60px; width: 960px; text-align: center; }
+      .big { font-weight: 800; font-size: 74px; line-height: 1.22; letter-spacing: -0.01em; text-shadow: 0 6px 24px rgba(0,0,0,0.45); }
+      .card { position: absolute; background: var(--card); border: 2px solid rgba(255, 201, 74, 0.45); border-radius: 32px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+      .chip { position: absolute; padding: 6px 16px; border-radius: 10px; font-weight: 700; font-size: 30px; white-space: nowrap; color: #0b0f1a; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45); }
+      .num { position: absolute; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-radius: 50%; background: #ea580c; border: 4px solid #fff3; color: #fff; font-weight: 800; font-size: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 18px rgba(249,115,22,0.6); }
+      .tpill { position: absolute; top: 470px; padding: 14px 34px; border-radius: 22px; font-weight: 800; font-size: 40px; color: #fff; text-align: center; white-space: nowrap; box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+      .tcard { position: absolute; top: 1200px; width: 300px; height: 560px; border-radius: 26px; background: rgba(19, 26, 43, 0.92); overflow: hidden; }
+      .tcard .hd { position: absolute; left: 0; top: 0; width: 100%; height: 118px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: 800; font-size: 32px; line-height: 1.2; }
+      .tcard .hd small { font-weight: 600; font-size: 28px; color: #cfd5e3; }
+      .verdict { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); padding: 8px 20px; border-radius: 12px; font-weight: 800; font-size: 30px; white-space: nowrap; }
+      .rule { position: absolute; left: 90px; width: 900px; padding: 22px 30px; border-radius: 26px; text-align: center; font-weight: 800; font-size: 54px; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="51.2" data-width="1080" data-height="1920">
+      <div id="grid" data-layout-ignore></div>
+
+      <!-- FIXED HEADER (logo) -->
+      <img id="hdr" class="abs" src="assets/tw-wordmark.png" style="left: 380px; top: 46px; width: 320px; height: 117px" />
+      <!-- FIXED FOOTER (YouTube + disclaimer) -->
+      <div id="ftr" class="abs center" style="top: 1772px">
+        <div style="display: inline-flex; align-items: center; gap: 18px; font-weight: 700; font-size: 44px; color: var(--yellow)">
+          <svg width="62" height="44" viewBox="0 0 62 44"><rect width="62" height="44" rx="12" fill="#ff0033" /><path d="M25 13 L42 22 L25 31 Z" fill="#fff" /></svg>The Trading Wizaard
+        </div>
+        <div style="margin-top: 10px; font-weight: 500; font-size: 28px; color: #6b7387">Educational purpose only • Not investment advice</div>
+      </div>
+
+      <!-- 1 · HOOK (live chart card) -->
+      <div id="sHook" class="scene clip" data-start="0" data-duration="4.37" data-track-index="1" data-track-kind="graphics">
+        <div id="hookCard" class="card" style="left: 120px; top: 240px; width: 840px; height: 690px">
+          <div class="abs" style="left: 40px; top: 32px; font-weight: 600; font-size: 36px; color: #a7afc2; letter-spacing: 0.04em">NIFTY 50 · 5m</div>
+          <div class="abs" style="right: 40px; top: 32px; font-weight: 800; font-size: 34px; color: var(--red)"><span id="liveDot">●</span> LIVE</div>
+          <svg id="hookSvg" class="abs" style="left: 0; top: 0" width="840" height="690" viewBox="0 0 840 690"></svg>
+          <div id="hBuy" class="chip" style="background: var(--green)">BUY</div>
+          <div id="hSL" class="chip" style="background: var(--red); color: #fff">SL</div>
+          <div id="hStamp" class="abs" style="left: 150px; top: 440px; padding: 8px 26px; border: 7px solid var(--red); border-radius: 16px; color: var(--red); font-weight: 800; font-size: 56px; transform: rotate(-9deg); background: rgba(16,20,33,0.8)">SL HIT ✕</div>
+          <div id="hUp" class="chip" style="background: var(--yellow)">price ऊपर ↑</div>
+        </div>
+        <div id="hk1" class="abs center big" style="top: 1000px">Top पे <span style="color: var(--yellow)">खरीदा</span>… 😬</div>
+        <div id="hk2" class="abs center big" style="top: 1000px"><span style="color: var(--red)">SL HIT</span> हुआ… 😤</div>
+        <div id="hk3" class="abs center big" style="top: 1000px">फिर price <span style="color: var(--green)">ऊपर</span> भागा 😩</div>
+      </div>
+
+      <!-- 2 · CLAIM + PROMISE -->
+      <div id="sClaim" class="scene clip" data-start="4.37" data-duration="4.55" data-track-index="1" data-track-kind="graphics">
+        <div id="c1" class="abs center big" style="top: 420px; font-size: 84px">ये <span style="color: var(--red)">luck</span> नहीं…</div>
+        <div id="c2" class="abs center big" style="top: 530px; font-size: 84px">गलत <span style="color: var(--yellow)">जगह</span> की entry है 👇</div>
+        <div id="promise" class="abs" style="left: 200px; top: 760px; width: 680px; white-space: nowrap; padding: 22px 0; border-radius: 60px; background: var(--yellow); color: #0b0f1a; text-align: center; font-weight: 800; font-size: 44px; transform: rotate(-3deg); box-shadow: 0 14px 40px rgba(255,201,74,0.35)">⏱ 40 सेकंड में कारण समझो</div>
+      </div>
+
+      <!-- TOPIC PILL (appears when the name is said, stays) -->
+      <div id="topic" class="abs" style="left: 165px; top: 196px; width: 750px; padding: 14px 0; border-radius: 40px; border: 3px dashed #f97316; background: rgba(60, 35, 20, 0.55); text-align: center; font-weight: 700; font-size: 42px; white-space: nowrap"><span style="color: var(--yellow)">PDA</span> = Progressive Demand Area</div>
+
+      <!-- 3 · DIAGRAM + TYPES + RULES (builds up and stays) -->
+      <div id="sLesson" class="scene clip" data-start="8.92" data-duration="36.87" data-track-index="1" data-track-kind="graphics">
+        <div id="diag" class="abs" style="left: 60px; top: 300px; width: 960px; height: 640px">
+          <svg id="diagSvg" class="abs" style="left: 0; top: 0" width="960" height="640" viewBox="0 0 960 640"></svg>
+          <div id="n1" class="num">1</div>
+          <div id="n2" class="num">2</div>
+          <div id="n3" class="num">3</div>
+          <div id="dDA" class="chip" style="background: var(--green)">Demand Area →</div>
+          <div id="dExt" class="chip" style="background: #fff">External DA</div>
+          <div id="dHL" class="chip" style="background: #fff">Higher Low</div>
+          <div id="dProg" class="chip" style="background: var(--yellow)">Progressive DA</div>
+          <div id="dBuy" class="abs" style="left: 40px; top: 40px; padding: 14px 22px; border-radius: 18px; background: rgba(38,208,124,0.14); border: 2px solid var(--green); box-shadow: 0 0 34px rgba(38,208,124,0.25)">
+            <div style="font-weight: 800; font-size: 36px; color: var(--green)">🐂 Buyers ready</div>
+            <div style="font-weight: 600; font-size: 30px">higher price पे भी</div>
+          </div>
+          <div id="dTop" class="chip" style="background: var(--red); color: #fff">तुम्हारी entry + SL</div>
+          <div id="dFar" class="chip" style="background: #fff">Zone से दूर ↕</div>
+        </div>
+
+        <div id="p1" class="tpill" style="top: 1110px; left: 60px; width: 300px; background: var(--red)">ZONE FAIL</div>
+        <div id="p2" class="tpill" style="top: 1110px; left: 390px; width: 300px; background: var(--orange); color: #0b0f1a">WAIT</div>
+        <div id="p3" class="tpill" style="top: 1110px; left: 720px; width: 300px; background: var(--green); color: #0b0f1a">ENTRY</div>
+
+        <div id="k1" class="tcard" style="left: 60px; border: 2px solid rgba(239,68,68,0.6)">
+          <div class="hd" style="background: rgba(239,68,68,0.14); color: var(--red)">Zone तोड़ा<small>नीचे close ❌</small></div>
+          <svg id="m1" class="abs" style="left: 0; top: 118px" width="300" height="340" viewBox="0 0 300 340"></svg>
+          <div id="v1" class="verdict" style="background: var(--red); color: #fff">✕ No Trade</div>
+        </div>
+        <div id="k2" class="tcard" style="left: 390px; border: 2px solid rgba(245,158,11,0.6)">
+          <div class="hd" style="background: rgba(245,158,11,0.14); color: var(--orange)">Zone तक नहीं<small>आया ⏳</small></div>
+          <svg id="m2" class="abs" style="left: 0; top: 118px" width="300" height="340" viewBox="0 0 300 340"></svg>
+          <div id="v2" class="verdict" style="background: var(--orange); color: #0b0f1a">Chase मत करो</div>
+        </div>
+        <div id="k3" class="tcard" style="left: 720px; border: 2px solid rgba(38,208,124,0.6)">
+          <div class="hd" style="background: rgba(38,208,124,0.14); color: var(--green)">Wick अंदर<small>Close ऊपर ✅</small></div>
+          <svg id="m3" class="abs" style="left: 0; top: 118px" width="300" height="340" viewBox="0 0 300 340"></svg>
+          <div id="v3" class="verdict" style="background: var(--green); color: #0b0f1a">✓ Entry</div>
+        </div>
+
+        <div id="rSticker" class="rule" style="top: 1270px; background: var(--yellow); color: #0b0f1a; transform: rotate(-3deg); box-shadow: 0 16px 44px rgba(255,201,74,0.35)">Entry zone पे, top पे नहीं 👀</div>
+        <div id="rCard" class="rule" style="top: 1450px; background: rgba(60, 16, 22, 0.94); border: 3px solid var(--red); color: #fff">SL zone के अंदर ❌ → नीचे ✅</div>
+      </div>
+
+      <!-- 4 · END CARD (subscribe) -->
+      <div id="sEnd" class="scene clip" data-start="45.79" data-duration="5.41" data-track-index="1" data-track-kind="graphics">
+        <img id="eLogo" class="abs" src="assets/tw-wordmark.png" style="left: 110px; top: 470px; width: 860px; height: 314px" />
+        <div id="eTxt" class="abs center" style="top: 880px; font-weight: 700; font-size: 62px; line-height: 1.3">ऐसे ही <span style="color: var(--yellow)">simple</span> trading<br />concepts के लिए 📈</div>
+        <div id="eBtn" class="abs" style="left: 235px; top: 1110px; width: 610px; height: 142px; border-radius: 71px; background: #ff0033; display: flex; align-items: center; justify-content: center; gap: 18px; font-weight: 800; font-size: 62px; color: #fff; box-shadow: 0 16px 50px rgba(255,0,51,0.35)"><span id="eLbl">SUBSCRIBE</span><span id="eLbl2" style="display: none">SUBSCRIBED</span><span id="eTick" style="font-size: 54px; display: none">✓</span></div>
+        <div id="eHand" class="abs" style="left: 600px; top: 1200px; font-size: 100px">👆</div>
+        <div id="eHandle" class="abs center" style="top: 1320px; font-weight: 700; font-size: 50px; color: var(--yellow)">@thetradingwizaard</div>
+      </div>
+
+      <!-- AUDIO: VO + light SFX, no music -->
+      <audio id="vo" class="clip" src="assets/vo.mp3" data-start="0" data-track-index="10" data-volume="1"></audio>
+      <audio id="sx1" class="clip" src="assets/sfx/pop.mp3" data-start="0.2" data-duration="0.12" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx2" class="clip" src="assets/sfx/stamp.mp3" data-start="1.3" data-duration="0.5" data-track-index="12" data-volume="0.4"></audio>
+      <audio id="sx3" class="clip" src="assets/sfx/whoosh.mp3" data-start="2.45" data-duration="0.5" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx4" class="clip" src="assets/sfx/whoosh.mp3" data-start="4.2" data-duration="0.5" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx5" class="clip" src="assets/sfx/pop.mp3" data-start="6.75" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="sx6" class="clip" src="assets/sfx/whoosh.mp3" data-start="8.85" data-duration="0.5" data-track-index="13" data-volume="0.28"></audio>
+      <audio id="sx7" class="clip" src="assets/sfx/pop.mp3" data-start="10.3" data-duration="0.12" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx8" class="clip" src="assets/sfx/pop.mp3" data-start="11.5" data-duration="0.12" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx9" class="clip" src="assets/sfx/click.mp3" data-start="12.6" data-duration="0.1" data-track-index="14" data-volume="0.28"></audio>
+      <audio id="sx10" class="clip" src="assets/sfx/click.mp3" data-start="15.5" data-duration="0.1" data-track-index="14" data-volume="0.28"></audio>
+      <audio id="sx11" class="clip" src="assets/sfx/pop.mp3" data-start="17.6" data-duration="0.12" data-track-index="11" data-volume="0.25"></audio>
+      <audio id="sx12" class="clip" src="assets/sfx/pop.mp3" data-start="19.6" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="sx13" class="clip" src="assets/sfx/pop.mp3" data-start="22.3" data-duration="0.12" data-track-index="11" data-volume="0.28"></audio>
+      <audio id="sx14" class="clip" src="assets/sfx/tick.mp3" data-start="25.3" data-duration="0.07" data-track-index="15" data-volume="0.3"></audio>
+      <audio id="sx15" class="clip" src="assets/sfx/tick.mp3" data-start="25.7" data-duration="0.07" data-track-index="15" data-volume="0.3"></audio>
+      <audio id="sx16" class="clip" src="assets/sfx/tick.mp3" data-start="26.1" data-duration="0.07" data-track-index="15" data-volume="0.3"></audio>
+      <audio id="sx17" class="clip" src="assets/sfx/stamp.mp3" data-start="30.1" data-duration="0.5" data-track-index="12" data-volume="0.3"></audio>
+      <audio id="sx18" class="clip" src="assets/sfx/pop.mp3" data-start="33.46" data-duration="0.12" data-track-index="11" data-volume="0.28"></audio>
+      <audio id="sx19" class="clip" src="assets/sfx/pop.mp3" data-start="37.65" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="sx20" class="clip" src="assets/sfx/whoosh.mp3" data-start="38.6" data-duration="0.5" data-track-index="13" data-volume="0.25"></audio>
+      <audio id="sx21" class="clip" src="assets/sfx/stamp.mp3" data-start="42.05" data-duration="0.5" data-track-index="12" data-volume="0.3"></audio>
+      <audio id="sx22" class="clip" src="assets/sfx/pop.mp3" data-start="44.1" data-duration="0.12" data-track-index="11" data-volume="0.3"></audio>
+      <audio id="sx23" class="clip" src="assets/sfx/whoosh.mp3" data-start="45.6" data-duration="0.5" data-track-index="13" data-volume="0.3"></audio>
+      <audio id="sx24" class="clip" src="assets/sfx/click.mp3" data-start="48.45" data-duration="0.1" data-track-index="14" data-volume="0.35"></audio>
+    </div>
+
+    <script>
+      // ---------- chart helpers (deterministic) ----------
+      const NS = "http://www.w3.org/2000/svg";
+      const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+      function chart(svgId, prefix, C, o) {
+        const svg = document.getElementById(svgId);
+        const py = (p) => o.yb - ((p - o.pmin) / (o.pmax - o.pmin)) * (o.yb - o.yt);
+        const cx = (i) => o.x0 + o.step * i;
+        const z = el("g", { id: prefix + "z" }, svg);
+        const g = el("g", {}, svg);
+        C.forEach(([op, h, l, c], i) => {
+          const col = c >= op ? "#26d07c" : "#ef4444";
+          const cg = el("g", { id: prefix + i }, g);
+          el("line", { x1: cx(i), x2: cx(i), y1: py(h), y2: py(l), stroke: col, "stroke-width": o.wick }, cg);
+          el("rect", { x: cx(i) - o.bw / 2, y: py(Math.max(op, c)), width: o.bw, height: Math.max(4, Math.abs(py(op) - py(c))), fill: col, rx: 3 }, cg);
+        });
+        return { py, cx, z, svg };
+      }
+
+      // Hook chart: uptrend → top BUY → pullback hits SL → ghost up-move
+      const HC = [[20,23,18,22],[22,24,19,20],[20,25,19,24],[24,28,23,27],[27,28,24,25],[25,33,25,32],[32,38,31,37],[37,39,34,35],[35,36,32,33],[33,42,33,41],[41,48,40,47],[47,50,45,49],[49,50,44,45],[45,46,40,41]];
+      const H = chart("hookSvg", "hc", HC, { x0: 70, step: 46, pmin: 14, pmax: 56, yt: 110, yb: 660, bw: 26, wick: 5 });
+      el("line", { id: "hBuyL", x1: H.cx(11), x2: 800, y1: H.py(49), y2: H.py(49), stroke: "#26d07c", "stroke-width": 3, "stroke-dasharray": "10 8" }, H.svg);
+      el("line", { id: "hSLL", x1: H.cx(11), x2: 800, y1: H.py(45.5), y2: H.py(45.5), stroke: "#ef4444", "stroke-width": 3, "stroke-dasharray": "10 8" }, H.svg);
+      el("path", { id: "hGhost", d: `M ${H.cx(13) + 16} ${H.py(40)} Q ${H.cx(14) + 40} ${H.py(40)} ${H.cx(15) + 30} ${H.py(54)}`, fill: "none", stroke: "#ffc94a", "stroke-width": 5, "stroke-dasharray": "14 10" }, H.svg);
+      const pos = (id, x, y, right) => { const e = document.getElementById(id); e.style.top = y + "px"; if (right) e.style.right = right + "px"; else e.style.left = x + "px"; };
+      pos("hBuy", 0, H.py(49) - 46, 40); pos("hSL", 0, H.py(45.5) - 4, 40); pos("hUp", 0, H.py(53.5) - 10, 40);
+
+      // Lesson diagram
+      const DC = [[20,23,18,22],[22,24,19,20],[20,25,19,24],[24,28,23,27],[27,28,24,25],[25,33,25,32],[32,38,31,37],[37,39,34,35],[35,36,32,33],[33,42,33,41],[41,48,40,47],[47,50,45,49]];
+      const D = chart("diagSvg", "dc", DC, { x0: 120, step: 56, pmin: 14, pmax: 54, yt: 40, yb: 620, bw: 30, wick: 6 });
+      const zoneRect = (id, from, lo, hi, fill, stroke) => el("rect", { id, x: D.cx(from) - 22, y: D.py(hi), width: 900 - (D.cx(from) - 22), height: D.py(lo) - D.py(hi), fill, "fill-opacity": 0.2, stroke, "stroke-width": 3, "stroke-dasharray": "10 7", rx: 6 }, D.z);
+      zoneRect("zExt", 4, 24, 27.5, "#26d07c", "#26d07c");
+      zoneRect("zProg", 8, 32, 35.5, "#26d07c", "#ffc94a");
+      el("line", { id: "dFarL", x1: D.cx(11) + 46, x2: D.cx(11) + 46, y1: D.py(49), y2: D.py(35.5), stroke: "#fff", "stroke-width": 4, "stroke-dasharray": "8 7" }, D.svg);
+      el("circle", { id: "dTopDot", cx: D.cx(11), cy: D.py(49), r: 14, fill: "#ef4444", stroke: "#fff", "stroke-width": 4 }, D.svg);
+      const npos = (id, i, p) => { const e = document.getElementById(id); e.style.left = D.cx(i) + "px"; e.style.top = D.py(p) + "px"; };
+      npos("n1", 5, 33 + 4.2); npos("n2", 4, 28 + 3.6); npos("n3", 8, 32 - 4.6);
+      document.getElementById("n1").style.left = D.cx(5) + 44 + "px";
+      pos("dDA", D.cx(4) - 22 - 250, D.py(26) - 24); pos("dExt", 0, D.py(27.5) - 52, 70); pos("dHL", D.cx(8) + 40, D.py(32) - 64);
+      pos("dProg", 0, D.py(35.5) - 52, 70); pos("dTop", D.cx(11) - 330, D.py(49) - 26); pos("dFar", D.cx(11) + 64, (D.py(49) + D.py(35.5)) / 2 - 22);
+
+      // Mini charts: zone 36–39
+      const mo = { x0: 50, step: 50, pmin: 27, pmax: 50, yt: 20, yb: 320, bw: 26, wick: 5 };
+      const M = [
+        chart("m1", "a", [[42,45,41,44],[44,45,40,41],[41,42,37.5,38],[38,39,33,34],[34,35,29,30]], mo),
+        chart("m2", "b", [[42,45,41,44],[44,45,41.5,42],[42,43,40.6,41.2],[41.2,45,40.8,44.6],[44.6,48.5,44,48]], mo),
+        chart("m3", "c", [[42,45,41,44],[44,45,40,41],[41,42,39.4,39.8],[39.8,41.5,36.4,41],[41,46,40.6,45.5]], mo),
+      ];
+      M.forEach((m, k) => el("rect", { id: "mz" + k, x: 20, y: m.py(39), width: 260, height: m.py(36) - m.py(39), fill: "#26d07c", "fill-opacity": 0.18, stroke: "#26d07c", "stroke-width": 2, "stroke-dasharray": "8 6" }, m.z));
+      el("rect", { id: "rejRing", x: M[2].cx(3) - 24, y: M[2].py(41.5) - 10, width: 48, height: M[2].py(36.4) - M[2].py(41.5) + 20, fill: "none", stroke: "#ffc94a", "stroke-width": 4, rx: 8 }, M[2].svg);
+
+      // ---------- timeline ----------
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const DUR = 51.2;
+      const show = (s, t, d = 0.3) => tl.fromTo(s, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: d, ease: "power3.out", immediateRender: false }, t);
+      const pop = (s, t) => tl.fromTo(s, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.32, ease: "back.out(2)", immediateRender: false }, t);
+      const hide = (s, t, d = 0.18) => tl.to(s, { opacity: 0, duration: d }, t);
+      const grow = (sel, open, cx, t, d = 0.2) => tl.fromTo(sel, { scaleY: 0, opacity: 1 }, { scaleY: 1, opacity: 1, duration: d, ease: "power2.out", svgOrigin: `${cx} ${open}`, immediateRender: false }, t);
+      const growAll = (prefix, C, ch, t0, gap, d) => C.forEach((c, i) => grow("#" + prefix + i, ch.py(c[0]), ch.cx(i), t0 + i * gap, d));
+      const drawZone = (sel, x, t) => tl.fromTo(sel, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out", svgOrigin: `${x} 0`, immediateRender: false }, t);
+
+      // initial hidden states
+      const hidden = ["#hBuy", "#hSL", "#hStamp", "#hUp", "#hBuyL", "#hSLL", "#hGhost", "#hk2", "#hk3", "#c1", "#c2", "#promise", "#topic",
+        "#n1", "#n2", "#n3", "#dDA", "#dExt", "#dHL", "#dProg", "#dBuy", "#dTop", "#dFar", "#dFarL", "#dTopDot", "#zExt", "#zProg",
+        "#p1", "#p2", "#p3", "#k1", "#k2", "#k3", "#v1", "#v2", "#v3", "#rejRing", "#rSticker", "#rCard", "#eHand"];
+      hidden.forEach((s) => tl.set(s, { opacity: 0 }, 0));
+      HC.forEach((c, i) => tl.set("#hc" + i, { opacity: i < 8 ? 1 : 0 }, 0));
+      DC.forEach((c, i) => tl.set("#dc" + i, { opacity: 0 }, 0));
+      ["a", "b", "c"].forEach((p) => { for (let i = 0; i < 5; i++) tl.set("#" + p + i, { opacity: 0 }, 0); });
+      tl.to("#liveDot", { opacity: 0.25, duration: 0.5, yoyo: true, repeat: 7, ease: "sine.inOut" }, 0);
+
+      // 1 · HOOK (frame 0: card + uptrend + line already on screen)
+      for (let i = 8; i <= 11; i++) grow("#hc" + i, H.py(HC[i][0]), H.cx(i), 0.05 + (i - 8) * 0.16, 0.16);
+      tl.to(["#hBuyL", "#hSLL"], { opacity: 1, duration: 0.2 }, 0.62); pop("#hBuy", 0.62); pop("#hSL", 0.7);
+      hide("#hk1", 1.2, 0.1); show("#hk2", 1.24, 0.25);
+      grow("#hc12", H.py(HC[12][0]), H.cx(12), 1.24, 0.3); grow("#hc13", H.py(HC[13][0]), H.cx(13), 1.55, 0.3);
+      tl.fromTo("#hStamp", { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.14, ease: "power3.in", immediateRender: false }, 1.3);
+      hide("#hk2", 2.34, 0.1); show("#hk3", 2.38, 0.25);
+      tl.to("#hGhost", { opacity: 1, duration: 0.01 }, 2.45);
+      tl.fromTo("#hGhost", { strokeDasharray: "600 600", strokeDashoffset: 600 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, 2.45);
+      tl.set("#hGhost", { strokeDasharray: "14 10", strokeDashoffset: 0 }, 3.36);
+      hide(["#hBuy", "#hSL", "#hBuyL", "#hSLL"], 2.4, 0.2); pop("#hUp", 3.2);
+      tl.to("#sHook", { opacity: 0, duration: 0.17 }, 4.2);
+
+      // 2 · CLAIM + PROMISE
+      show("#c1", 4.4); show("#c2", 5.3);
+      tl.fromTo("#promise", { opacity: 0, scale: 0.6, rotation: -10 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)", immediateRender: false }, 6.72);
+      tl.to("#sClaim", { opacity: 0, duration: 0.2 }, 8.72);
+
+      // 3 · DIAGRAM (on the words)
+      growAll("dc", DC, D, 9.0, 0.17, 0.16);
+      pop("#n1", 10.3);                          // "तेज़ी से भागता"
+      pop("#n2", 11.5);                          // "उस आखिरी candle"
+      drawZone("#zExt", D.cx(4) - 22, 12.4); pop("#dDA", 12.6);   // "demand area होता है"
+      tl.to("#zExt", { attr: { "fill-opacity": 0.38 }, duration: 0.3, yoyo: true, repeat: 1 }, 14.13);  // "नीचे वाला पहला zone"
+      hide("#dDA", 15.4); pop("#dExt", 15.5);   // "external demand area"
+      pop("#n3", 17.0); pop("#dHL", 17.6);      // "हर नए higher low"
+      drawZone("#zProg", D.cx(8) - 22, 18.5);   // "नया zone बनता है"
+      pop("#dProg", 19.6); hide("#dHL", 19.6);  // "यही progressive demand area"
+      tl.fromTo("#topic", { opacity: 0, y: -20, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 19.6);
+      tl.to("#zProg", { attr: { "fill-opacity": 0.4 }, duration: 0.3, yoyo: true, repeat: 3 }, 19.8);
+      pop("#dBuy", 22.3);                       // "buyers ... ready"
+
+      // 3b · THREE CASES
+      pop("#p1", 25.3); pop("#p2", 25.7); pop("#p3", 26.1);   // "तीन चीज़ें"
+      show("#k1", 27.3); growAll("a", [0, 0, 0, 0, 0].map((_, i) => [[42],[44],[41],[38],[34]][i]), M[0], 27.4, 0.3, 0.26);
+      tl.to("#k1", { boxShadow: "0 0 40px rgba(239,68,68,0.55)", duration: 0.25 }, 29.16);   // "zone fail"
+      pop("#v1", 30.1);                                         // "trade मत लो"
+      show("#k2", 30.93); growAll("b", [[42],[44],[42],[41.2],[44.6]], M[1], 31.0, 0.32, 0.26);
+      pop("#v2", 32.42);                                        // "chase मत करो"
+      tl.to("#v2", { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1 }, 33.46);  // "wait करो"
+      show("#k3", 34.28); growAll("c", [[42],[44],[41],[39.8],[41]], M[2], 34.35, 0.42, 0.3);
+      pop("#rejRing", 36.6);                                    // "rejection candle"
+      pop("#v3", 37.65);                                        // "यही entry है"
+      tl.to("#k3", { boxShadow: "0 0 44px rgba(38,208,124,0.5)", duration: 0.25 }, 37.65);
+
+      // 3c · CALLBACK + RULES
+      tl.to(["#p1", "#p2", "#p3", "#k1", "#k2", "#k3"], { opacity: 0.15, duration: 0.3 }, 38.7);
+      hide("#dBuy", 38.6);
+      pop("#dTopDot", 38.75); pop("#dTop", 38.8);               // "याद है वो SL? वो top पे था"
+      tl.fromTo("#dFarL", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.4, svgOrigin: `${D.cx(11) + 46} ${D.py(49)}`, immediateRender: false }, 40.7);
+      pop("#dFar", 40.9);                                       // "zone से बहुत दूर"
+      tl.to(["#p1", "#p2", "#p3", "#k1", "#k2", "#k3"], { opacity: 0, duration: 0.25 }, 41.8);
+      tl.fromTo("#rSticker", { opacity: 0, scale: 0.6, rotation: -10 }, { opacity: 1, scale: 1, rotation: -3, duration: 0.4, ease: "back.out(2)", immediateRender: false }, 42.05);
+      tl.fromTo("#rCard", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", immediateRender: false }, 44.1);
+      tl.to(["#sLesson", "#topic", "#hdr"], { opacity: 0, duration: 0.25 }, 45.55);
+
+      // 4 · END CARD
+      tl.fromTo("#eLogo", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 45.8);
+      show("#eTxt", 46.3, 0.4);
+      tl.fromTo("#eBtn", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 47.0);
+      tl.fromTo("#eHand", { opacity: 0, y: 90 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", immediateRender: false }, 48.05);
+      tl.to("#eBtn", { scale: 0.93, duration: 0.08, yoyo: true, repeat: 1 }, 48.45);
+      tl.to("#eBtn", { backgroundColor: "#3a3f4b", boxShadow: "0 10px 30px rgba(0,0,0,0.4)", duration: 0.1 }, 48.5);
+      tl.set("#eLbl", { display: "none" }, 48.5);
+      tl.set(["#eLbl2", "#eTick"], { display: "inline", opacity: 1 }, 48.5);
+      show("#eHandle", 48.8, 0.35);
+
+      tl.set({}, {}, DUR);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
