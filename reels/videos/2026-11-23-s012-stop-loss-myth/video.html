@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-devanagari-500-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-devanagari-600-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-devanagari-700-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-devanagari-800-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Noto Color Emoji"; src: url("assets/fonts/NotoColorEmoji.ttf") format("truetype"); }
+  :root { --bg:#101421; --green:#26d07c; --red:#ef4444; --yellow:#ffc94a; --orange:#ff8a3d; --ink:#f4f6fb; --muted:#8d97ad; --card:#131a2b; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bg); }
+  #root { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:"Poppins","Noto Color Emoji",sans-serif; color:var(--ink);
+    background: radial-gradient(70% 18% at 50% 0%, rgba(38,208,124,0.12), transparent 100%), radial-gradient(130% 80% at 50% 50%, #101421 55%, #141829 100%); }
+  #grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.035) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.035) 2px, transparent 2px); background-size:60px 60px; }
+  .abs { position:absolute; }
+  .center { left:60px; width:960px; text-align:center; }
+  .big { font-weight:800; font-size:74px; line-height:1.22; letter-spacing:-0.01em; text-shadow:0 6px 24px rgba(0,0,0,0.45); }
+  .card { position:absolute; background:var(--card); border:2px solid rgba(255,201,74,0.45); border-radius:32px; box-shadow:0 30px 70px rgba(0,0,0,0.55); }
+  .chip { position:absolute; padding:6px 16px; border-radius:10px; font-weight:700; font-size:30px; white-space:nowrap; color:#0b0f1a; box-shadow:0 8px 22px rgba(0,0,0,0.45); }
+  .topic { position:absolute; left:50%; top:200px; margin-left:-0px; padding:14px 38px; border-radius:26px; border:3px solid var(--orange); background:rgba(255,138,61,0.10); font-weight:800; font-size:40px; white-space:nowrap; transform:translateX(-50%); }
+  .tag { position:absolute; padding:4px 14px; border:2px solid #5d6680; border-radius:8px; font-weight:600; font-size:24px; color:#a7afc2; white-space:nowrap; }
+  .pill { display:inline-block; padding:22px 44px; border-radius:40px; background:var(--yellow); color:#0b0f1a; font-weight:800; font-size:50px; box-shadow:0 14px 34px rgba(0,0,0,0.5); }
+  .row { position:absolute; left:80px; width:920px; min-height:96px; padding:14px 24px 14px 104px; border-radius:22px; background:rgba(19,26,43,0.92); border:2px solid rgba(255,255,255,0.08); display:flex; align-items:center; font-weight:700; font-size:42px; line-height:1.25; }
+  .row .rn { position:absolute; left:18px; top:50%; margin-top:-32px; width:64px; height:64px; border-radius:50%; background:#ea580c; color:#fff; font-weight:800; font-size:34px; display:flex; align-items:center; justify-content:center; }
+  .rule { position:absolute; left:90px; width:900px; padding:26px 30px; border-radius:26px; text-align:center; font-weight:800; font-size:50px; line-height:1.3; }
+  .stamp { position:absolute; padding:8px 26px; border:7px solid var(--red); border-radius:16px; color:var(--red); font-weight:800; font-size:56px; background:rgba(16,20,33,0.85); white-space:nowrap; }
+  .y{color:var(--yellow)} .g{color:var(--green)} .r{color:var(--red)} .o{color:var(--orange)}
+  .scene { position:absolute; inset:0; visibility:hidden; transform-origin:50% 45%; }
+  [data-in] { will-change: transform, opacity; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div id="grid"></div>
+  <img class="abs" src="assets/tw-wordmark.png" style="left:380px; top:46px; width:320px; height:117px" />
+  <div class="abs center" style="top:1772px">
+    <div style="display:inline-flex; align-items:center; gap:18px; font-weight:700; font-size:44px; color:var(--yellow)">
+      <svg width="62" height="44" viewBox="0 0 62 44"><rect width="62" height="44" rx="12" fill="#ff0033"/><path d="M25 13 L42 22 L25 31 Z" fill="#fff"/></svg>The Trading Wizaard
+    </div>
+    <div style="margin-top:10px; font-weight:500; font-size:28px; color:#6b7387">Educational purpose only • Not investment advice</div>
+  </div>
+
+  <!-- all data-in / data-s times are RAW voice seconds (before tempo) -->
+
+  <section class="scene" data-s="0" data-e="3.62">
+    <div class="card" style="left:120px; top:260px; width:840px; height:640px">
+      <div class="abs" style="left:0; width:840px; top:70px; text-align:center; font-weight:700; font-size:44px; color:#a7afc2">SL लगाया होता…</div>
+      <div class="abs" style="left:0; width:840px; top:130px; text-align:center; font-weight:800; font-size:150px; color:var(--green)">₹500
+        <div data-in="1.2" data-fx="wipe" class="abs" style="left:205px; top:108px; width:430px; height:14px; border-radius:7px; background:var(--red); transform-origin:0 50%"></div></div>
+      <div class="abs" style="left:0; width:840px; top:330px; text-align:center; font-weight:700; font-size:44px; color:#a7afc2">SL नहीं लगाया…</div>
+      <div data-in="1.9" data-fx="slam" data-sfx="impact" class="abs" style="left:0; width:840px; top:390px; text-align:center; font-weight:800; font-size:150px; color:var(--red)">−₹3,000</div>
+      <div class="tag" style="right:30px; top:24px">Example</div>
+    </div>
+    <div class="abs center big" style="top:990px">₹500 का SL <span class="g">बचाया</span>…<br>₹3,000 का <span class="r">loss</span> खाया 😬</div>
+  </section>
+
+  <section class="scene" data-s="3.62" data-e="5.76">
+    <div data-in="3.62" data-fx="pop" class="abs center big" style="top:520px">“SL लगाओ तो<br><span class="r">loss</span> होता है” 🤔</div>
+    <div data-in="4.25" data-fx="pop" data-sfx="whoosh" class="abs center" style="top:860px"><span class="pill" style="transform:rotate(-3deg)">⏱️ 40 सेकंड में समझो</span></div>
+  </section>
+
+  <section class="scene" id="chartScene" data-s="5.76" data-e="18.8">
+    <div class="topic">STOP LOSS <span class="o">=</span> <span class="y">Myth?</span></div>
+    <div class="card" style="left:90px; top:330px; width:900px; height:760px">
+      <div class="abs" style="left:40px; top:30px; font-weight:600; font-size:34px; color:#a7afc2; letter-spacing:0.04em">ABC LTD · 15m</div>
+      <div class="tag" style="right:34px; top:28px">Example chart</div>
+      <svg id="cs" class="abs" style="left:0; top:0" width="900" height="760" viewBox="0 0 900 760"></svg>
+      <div id="chips"></div>
+    </div>
+    <div id="ctext" class="abs center big" style="top:1170px"></div>
+  </section>
+
+  <section class="scene" data-s="18.8" data-e="22.62">
+    <div class="topic">STOP LOSS <span class="o">=</span> <span class="y">Myth?</span></div>
+    <div data-in="18.8" data-fx="pop" class="abs center" style="top:420px; font-weight:700; font-size:56px; color:#a7afc2">Loss बना था…</div>
+    <div data-in="19.26" data-fx="slam" data-sfx="impact" class="abs center" style="top:500px; font-weight:800; font-size:190px; color:var(--red); letter-spacing:0.02em; text-shadow:0 0 40px rgba(239,68,68,0.35)">ENTRY</div>
+    <div data-in="19.54" data-fx="pop" class="abs center" style="top:740px; font-weight:700; font-size:56px; color:#a7afc2">पे 👆</div>
+    <div data-in="20.22" data-fx="up" data-sfx="pop" class="rule" style="top:930px; background:rgba(38,208,124,0.12); border:3px solid var(--green)">SL ने loss <span class="g">छोटा रखा</span>,<br>बनाया नहीं ✅</div>
+  </section>
+
+  <section class="scene" data-s="22.62" data-e="31.46">
+    <div class="topic">दिमाग़ का <span class="y">Trap</span> 🧠</div>
+    <div data-in="22.62" data-out="24.64" data-fx="pop" class="abs center big" style="top:600px">फिर हम SL<br><span class="r">हटाते</span> क्यों हैं? 🤔</div>
+    <div data-in="24.64" data-out="26.22" data-fx="slam" data-sfx="heartbeat" class="abs center big" style="top:600px">क्योंकि loss <span class="r">book</span><br>करने से डर लगता है 😨</div>
+    <div data-in="26.22" data-fx="up" data-sfx="whoosh" class="card" style="left:90px; top:330px; width:900px; height:640px">
+      <div class="abs" style="left:0; width:900px; top:44px; text-align:center; font-weight:700; font-size:40px; color:#a7afc2">10,000 trading accounts की study</div>
+      <div class="abs" style="left:70px; top:170px; font-weight:700; font-size:38px">फ़ायदे वाला stock बेचा</div>
+      <div data-in="28.18" data-fx="grow" class="abs" style="left:70px; top:230px; width:690px; height:70px; border-radius:16px; background:var(--green); transform-origin:0 50%"></div>
+      <div data-in="28.7" data-fx="pop" class="abs" style="left:775px; top:236px; font-weight:800; font-size:44px"><span class="g">1.5×+</span></div>
+      <div class="abs" style="left:70px; top:350px; font-weight:700; font-size:38px">घाटे वाला stock बेचा</div>
+      <div data-in="29.48" data-fx="grow" class="abs" style="left:70px; top:410px; width:450px; height:70px; border-radius:16px; background:var(--red); transform-origin:0 50%"></div>
+      <div data-in="29.9" data-fx="pop" class="abs" style="left:540px; top:416px; font-weight:800; font-size:44px"><span class="r">1×</span></div>
+      <div class="abs" style="left:0; width:900px; top:560px; text-align:center; font-weight:500; font-size:26px; color:#6b7387">Odean (1998), Journal of Finance · 10,000 US brokerage accounts</div>
+    </div>
+    <div data-in="30.0" data-fx="pop" class="abs center big" style="top:1060px">Loss वाला <span class="r">पकड़े रखा</span> 🙈</div>
+  </section>
+
+  <section class="scene" data-s="31.46" data-e="37.8">
+    <div class="topic">वो <span class="y">math</span> याद है? 🔁</div>
+    <div class="abs" style="left:80px; top:350px; width:920px; display:flex; justify-content:space-between; font-weight:700; font-size:34px; color:#a7afc2; padding:0 40px"><span>Loss</span><span>वापस आने को चाहिए</span></div>
+    <div data-in="33.12" data-fx="up" data-sfx="pop" class="row" style="top:420px; justify-content:space-between; padding-left:40px; padding-right:40px"><span class="r">−10%</span><span class="g">+11%</span></div>
+    <div data-in="34.3" data-fx="up" data-sfx="pop" class="row" style="top:540px; justify-content:space-between; padding-left:40px; padding-right:40px"><span class="r">−30%</span><span class="g">+43%</span></div>
+    <div data-in="35.52" data-fx="slam" data-sfx="impact" class="row" style="top:660px; justify-content:space-between; padding-left:40px; padding-right:40px; border:3px solid var(--yellow); background:rgba(255,201,74,0.10); font-size:56px; min-height:120px"><span class="r">−50%</span><span class="y">+100% 😶</span></div>
+    <div data-in="36.6" data-fx="pop" class="abs center big" style="top:900px">छोटा SL = <span class="g">छोटी</span> recovery</div>
+  </section>
+
+  <section class="scene" data-s="37.8" data-e="48.28">
+    <div class="topic"><span class="y">2 Rules</span> 📌</div>
+    <div data-in="39.24" data-fx="up" data-sfx="pop" class="row" style="top:340px"><span class="rn">1</span><span>SL वहाँ, जहाँ <span class="y">trade idea गलत</span> साबित हो</span></div>
+    <div data-in="43.35" data-fx="up" data-sfx="pop" class="row" style="top:500px"><span class="rn">2</span><span><span class="y">Quantity</span> SL से तय करो ⚖️</span></div>
+    <div data-in="44.1" data-fx="up" class="card" style="left:150px; top:690px; width:780px; height:200px; border-color:rgba(255,255,255,0.12)">
+      <div class="abs" style="left:0; width:780px; top:40px; text-align:center; font-weight:700; font-size:40px; color:#a7afc2">Quantity =</div>
+      <div class="abs" style="left:0; width:780px; top:100px; text-align:center; font-weight:800; font-size:46px">Risk ₹ <span class="o">÷</span> SL distance</div>
+    </div>
+    <div data-in="45.69" data-fx="pop" class="abs center big" style="top:980px">1 SL हिट = <span class="g">छोटी सी चोट</span> 🩹</div>
+  </section>
+
+  <section class="scene" data-s="48.28" data-e="51.54">
+    <div data-in="48.28" data-fx="up" data-sfx="stamp" class="card" style="left:240px; top:300px; width:600px; height:600px; background:#f4f1e8; border-color:#f4f1e8">
+      <div class="abs" style="left:0; width:600px; top:50px; text-align:center; font-size:90px">🧾</div>
+      <div class="abs" style="left:0; width:600px; top:190px; text-align:center; font-weight:800; font-size:54px; color:#0e1424">Plan का बिल</div>
+      <div class="abs" style="left:60px; width:480px; top:290px; border-top:4px dashed #b9b3a3"></div>
+      <div class="abs" style="left:60px; width:480px; top:320px; display:flex; justify-content:space-between; font-weight:700; font-size:40px; color:#3a4157"><span>SL hit</span><span style="color:#16a34a">−₹500</span></div>
+      <div class="abs" style="left:60px; width:480px; top:390px; display:flex; justify-content:space-between; font-weight:700; font-size:40px; color:#3a4157"><span>Account</span><span style="color:#16a34a">safe ✓</span></div>
+      <div class="abs" style="left:0; width:600px; top:490px; text-align:center; font-weight:600; font-size:28px; color:#8a8473">PAID</div>
+    </div>
+    <div data-in="48.6" data-fx="pop" class="abs center big" style="top:1000px">SL हिट = <span class="r">हार</span> नहीं,<br>plan का <span class="g">छोटा बिल</span> है</div>
+  </section>
+
+  <section class="scene" data-s="51.54" data-e="999">
+    <img data-in="51.54" data-fx="pop" class="abs" src="assets/tw-wordmark.png" style="left:240px; top:300px; width:600px" />
+    <div data-in="51.9" data-fx="up" data-sfx="whoosh" class="card" style="left:150px; top:620px; width:780px; height:260px; border-color:var(--orange)">
+      <div class="abs" style="left:30px; top:30px; width:300px; height:200px; border-radius:18px; background:linear-gradient(135deg,#1c2640,#0e1424); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:64px; color:var(--red)">RUKO</div>
+      <div class="abs" style="left:360px; top:50px; width:390px; font-weight:800; font-size:32px; line-height:1.3">17 Lakh Loss Ke Baad Pehla Step: <span class="r">RUKO</span></div>
+      <div class="abs" style="left:360px; top:190px; font-weight:600; font-size:26px; color:#a7afc2">▶ Related video · नीचे टैप करो</div>
+    </div>
+    <div data-in="51.54" data-fx="pop" class="abs center" style="top:960px; font-weight:800; font-size:56px; line-height:1.3">पूरा recovery <span class="y">math</span> यहाँ 📈</div>
+    <div data-in="54.68" data-fx="slam" data-sfx="click" class="abs center" style="top:1120px"><span style="display:inline-block; padding:24px 60px; border-radius:50px; background:#ff0033; font-weight:800; font-size:56px; box-shadow:0 14px 34px rgba(0,0,0,0.5)">SUBSCRIBE 🔔</span></div>
+    <div data-in="55.0" data-fx="pop" class="abs center" style="top:1290px; font-weight:700; font-size:40px; color:var(--green)">@thetradingwizaard</div>
+  </section>
+</div>
+
+<script>
+const TEMPO = 1.08;
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+
+// ---------- chart ----------
+let P0 = 186, P1 = 208; const Y0 = 120, Y1 = 700;
+const y = p => Y1 - (p - P0) / (P1 - P0) * (Y1 - Y0);
+const C = [
+  [204,202,205,201],[202,199,203,198],[199,201,202,198],[201,198,202,197],[198,200,201,197],[200,203,204,199],[203,200,204,199],
+  [200,198,201,197],[198,196,199,195.5],[196,194,197,193],
+  [194,191,195,190],[191,192,193,189],[192,188,192.5,187],[188,185,189,184],[185,186,187,183],[186,181,186.5,180],[181,178,182,177],[178,179,180,176],[179,174,179.5,173],[174,171,175,170],[171,170,172.5,169]
+];
+const X = i => 70 + i * 37;
+const chip = (html, x, yy, bg, fg, a = 1, s = 1, extra = '') =>
+  `<div class="chip" style="left:${x}px; top:${yy}px; background:${bg}; color:${fg || '#0b0f1a'}; opacity:${a}; transform:scale(${s}); ${extra}">${html}</div>`;
+const pa = (t, t0, d = 0.28) => clamp((t - t0) / d);       // progress
+const sc = p => 0.7 + 0.3 * back(p);
+function lerp(a, b, p) { return a + (b - a) * p; }
+function drawChart(t) {
+  // range: zoom out when the no-SL fall starts
+  const zp = eo(pa(t, 13.6, 0.8));
+  P0 = lerp(186, 168, zp); P1 = 208;
+  let n;
+  if (t < 10.0) n = 2 + 5 * clamp((t - 5.76) / 1.6);
+  else if (t < 14.0) n = 7 + 3 * clamp((t - 10.0) / 0.9);
+  else n = 10 + 11 * clamp((t - 14.0) / 3.6);
+  if (t >= 12.59 && t < 14.0) n = 10;
+  const full = Math.floor(n), frac = n - full;
+  const slFade = t >= 12.59 ? lerp(0.95, 0.18, eo(pa(t, 12.59, 0.5))) : 0.95;
+  let s = `<line x1="40" x2="860" y1="${y(200)}" y2="${y(200)}" stroke="#26d07c" stroke-width="3" stroke-dasharray="12 8" opacity="${clamp(pa(t, 6.76))}"/>`;
+  s += `<line x1="40" x2="${lerp(40, 860, eo(pa(t, 8.72, 0.5)))}" y1="${y(195)}" y2="${y(195)}" stroke="#ef4444" stroke-width="3" stroke-dasharray="12 8" opacity="${slFade}"/>`;
+  for (let i = 0; i < Math.min(C.length, full + 1); i++) {
+    const g = i < full ? 1 : frac; if (g <= 0) continue;
+    const [op, clRaw, hi, lo] = C[i], cl = op + (clRaw - op) * g, up = clRaw >= op, col = up ? '#26d07c' : '#ef4444';
+    s += `<line x1="${X(i)}" x2="${X(i)}" y1="${y(Math.max(hi * g + op * (1 - g), op, cl))}" y2="${y(Math.min(lo * g + op * (1 - g), op, cl))}" stroke="${col}" stroke-width="4"/>`;
+    s += `<rect x="${X(i) - 12}" y="${y(Math.max(op, cl))}" width="24" height="${Math.max(4, Math.abs(y(op) - y(cl)))}" rx="3" fill="${col}"/>`;
+  }
+  if (t >= 6.76) s += `<circle cx="${X(6)}" cy="${y(200)}" r="${13 * sc(pa(t, 6.76))}" fill="#26d07c" stroke="#fff" stroke-width="4"/>`;
+  if (t >= 10.9) s += `<circle cx="${X(9)}" cy="${y(195)}" r="${13 * sc(pa(t, 10.9))}" fill="#ef4444" stroke="#fff" stroke-width="4" opacity="${t >= 12.59 ? 0.35 : 1}"/>`;
+  if (t >= 17.6) s += `<circle cx="${X(20)}" cy="${y(170)}" r="${13 * sc(pa(t, 17.6))}" fill="#ef4444" stroke="#fff" stroke-width="4"/>`;
+  document.getElementById('cs').innerHTML = s;
+
+  let h = '';
+  const ap = (t0) => { const p = pa(t, t0); return [p, sc(p)]; };
+  let [p, k] = ap(6.76); if (p > 0) h += chip('BUY ₹200', 600, y(200) - 58, '#26d07c', null, p, k);
+  [p, k] = ap(7.9); if (p > 0 && t < 10.9) h += chip('Qty 100', 40, 640, '#fff', null, p, k);
+  if (t < 12.59) { [p, k] = ap(8.9); if (p > 0) h += chip('SL ₹195', 600, y(195) + 14, '#ef4444', '#fff', p, k); }
+  if (t >= 10.9 && t < 12.59) { const q = pa(t, 10.9, 0.22); h += `<div class="stamp" style="left:110px; top:560px; opacity:${q}; transform:rotate(-9deg) scale(${lerp(1.8, 1, eo(q))})">SL HIT ✕</div>`; }
+  if (t < 12.59) { [p, k] = ap(11.7); if (p > 0) h += chip('−₹500', X(9) + 30, y(193) + 10, '#ffc94a', null, p, k); }
+  if (t >= 12.59) { [p, k] = ap(13.56); if (p > 0) h += chip('बिना SL ❌', 640, y(195) + 14, '#2a3249', '#a7afc2', p, k); }
+  [p, k] = ap(15.56); if (p > 0) h += chip('वापस आएगा 🙏', 300, y(188) - 90, '#fff', null, p, k, 'border-radius:30px;');
+  if (t >= 17.4) {
+    const cnt = Math.round(lerp(500, 3000, eo(pa(t, 17.4, 1.0))) / 10) * 10;
+    [p, k] = ap(17.4); h += chip(`₹170 · −₹${cnt.toLocaleString('en-IN')}`, 520, y(170) - 66, '#ef4444', '#fff', p, k);
+  }
+  document.getElementById('chips').innerHTML = h;
+
+  let txt = '', t0 = 0;
+  if (t < 6.76) { txt = ''; }
+  else if (t < 10.01) { txt = '₹200 पे <span class="g">BUY</span><br>SL <span class="r">₹195</span> 📍'; t0 = 6.76; }
+  else if (t < 12.59) { txt = 'SL हिट = सिर्फ़ <span class="y">₹500</span> 😌'; t0 = 10.01; }
+  else if (t < 16.76) { txt = 'वही trade… <span class="r">बिना SL</span>'; t0 = 12.59; }
+  else { txt = 'बिना SL… loss <span class="r">₹3,000</span> 😰'; t0 = 16.76; }
+  const el = document.getElementById('ctext');
+  if (el.dataset.k !== txt) { el.innerHTML = txt; el.dataset.k = txt; }
+  const q = pa(t, t0, 0.3); el.style.opacity = q; el.style.transform = `translateY(${(1 - eo(q)) * 40}px)`;
+}
+
+// ---------- generic ----------
+const scenes = [...document.querySelectorAll('.scene')];
+const items = [...document.querySelectorAll('[data-in]')];
+function seek(T) {                         // T = output seconds
+  const t = T * TEMPO;
+  for (const s of scenes) {
+    const a = +s.dataset.s, b = +s.dataset.e, on = t >= a && t < b;
+    s.style.visibility = on ? 'visible' : 'hidden';
+    if (on) {
+      const fin = clamp((t - a) / 0.12);
+      const drift = 1 + 0.018 * clamp((t - a) / Math.max(1, b - a));
+      s.style.opacity = a === 0 ? 1 : fin;
+      s.style.transform = `scale(${drift})`;
+    }
+  }
+  for (const el of items) {
+    const t0 = +el.dataset.in, fx = el.dataset.fx || 'pop';
+    const out = el.dataset.out ? +el.dataset.out : 1e9;
+    let p = t0 <= 0.01 ? 1 : pa(t, t0, fx === 'grow' || fx === 'wipe' ? 0.45 : 0.28);
+    if (t >= out) p = 0;
+    let tr = '';
+    if (fx === 'pop') tr = `scale(${0.85 + 0.15 * back(p)})`;
+    else if (fx === 'slam') tr = `scale(${lerp(1.6, 1, eo(p))})`;
+    else if (fx === 'up') tr = `translateY(${(1 - eo(p)) * 60}px)`;
+    else if (fx === 'grow' || fx === 'wipe') { tr = `scaleX(${eo(p)})`; }
+    el.style.opacity = (fx === 'grow' || fx === 'wipe') ? (p > 0 ? 1 : 0) : clamp(p * 1.6);
+    el.style.transform = tr;
+  }
+  if (t >= 5.76 && t < 18.8) drawChart(t);
+}
+window.seek = seek;
+window.sfxList = items.filter(e => e.dataset.sfx).map(e => ({ t: +e.dataset.in / TEMPO, s: e.dataset.sfx }))
+  .concat([{ t: 10.9 / TEMPO, s: 'stamp' }, { t: 17.4 / TEMPO, s: 'impact' }, { t: 6.76 / TEMPO, s: 'pop' }, { t: 8.9 / TEMPO, s: 'pop' }, { t: 15.56 / TEMPO, s: 'pop' }, { t: 3.62 / TEMPO, s: 'whoosh' }, { t: 18.8 / TEMPO, s: 'whoosh' }, { t: 22.62 / TEMPO, s: 'whoosh' }, { t: 31.46 / TEMPO, s: 'whoosh' }, { t: 37.8 / TEMPO, s: 'whoosh' }]);
+seek(+(location.hash.slice(1) || 0));
+</script>
+</body>
+</html>
