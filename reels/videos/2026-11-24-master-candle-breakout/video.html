@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("assets/fonts/poppins-devanagari-500-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 600; src: url("assets/fonts/poppins-devanagari-600-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("assets/fonts/poppins-devanagari-700-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Poppins"; font-weight: 800; src: url("assets/fonts/poppins-devanagari-800-normal.woff2") format("woff2"); unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FF; }
+  @font-face { font-family: "Noto Color Emoji"; src: url("assets/fonts/NotoColorEmoji.ttf") format("truetype"); }
+  :root { --bg:#101421; --green:#26d07c; --red:#ef4444; --yellow:#ffc94a; --orange:#ff8a3d; --ink:#f4f6fb; --muted:#8d97ad; --card:#131a2b; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bg); }
+  #root { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:"Poppins","Noto Color Emoji",sans-serif; color:var(--ink);
+    background: radial-gradient(70% 18% at 50% 0%, rgba(38,208,124,0.12), transparent 100%), radial-gradient(130% 80% at 50% 50%, #101421 55%, #141829 100%); }
+  #grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.035) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.035) 2px, transparent 2px); background-size:60px 60px; }
+  .abs { position:absolute; }
+  .center { left:60px; width:960px; text-align:center; }
+  .big { font-weight:800; font-size:72px; line-height:1.22; letter-spacing:-0.01em; text-shadow:0 6px 24px rgba(0,0,0,0.45); }
+  .card { position:absolute; background:var(--card); border:2px solid rgba(255,201,74,0.45); border-radius:32px; box-shadow:0 30px 70px rgba(0,0,0,0.55); }
+  .chip { position:absolute; padding:6px 16px; border-radius:10px; font-weight:700; font-size:28px; white-space:nowrap; color:#0b0f1a; box-shadow:0 8px 22px rgba(0,0,0,0.45); }
+  .topic { position:absolute; left:50%; top:200px; padding:14px 38px; border-radius:26px; border:3px dashed var(--orange); background:rgba(120,60,20,0.35); font-weight:800; font-size:40px; white-space:nowrap; transform:translateX(-50%); }
+  .tag { position:absolute; padding:4px 14px; border:2px solid #5d6680; border-radius:8px; font-weight:600; font-size:24px; color:#a7afc2; white-space:nowrap; }
+  .pill { display:inline-block; padding:22px 44px; border-radius:40px; background:var(--yellow); color:#0b0f1a; font-weight:800; font-size:50px; box-shadow:0 14px 34px rgba(0,0,0,0.5); }
+  .row { position:absolute; left:80px; width:920px; min-height:96px; padding:14px 24px 14px 104px; border-radius:22px; background:rgba(19,26,43,0.92); border:2px solid rgba(255,255,255,0.08); display:flex; align-items:center; font-weight:700; font-size:40px; line-height:1.25; }
+  .row .rn { position:absolute; left:18px; top:50%; margin-top:-32px; width:64px; height:64px; border-radius:50%; background:#ea580c; color:#fff; font-weight:800; font-size:34px; display:flex; align-items:center; justify-content:center; }
+  .stamp { position:absolute; padding:8px 26px; border:7px solid var(--red); border-radius:16px; color:var(--red); font-weight:800; font-size:56px; background:rgba(16,20,33,0.85); white-space:nowrap; }
+  .vpill { position:absolute; padding:10px 0; width:380px; text-align:center; border-radius:20px; font-weight:800; font-size:36px; }
+  .y{color:var(--yellow)} .g{color:var(--green)} .r{color:var(--red)} .o{color:var(--orange)}
+  .scene { position:absolute; inset:0; visibility:hidden; transform-origin:50% 45%; }
+  [data-in] { will-change: transform, opacity; }
+</style>
+</head>
+<body>
+<div id="root">
+  <div id="grid"></div>
+  <img class="abs" src="assets/tw-wordmark.png" style="left:380px; top:46px; width:320px; height:117px" />
+  <div class="abs center" style="top:1772px">
+    <div style="display:inline-flex; align-items:center; gap:18px; font-weight:700; font-size:44px; color:var(--yellow)">
+      <svg width="62" height="44" viewBox="0 0 62 44"><rect width="62" height="44" rx="12" fill="#ff0033"/><path d="M25 13 L42 22 L25 31 Z" fill="#fff"/></svg>The Trading Wizaard
+    </div>
+    <div style="margin-top:10px; font-weight:500; font-size:28px; color:#6b7387">Educational purpose only • Not investment advice</div>
+  </div>
+
+  <!-- all data-in / data-s times are RAW voice seconds (before tempo). Storyboard v1: estimated times. -->
+
+  <!-- 1 HOOK -->
+  <section class="scene" data-s="0" data-e="4.4">
+    <div class="card" style="left:90px; top:240px; width:900px; height:720px">
+      <div class="abs" style="left:40px; top:30px; font-weight:600; font-size:34px; color:#a7afc2; letter-spacing:0.04em">ABC LTD · 5m <span class="r">● LIVE</span></div>
+      <div class="tag" style="right:34px; top:28px">Example chart</div>
+      <svg id="hs" class="abs" style="left:0; top:0" width="900" height="720" viewBox="0 0 900 720"></svg>
+      <div id="hchips"></div>
+    </div>
+    <div class="abs center big" style="top:1010px">बड़ी <span class="r">red candle</span> पे SELL…<br>और price <span class="g">ऊपर</span> भाग गया? 😤</div>
+  </section>
+
+  <!-- 2 PROMISE -->
+  <section class="scene" data-s="4.4" data-e="6.8">
+    <div data-in="4.4" data-fx="pop" class="abs center big" style="top:540px">ये <span class="r">luck</span> नहीं था… 🤔</div>
+    <div data-in="5.2" data-fx="pop" data-sfx="whoosh" class="abs center" style="top:760px"><span class="pill" style="transform:rotate(-3deg)">⏱️ 40 सेकंड में समझो</span></div>
+  </section>
+
+  <!-- 3 CHART BUILD -->
+  <section class="scene" data-s="6.8" data-e="37.4">
+    <div class="topic"><span class="y">MASTER CANDLE</span> = Breakout Box</div>
+    <div class="card" style="left:90px; top:330px; width:900px; height:780px">
+      <div class="abs" style="left:40px; top:30px; font-weight:600; font-size:34px; color:#a7afc2; letter-spacing:0.04em">ABC LTD · 5m</div>
+      <div class="tag" style="right:34px; top:28px">Example chart</div>
+      <svg id="cs" class="abs" style="left:0; top:0" width="900" height="780" viewBox="0 0 900 780"></svg>
+      <div id="chips"></div>
+    </div>
+    <div id="ctext" class="abs center big" style="top:1180px; font-size:64px"></div>
+  </section>
+
+  <!-- 4 WICK vs BODY -->
+  <section class="scene" data-s="37.4" data-e="42.6">
+    <div class="topic"><span class="y">MASTER CANDLE</span> = Breakout Box</div>
+    <div data-in="37.4" data-fx="pop" class="abs center" style="top:320px; font-weight:800; font-size:56px">ध्यान दो 👀</div>
+    <div data-in="37.9" data-fx="up" data-sfx="pop" class="card" style="left:70px; top:430px; width:450px; height:640px; border-color:rgba(239,68,68,0.6); background:rgba(239,68,68,0.08)">
+      <div class="abs" style="left:0; width:450px; top:28px; text-align:center; font-weight:800; font-size:38px">सिर्फ़ <span class="r">WICK</span> बाहर</div>
+      <svg id="m1" class="abs" style="left:0; top:90px" width="450" height="420" viewBox="0 0 450 420"></svg>
+      <div class="vpill" style="left:35px; top:540px; background:var(--red); color:#fff">✕ TRAP</div>
+    </div>
+    <div data-in="39.9" data-fx="up" data-sfx="pop" class="card" style="left:560px; top:430px; width:450px; height:640px; border-color:rgba(38,208,124,0.6); background:rgba(38,208,124,0.08)">
+      <div class="abs" style="left:0; width:450px; top:28px; text-align:center; font-weight:800; font-size:38px"><span class="g">BODY</span> 60%+ बाहर</div>
+      <svg id="m2" class="abs" style="left:0; top:90px" width="450" height="420" viewBox="0 0 450 420"></svg>
+      <div class="vpill" style="left:35px; top:540px; background:var(--green); color:#0b0f1a">✓ BREAKOUT</div>
+    </div>
+    <div data-in="40.8" data-fx="pop" class="abs center big" style="top:1150px; font-size:64px">Wick नहीं, <span class="y">body का close</span> देखो</div>
+  </section>
+
+  <!-- 5 CALLBACK -->
+  <section class="scene" data-s="42.6" data-e="46.0">
+    <div class="topic">याद है वो <span class="r">SELL</span>? 🔁</div>
+    <div class="card" style="left:90px; top:330px; width:900px; height:720px">
+      <div class="tag" style="right:34px; top:28px">Example chart</div>
+      <svg id="cb" class="abs" style="left:0; top:0" width="900" height="720" viewBox="0 0 900 720"></svg>
+      <div id="cbchips"></div>
+    </div>
+    <div data-in="43.9" data-fx="pop" class="abs center big" style="top:1110px; font-size:64px">Box के <span class="r">अंदर</span> trade = फँसना 🪤</div>
+  </section>
+
+  <!-- 6 CHEAT SHEET -->
+  <section class="scene" data-s="46.0" data-e="51.6">
+    <div class="topic"><span class="y">Cheat Sheet</span> 📌 Save करो</div>
+    <div data-in="46.3" data-fx="up" data-sfx="pop" class="row" style="top:340px"><span class="rn">1</span><span>बड़ी candle = <span class="y">Master Candle</span>, उसका high-low = box</span></div>
+    <div data-in="47.3" data-fx="up" data-sfx="pop" class="row" style="top:490px"><span class="rn">2</span><span><span class="y">4+ candles</span> box के अंदर close ⏳</span></div>
+    <div data-in="48.4" data-fx="up" data-sfx="pop" class="row" style="top:640px"><span class="rn">3</span><span>Breakout candle की <span class="y">body 60%+</span> बाहर</span></div>
+    <div data-in="49.6" data-fx="up" data-sfx="pop" class="row" style="top:790px"><span class="rn">4</span><span>अगली candle <span class="g">confirm</span> → Entry, SL box के उस पार</span></div>
+    <div data-in="50.3" data-fx="slam" data-sfx="stamp" class="abs" style="left:300px; top:990px; transform-origin:50% 50%"><span class="pill" style="display:inline-block; transform:rotate(-4deg); font-size:44px">Box के अंदर = No Trade 🚫</span></div>
+  </section>
+
+  <!-- 7 CTA -->
+  <section class="scene" data-s="51.6" data-e="999">
+    <img data-in="51.6" data-fx="pop" class="abs" src="assets/tw-wordmark.png" style="left:240px; top:330px; width:600px" />
+    <div data-in="51.9" data-fx="pop" class="abs center" style="top:640px; font-weight:800; font-size:56px; line-height:1.3">ऐसे ही simple trading<br>concepts के लिए 📈</div>
+    <div id="subBtn" data-in="52.9" data-fx="slam" data-sfx="click" class="abs center" style="top:880px"><span id="subTxt" style="display:inline-block; padding:24px 60px; border-radius:50px; background:#ff0033; font-weight:800; font-size:56px; box-shadow:0 14px 34px rgba(0,0,0,0.5)">SUBSCRIBE 🔔</span></div>
+    <div data-in="53.4" data-fx="pop" class="abs center" style="top:1050px; font-weight:700; font-size:40px; color:var(--yellow)">@thetradingwizaard</div>
+  </section>
+</div>
+
+<script>
+const TEMPO = 1.0;
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const back = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const pa = (t, t0, d = 0.28) => clamp((t - t0) / d);
+const sc = p => 0.7 + 0.3 * back(p);
+const lerp = (a, b, p) => a + (b - a) * p;
+const chip = (html, x, yy, bg, fg, a = 1, s = 1, extra = '') =>
+  `<div class="chip" style="left:${x}px; top:${yy}px; background:${bg}; color:${fg || '#0b0f1a'}; opacity:${a}; transform:scale(${s}); ${extra}">${html}</div>`;
+
+// candles [open, close, high, low]
+const C = [
+  [226,222,227,221],[222,223,224,220],[223,218,224,217],[218,219,220,216.5],[219,214,220,213],
+  [214,200,215,199],                                   // 5 = MASTER
+  [200,204,205,199.5],[204,202,206,201],[202,207,208,201.5],[207,203,209,202],[205,210,211,204], // 6-10 inside
+  [210,224,225,209],                                   // 11 = breakout (body 64% above 215)
+  [224,228,229,222.5],[228,233,234,227],[233,236,238,232]
+];
+const BOX_H = 215, BOX_L = 199;
+
+// draw candles n (fractional) into svg string
+function candles(n, X, y, w = 26) {
+  let s = ''; const full = Math.floor(n), frac = n - full;
+  for (let i = 0; i < Math.min(C.length, full + 1); i++) {
+    const g = i < full ? 1 : frac; if (g <= 0) continue;
+    const [op, clRaw, hi, lo] = C[i], cl = op + (clRaw - op) * g, col = clRaw >= op ? '#26d07c' : '#ef4444';
+    s += `<line x1="${X(i)}" x2="${X(i)}" y1="${y(Math.max(hi * g + op * (1 - g), op, cl))}" y2="${y(Math.min(lo * g + op * (1 - g), op, cl))}" stroke="${col}" stroke-width="4"/>`;
+    s += `<rect x="${X(i) - w / 2}" y="${y(Math.max(op, cl))}" width="${w}" height="${Math.max(4, Math.abs(y(op) - y(cl)))}" rx="3" fill="${col}"/>`;
+  }
+  return s;
+}
+function box(X, y, x0, x1, a = 1) {
+  return `<rect x="${x0}" y="${y(BOX_H)}" width="${x1 - x0}" height="${y(BOX_L) - y(BOX_H)}" fill="rgba(255,201,74,${0.10 * a})" stroke="#ffc94a" stroke-width="3" stroke-dasharray="12 8" opacity="${a}"/>`;
+}
+
+// ---------- 1 hook mini chart ----------
+function drawHook(t) {
+  const y = p => 640 - (p - 196) / (240 - 196) * 540, X = i => 70 + i * 54;
+  const n = t < 1.0 ? 6 : 6 + 7 * clamp((t - 1.0) / 2.0);
+  let s = candles(n, X, y);
+  s += `<line x1="40" x2="860" y1="${y(217)}" y2="${y(217)}" stroke="#ef4444" stroke-width="3" stroke-dasharray="12 8" opacity="0.9"/>`;
+  s += `<circle cx="${X(5)}" cy="${y(200)}" r="13" fill="#ef4444" stroke="#fff" stroke-width="4"/>`;
+  document.getElementById('hs').innerHTML = s;
+  let h = chip('SELL ₹200', X(5) - 80, y(200) + 26, '#ef4444', '#fff');
+  h += chip('SL ₹217', 700, y(217) - 52, '#2a3249', '#f4f6fb');
+  if (t >= 3.0) { const q = pa(t, 3.0, 0.22); h += `<div class="stamp" style="left:420px; top:120px; opacity:${q}; transform:rotate(-9deg) scale(${lerp(1.8, 1, eo(q))})">SL HIT ✕</div>`; }
+  document.getElementById('hchips').innerHTML = h;
+}
+
+// ---------- 3 main chart ----------
+const T = { master: 7.6, box: 12.2, sq: 15.2, sqEnd: 19.0, rush: 21.0, any: 25.0, bo: 27.0, pct: 29.4, cont: 32.0, buy: 33.0, sl: 34.6, run: 35.6 };
+function drawChart(t) {
+  const y = p => 700 - (p - 194) / (240 - 194) * 560, X = i => 70 + i * 54;
+  let n;
+  if (t < T.master) n = 5 * clamp((t - 6.8) / 0.7);
+  else if (t < T.sq) n = 5 + clamp((t - T.master) / 0.5);
+  else if (t < T.bo) n = 6 + 5 * clamp((t - T.sq) / (T.sqEnd - T.sq));
+  else if (t < T.cont) n = 11 + clamp((t - T.bo) / 0.8);
+  else if (t < T.run) n = 12 + clamp((t - T.cont) / 0.6);
+  else n = 13 + 2 * clamp((t - T.run) / 1.2);
+  let s = '';
+  if (t >= T.box) s += box(X, y, X(5) - 22, lerp(X(5) + 22, 860, eo(pa(t, T.box, 0.6))));
+  // breakout 60% bracket
+  if (t >= T.pct) {
+    const q = eo(pa(t, T.pct, 0.4)), bx = X(11) + 26;
+    s += `<line x1="${bx}" x2="${bx}" y1="${y(215)}" y2="${lerp(y(215), y(224), q)}" stroke="#ffc94a" stroke-width="5"/>`;
+    s += `<line x1="${bx - 8}" x2="${bx + 8}" y1="${y(215)}" y2="${y(215)}" stroke="#ffc94a" stroke-width="5"/><line x1="${bx - 8}" x2="${bx + 8}" y1="${y(224)}" y2="${y(224)}" stroke="#ffc94a" stroke-width="5" opacity="${q}"/>`;
+  }
+  if (t >= T.buy) s += `<line x1="${X(12)}" x2="${lerp(X(12), 860, eo(pa(t, T.buy, 0.5)))}" y1="${y(224)}" y2="${y(224)}" stroke="#26d07c" stroke-width="3" stroke-dasharray="12 8"/>`;
+  if (t >= T.sl) s += `<line x1="${X(5) - 22}" x2="${lerp(X(5) - 22, 860, eo(pa(t, T.sl, 0.5)))}" y1="${y(197.5)}" y2="${y(197.5)}" stroke="#ef4444" stroke-width="3" stroke-dasharray="12 8"/>`;
+  s += candles(n, X, y);
+  // squeeze count markers
+  for (let k = 0; k < 4; k++) {
+    const tk = T.sq + 0.6 + k * 0.85; if (t < tk) continue;
+    const p = pa(t, tk); const cx = X(6 + k), [o, c, h] = C[6 + k];
+    s += `<g transform="translate(${cx},${y(h) - 40}) scale(${sc(p)})" opacity="${p}"><circle r="22" fill="#ea580c"/><text y="10" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="28" fill="#fff">${k + 1}</text></g>`;
+  }
+  if (t >= T.buy) s += `<circle cx="${X(12)}" cy="${y(224)}" r="${13 * sc(pa(t, T.buy))}" fill="#26d07c" stroke="#fff" stroke-width="4"/>`;
+  document.getElementById('cs').innerHTML = s;
+
+  let h = '', p, k;
+  const ap = t0 => { const q = pa(t, t0); return [q, sc(q)]; };
+  [p, k] = ap(T.master + 0.4); if (p > 0) h += chip('Master Candle', X(5) - 100, y(199) + 24, '#ffc94a', null, p, k);
+  [p, k] = ap(T.box + 0.3); if (p > 0 && t < T.pct) h += chip('Box High', 730, y(BOX_H) - 50, '#fff', null, p, k);
+  [p, k] = ap(T.box + 0.9); if (p > 0 && t < T.sl) h += chip('Box Low', 730, y(BOX_L) + 10, '#fff', null, p, k);
+  if (t >= T.rush && t < T.any) {
+    [p, k] = ap(T.rush); h += chip('BUY? ✕', X(8) - 60, y(209) - 110, '#ef4444', '#fff', p, k);
+    [p, k] = ap(T.rush + 1.2); h += chip('SELL? ✕', X(9) - 10, y(199) + 70, '#ef4444', '#fff', p, k);
+  }
+  [p, k] = ap(T.bo + 0.4); if (p > 0) h += chip('Breakout Candle', X(11) - 250, y(226) - 40, '#26d07c', null, p, k);
+  [p, k] = ap(T.pct + 0.2); if (p > 0) h += chip('60%+ बाहर', X(11) + 40, y(221) - 20, '#ffc94a', null, p, k);
+  [p, k] = ap(T.cont + 0.2); if (p > 0 && t < T.buy) h += chip('Confirm ✓', X(12) + 20, y(229) - 56, '#fff', null, p, k);
+  [p, k] = ap(T.buy + 0.2); if (p > 0) h += chip('BUY ₹224', 700, y(224) + 12, '#26d07c', null, p, k);
+  [p, k] = ap(T.sl + 0.2); if (p > 0) h += chip('SL box के नीचे', 600, y(197.5) + 12, '#ef4444', '#fff', p, k);
+  document.getElementById('chips').innerHTML = h;
+
+  let txt = '', t0 = 6.8;
+  if (t < T.master) txt = 'Downtrend… <span class="r">sellers</span> हावी 📉';
+  else if (t < T.box) { txt = 'बड़ी red candle = <span class="y">Master Candle</span>'; t0 = T.master; }
+  else if (t < T.sq) { txt = 'High–Low = <span class="y">Box</span> 📦'; t0 = T.box; }
+  else if (t < T.rush) { txt = '<span class="y">4+ candles</span> box के अंदर ⏳'; t0 = T.sq; }
+  else if (t < T.any) { txt = 'जल्दबाज़ी = <span class="r">SL hit</span> 😵'; t0 = T.rush; }
+  else if (t < T.pct) { txt = 'Breakout <span class="y">किसी भी side</span> ↕️'; t0 = T.any; }
+  else if (t < T.cont) { txt = 'Body का <span class="y">60%+</span> box के ऊपर'; t0 = T.pct; }
+  else if (t < T.run) { txt = 'Confirm के बाद <span class="g">BUY</span> ✅'; t0 = T.cont; }
+  else { txt = 'Squeeze → <span class="g">तेज़ move</span> 🚀'; t0 = T.run; }
+  const el = document.getElementById('ctext');
+  if (el.dataset.k !== txt) { el.innerHTML = txt; el.dataset.k = txt; }
+  const q = pa(t, t0, 0.3); el.style.opacity = q; el.style.transform = `translateY(${(1 - eo(q)) * 40}px)`;
+}
+
+// ---------- 4 mini cards ----------
+function mini(id, t, t0, body) {
+  const y = p => 390 - (p - 196) / (226 - 196) * 330, X = i => 70 + i * 44;
+  let s = `<rect x="40" y="${y(215)}" width="370" height="${y(199) - y(215)}" fill="rgba(255,201,74,0.10)" stroke="#ffc94a" stroke-width="3" stroke-dasharray="10 7"/>`;
+  const mc = [[214,200,215,199],[200,204,205,199.5],[204,202,206,201],[202,207,208,201.5],[207,203,209,202],[205,210,211,204]];
+  const last = body ? [210,224,225,209] : [210,212,223,209];
+  const all = mc.concat([last]), n = 6 + clamp((t - t0 - 0.5) / 0.6);
+  const full = Math.floor(n), frac = n - full;
+  for (let i = 0; i < Math.min(all.length, full + 1); i++) {
+    const g = i < full ? 1 : frac; if (g <= 0) continue;
+    const [op, clRaw, hi, lo] = all[i], cl = op + (clRaw - op) * g, col = clRaw >= op ? '#26d07c' : '#ef4444';
+    s += `<line x1="${X(i)}" x2="${X(i)}" y1="${y(Math.max(hi * g + op * (1 - g), op, cl))}" y2="${y(Math.min(lo * g + op * (1 - g), op, cl))}" stroke="${col}" stroke-width="4"/>`;
+    s += `<rect x="${X(i) - 12}" y="${y(Math.max(op, cl))}" width="24" height="${Math.max(4, Math.abs(y(op) - y(cl)))}" rx="3" fill="${col}"/>`;
+  }
+  document.getElementById(id).innerHTML = s;
+}
+
+// ---------- 5 callback ----------
+function drawCallback(t) {
+  const y = p => 640 - (p - 196) / (240 - 196) * 540, X = i => 70 + i * 54;
+  let s = box(X, y, X(5) - 22, 860, eo(pa(t, 42.8, 0.5)));
+  s += candles(13, X, y);
+  s += `<circle cx="${X(5)}" cy="${y(200)}" r="13" fill="#ef4444" stroke="#fff" stroke-width="4"/>`;
+  document.getElementById('cb').innerHTML = s;
+  const p = pa(t, 43.2);
+  document.getElementById('cbchips').innerHTML = chip('यहाँ SELL किया था ❌', X(5) - 60, y(199) + 30, '#ef4444', '#fff', p, sc(p));
+}
+
+// ---------- generic ----------
+const scenes = [...document.querySelectorAll('.scene')];
+const items = [...document.querySelectorAll('[data-in]')];
+function seek(Tout) {
+  const t = Tout * TEMPO;
+  for (const s of scenes) {
+    const a = +s.dataset.s, b = +s.dataset.e, on = t >= a && t < b;
+    s.style.visibility = on ? 'visible' : 'hidden';
+    if (on) {
+      const fin = clamp((t - a) / 0.12), drift = 1 + 0.018 * clamp((t - a) / Math.max(1, b - a));
+      s.style.opacity = a === 0 ? 1 : fin; s.style.transform = `scale(${drift})`;
+    }
+  }
+  for (const el of items) {
+    const t0 = +el.dataset.in, fx = el.dataset.fx || 'pop', out = el.dataset.out ? +el.dataset.out : 1e9;
+    let p = t0 <= 0.01 ? 1 : pa(t, t0, 0.28); if (t >= out) p = 0;
+    let tr = '';
+    if (fx === 'pop') tr = `scale(${0.85 + 0.15 * back(p)})`;
+    else if (fx === 'slam') tr = `scale(${lerp(1.6, 1, eo(p))})`;
+    else if (fx === 'up') tr = `translateY(${(1 - eo(p)) * 60}px)`;
+    el.style.opacity = clamp(p * 1.6); el.style.transform = tr;
+  }
+  // subscribe -> subscribed
+  const st = document.getElementById('subTxt'), subT = (+document.getElementById('subBtn').dataset.in) + 0.9;
+  if (t >= subT) { st.textContent = 'SUBSCRIBED ✓'; st.style.background = '#3a4157'; } else { st.textContent = 'SUBSCRIBE 🔔'; st.style.background = '#ff0033'; }
+  if (t < 4.4) drawHook(t);
+  if (t >= 6.8 && t < 37.4) drawChart(t);
+  if (t >= 37.4 && t < 42.6) { mini('m1', t, 37.9, false); mini('m2', t, 39.9, true); }
+  if (t >= 42.6 && t < 46.0) drawCallback(t);
+}
+window.seek = seek;
+window.sfxList = items.filter(e => e.dataset.sfx).map(e => ({ t: +e.dataset.in / TEMPO, s: e.dataset.sfx }))
+  .concat([[3.0,'stamp'],[4.4,'whoosh'],[6.8,'whoosh'],[T.master,'impact'],[T.box,'pop'],[T.rush,'heartbeat'],[T.bo,'whoosh'],[T.pct,'pop'],[T.buy,'pop'],[T.sl,'pop'],[37.4,'whoosh'],[42.6,'whoosh'],[46.0,'whoosh']].map(([t, s]) => ({ t: t / TEMPO, s })));
+seek(+(location.hash.slice(1) || 0));
+</script>
+</body>
+</html>
